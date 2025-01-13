@@ -1,0 +1,13 @@
+{
+    "name": "Excon",
+    "alias": "excon",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Excon\\Providers\\ExconServiceProvider",
+        "Modules\\Excon\\Providers\\Filament\\FilamentPanelProvider"
+
+    ],
+    "files": []
+}
