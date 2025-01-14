@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer("subcategory")->default(1);
             $table->integer("specific")->default(1);
             $table->integer("extra")->default(1);
+            $table->decimal("speed")->default(300);
 
             $table->timestamps();
         });

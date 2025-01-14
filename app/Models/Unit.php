@@ -51,4 +51,11 @@ class Unit extends Model
     {
         return $this->hasMany(Identifier::class);
     }
+
+    public function extrapolatePositionForTimestamp($timestamp)
+    {
+        # Là, il faut trouver toutes les positions et notamment celle juste avant et celle juste après le timetamp.
+        # puis extrapoler si nécessaire (écart entre les 2 positions supérieure à un seuil à définir)
+        return [43.2, 005.0];
+    }
 }
