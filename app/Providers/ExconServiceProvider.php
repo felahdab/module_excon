@@ -12,6 +12,7 @@ use Modules\Excon\Models\Position;
 use Modules\Excon\Models\Side;
 use Modules\Excon\Models\Unit;
 use Modules\Excon\Models\Weapon;
+use Modules\Excon\Models\Identifier;
 
 
 use Modules\Excon\Policies\EngagementPolicy;
@@ -19,6 +20,7 @@ use Modules\Excon\Policies\PositionPolicy;
 use Modules\Excon\Policies\SidePolicy;
 use Modules\Excon\Policies\UnitPolicy;
 use Modules\Excon\Policies\WeaponPolicy;
+use Modules\Excon\Policies\IdentifierPolicy;
 
 class ExconServiceProvider extends ServiceProvider
 {
@@ -59,6 +61,7 @@ class ExconServiceProvider extends ServiceProvider
             Side::class => SidePolicy::class,
             Unit::class => UnitPolicy::class,
             Weapon::class => WeaponPolicy::class,
+            Identifier::class => IdentifierPolicy::class
 
         ];
 

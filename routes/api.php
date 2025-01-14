@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Excon\Http\Controllers\ExconController;
+use Modules\Excon\Http\Controllers\PositionController;
 
 /*
  *--------------------------------------------------------------------------
@@ -14,6 +14,7 @@ use Modules\Excon\Http\Controllers\ExconController;
  *
 */
 
-Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
+Route::middleware(['forcejson', 'auth:sanctum'])->prefix('v1')->group(function () {
+    Route::put("position", [PositionController::class, "store"])->name("position.store");
     #Route::apiResource('excon', ExconController::class)->names('excon');
 });

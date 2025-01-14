@@ -39,6 +39,16 @@ class Unit extends Model
 
     public function positions()
     {
-        return $this->hasMany(Position::class);
+        # Là, il faut coder le nécessaire pour
+        # - trouver les identifiants de l'unité dans la table des identifiants
+        # - trouver toutes les positions reportées pour ces identifiants
+        # - merger le tout dans une série chronologique
+        # Prévoir de pouvoir restreindre les positions à certaines sources uniquement
+        return [];
+    }
+
+    public function identifiers()
+    {
+        return $this->hasMany(Identifier::class);
     }
 }

@@ -38,8 +38,8 @@ class UnitResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('side_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('side.name')
+                    ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

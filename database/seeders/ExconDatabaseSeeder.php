@@ -15,6 +15,7 @@ class ExconDatabaseSeeder extends Seeder
             WeaponsSeeder::class,
             SideSeeder::class,
             UnitSeeder::class,
+            IdentifierSeeder::class
         ]);
     }
 }

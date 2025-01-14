@@ -17,10 +17,10 @@ class Position extends Model
      * The attributes that are mass assignable.
      */
     protected $fillable = [
-        "unit_id",
-        "source",
+        "identifier_id",
         "latitude",
         "longitude",
+        "timestamp",
         "data"
     ];
 
@@ -32,4 +32,15 @@ class Position extends Model
     // {
     //     // return PositionFactory::new();
     // }
+
+    public function identifier()
+    {
+        return $this->belongsTo(Identifier::class);
+    }
+
+    public function getUnitAttribute()
+    {
+        return $this->identifier->unit;
+    }
+
 }

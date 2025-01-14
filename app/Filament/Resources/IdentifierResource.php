@@ -2,9 +2,9 @@
 
 namespace Modules\Excon\Filament\Resources;
 
-use Modules\Excon\Filament\Resources\PositionResource\Pages;
-use Modules\Excon\Filament\Resources\PositionResource\RelationManagers;
-use Modules\Excon\Models\Position;
+use Modules\Excon\Filament\Resources\IdentifierResource\Pages;
+use Modules\Excon\Filament\Resources\IdentifierResource\RelationManagers;
+use Modules\Excon\Models\Identifier;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,9 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class PositionResource extends Resource
+class IdentifierResource extends Resource
 {
-    protected static ?string $model = Position::class;
+    protected static ?string $model = Identifier::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -23,15 +23,13 @@ class PositionResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\DateTimePicker::make('timestamp')
-                    ->required(),
-                Forms\Components\TextInput::make('identifier_id')
+                Forms\Components\TextInput::make('source')
                     ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('latitude')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('identifier')
                     ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('longitude')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('unit_id')
                     ->required()
                     ->numeric(),
                 Forms\Components\TextInput::make('data'),
@@ -42,15 +40,11 @@ class PositionResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('timestamp')
-                    ->dateTime()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('unit.name')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('latitude')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('longitude')
+                Tables\Columns\TextColumn::make('source')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('identifier')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('unit_id')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -85,9 +79,9 @@ class PositionResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPositions::route('/'),
-            'create' => Pages\CreatePosition::route('/create'),
-            'edit' => Pages\EditPosition::route('/{record}/edit'),
+            'index' => Pages\ListIdentifiers::route('/'),
+            'create' => Pages\CreateIdentifier::route('/create'),
+            'edit' => Pages\EditIdentifier::route('/{record}/edit'),
         ];
     }
 }
