@@ -16,10 +16,26 @@ class Engagement extends Model
     /**
      * The attributes that are mass assignable.
      */
-    protected $fillable = [];
+    protected $fillable = [
+        "timestamp",
+        "unit_id",
+        "amount",
+        "weapon_id",
+        "data"
+    ];
 
     // protected static function newFactory(): TirFactory
     // {
     //     // return TirFactory::new();
     // }
+
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class);
+    }
+
+    public function weapon()
+    {
+        return $this->belongsTo(Weapon::class);
+    }
 }

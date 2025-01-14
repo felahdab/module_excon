@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId("unit_id")->references("id")->on("excon_units");
             $table->integer("amount");
 
-            $table->json("data");
+            $table->json("data")->nullable(true);
             
             $table->timestamps();
         });

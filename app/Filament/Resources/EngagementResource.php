@@ -24,7 +24,8 @@ class EngagementResource extends Resource
         return $form
             ->schema([
                 Forms\Components\DateTimePicker::make('timestamp')
-                    ->required(),
+                    ->required()
+                    ->native(false),
                 Forms\Components\TextInput::make('weapon_id')
                     ->required()
                     ->numeric(),
@@ -34,8 +35,7 @@ class EngagementResource extends Resource
                 Forms\Components\TextInput::make('amount')
                     ->required()
                     ->numeric(),
-                Forms\Components\TextInput::make('data')
-                    ->required(),
+                Forms\Components\TextInput::make('data'),
             ]);
     }
 
@@ -46,12 +46,12 @@ class EngagementResource extends Resource
                 Tables\Columns\TextColumn::make('timestamp')
                     ->dateTime()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('weapon_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('unit_id')
-                    ->numeric()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('weapon.name')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('unit.name')
+                    ->sortable()
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('amount')
                     ->numeric()
                     ->sortable(),
