@@ -3,8 +3,22 @@
 namespace Modules\Excon\Providers;
 
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Nwidart\Modules\Traits\PathNamespace;
+
+use Modules\Excon\Models\Engagement;
+use Modules\Excon\Models\Position;
+use Modules\Excon\Models\Side;
+use Modules\Excon\Models\Unit;
+use Modules\Excon\Models\Weapon;
+
+
+use Modules\Excon\Policies\EngagementPolicy;
+use Modules\Excon\Policies\PositionPolicy;
+use Modules\Excon\Policies\SidePolicy;
+use Modules\Excon\Policies\UnitPolicy;
+use Modules\Excon\Policies\WeaponPolicy;
 
 class ExconServiceProvider extends ServiceProvider
 {
@@ -34,6 +48,23 @@ class ExconServiceProvider extends ServiceProvider
     {
         $this->app->register(EventServiceProvider::class);
         $this->app->register(RouteServiceProvider::class);
+        $this->registerPolicies();
+    }
+
+    public function registerPolicies()
+    {
+        $policies = [
+            Engagement::class => EngagementPolicy::class,
+            Position::class => PositionPolicy::class,
+            Side::class => SidePolicy::class,
+            Unit::class => UnitPolicy::class,
+            Weapon::class => WeaponPolicy::class,
+
+        ];
+
+        foreach ($policies as $model => $policy) {
+            Gate::policy($model, $policy);
+        }
     }
 
     /**

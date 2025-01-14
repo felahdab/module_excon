@@ -11,6 +11,10 @@ class ExconDatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // $this->call([]);
+        $this->call([
+            WeaponsSeeder::class,
+            SideSeeder::class,
+            UnitSeeder::class,
+        ]);
     }
 }
