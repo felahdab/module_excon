@@ -16,7 +16,21 @@ class Weapon extends Model
     /**
      * The attributes that are mass assignable.
      */
-    protected $fillable = [];
+    protected $fillable = [
+        "name",
+        "kind",
+        "country",
+        "category",
+        "subcategory",
+        "extra",
+        "specific",
+        "speed"
+
+    ];
+
+    protected $casts = [
+        "data" => "json"
+    ];
 
     // protected static function newFactory(): WeaponFactory
     // {

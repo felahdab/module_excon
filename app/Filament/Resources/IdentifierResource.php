@@ -30,9 +30,8 @@ class IdentifierResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('unit_id')
-                    ->required()
                     ->numeric(),
-                Forms\Components\TextInput::make('data'),
+                Forms\Components\Hidden::make('data'),
             ]);
     }
 

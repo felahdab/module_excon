@@ -25,7 +25,8 @@ class Position extends Model
     ];
 
     protected $casts = [
-        "data" => "array",
+        "data" => "json",
+        "timestamp" => "datetime"
     ];
 
     // protected static function newFactory(): PositionFactory

@@ -13,6 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
+use Modules\Excon\Models\Weapon;
+
+
 class UnitResource extends Resource
 {
     protected static ?string $model = Unit::class;
@@ -26,9 +29,12 @@ class UnitResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('side_id')
-                    ->required()
-                    ->numeric(),
+                Forms\Components\Select::make('side_id')
+                    ->relationship(name: "side", titleAttribute: "name")
+                    ->required(),
+                Forms\Components\Select::make('weapons')
+                    ->relationship(name: "weapons", titleAttribute: "name")
+                    ->multiple()
             ]);
     }
 

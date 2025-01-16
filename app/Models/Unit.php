@@ -19,6 +19,11 @@ class Unit extends Model
     protected $fillable = [
         "name",
         "side_id",
+        "data",
+    ];
+
+    protected $casts = [
+        "data" => "json"
     ];
 
     // protected static function newFactory(): UnitFactory

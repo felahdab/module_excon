@@ -26,6 +26,12 @@ class SideResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\Repeater::make('data.sources')
+                    ->label("Position sources associated to this side")
+                    ->schema([
+                        Forms\Components\TextInput::make('name')->required(),
+                    ])
+
             ]);
     }
 

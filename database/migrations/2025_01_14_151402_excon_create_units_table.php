@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('excon_units', function (Blueprint $table) {
             $table->id();
             $table->string("name");
-            $table->foreignId("side_id")->references("id")->on("excon_sides")->nullable(true);
+            $table->foreignId("side_id")->nullable(true)->references("id")->on("excon_sides");
+
+            $table->json("data")->nullable(true);
             
             $table->timestamps();
         });

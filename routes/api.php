@@ -15,7 +15,9 @@ use Modules\Excon\Http\Controllers\EngagementController;
  *
 */
 
-Route::middleware(['forcejson', 'auth:sanctum'])->prefix('v1')->group(function () {
+$middlewares = config("app.debug") ? ["forcejson"] : ['forcejson', 'auth:sanctum'];
+
+Route::middleware($middlewares)->prefix('v1')->group(function () {
     Route::put("position", [PositionController::class, "store"])->name("position.store");
     Route::get("engagements", [EngagementController::class, "index"])->name("engagement.index");
 

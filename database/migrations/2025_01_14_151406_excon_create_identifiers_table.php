@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string("source");
             $table->string("identifier");
-            $table->foreignId("unit_id")->references("id")->on("excon_units");
+            $table->foreignId("unit_id")->nullable(true)->references("id")->on("excon_units")->default(null);
 
             $table->json("data")->nullable(true);
             

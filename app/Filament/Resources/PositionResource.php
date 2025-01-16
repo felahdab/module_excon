@@ -24,17 +24,18 @@ class PositionResource extends Resource
         return $form
             ->schema([
                 Forms\Components\DateTimePicker::make('timestamp')
+                    ->default(now())
                     ->required(),
-                Forms\Components\TextInput::make('identifier_id')
-                    ->required()
-                    ->numeric(),
+                Forms\Components\Select::make('identifier_id')
+                    ->relationship(name: "identifier", titleAttribute: "identifier")
+                    ->required(),
                 Forms\Components\TextInput::make('latitude')
                     ->required()
                     ->numeric(),
                 Forms\Components\TextInput::make('longitude')
                     ->required()
                     ->numeric(),
-                Forms\Components\TextInput::make('data'),
+                Forms\Components\Hidden::make('data'),
             ]);
     }
 
