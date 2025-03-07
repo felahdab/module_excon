@@ -29,8 +29,8 @@ class IdentifierResource extends Resource
                 Forms\Components\TextInput::make('identifier')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('unit_id')
-                    ->numeric(),
+                Forms\Components\Select::make('unit_id')
+                    ->relationship(name: 'unit', titleAttribute: 'name'),
                 Forms\Components\Hidden::make('data'),
             ]);
     }
@@ -43,8 +43,7 @@ class IdentifierResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('identifier')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('unit_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('unit.name')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
