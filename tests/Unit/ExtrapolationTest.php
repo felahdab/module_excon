@@ -102,8 +102,8 @@ it('reports a the next position when the previous one is invalid in time', funct
 
     [$latitude, $longitude ] = $identifier->extrapolatePositionForTimestamp($test_timestamp);
 
-    dump($latitude);
-    dump($longitude);
+    // dump($latitude);
+    // dump($longitude);
 
     $this->assertTrue($latitude == 44 && $longitude == 6);
 
@@ -142,4 +142,4 @@ it('extrapolates between two positionswhen both valid and above extrapolation th
     $this->assertTrue($latitude == 43.5 && $longitude == 5.5);
 
 
-})->only();
+});
