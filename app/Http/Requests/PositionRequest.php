@@ -28,7 +28,8 @@ class PositionRequest extends FormRequest
             */
             "longitude" => "required|decimal:0,12",
             /**
-            * L'identifiant de l'unité dont la position est reportée. Le couple source, identifier doit correspondre à une entrée dans la table des identifiers.'
+            * L'identifiant de l'unité dont la position est reportée. Le couple source, identifier doit correspondre 
+            * à une entrée dans la table des identifiers.'
             * @example "COT_1"
             */
             "identifier" => "required",
