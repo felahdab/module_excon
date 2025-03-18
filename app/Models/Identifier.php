@@ -46,7 +46,7 @@ class Identifier extends Model
         return $this->hasMany(Position::class);
     }
 
-    public function extrapolatePositionForTimestamp(Carbon $timestamp = null)
+    public function extrapolatePositionForTimestamp(Carbon | null $timestamp = null)
     {
         $timestamp = $timestamp ?? now();
         #dump($timestamp);

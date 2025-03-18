@@ -31,10 +31,7 @@ class UnitResource extends Resource
                     ->maxLength(255),
                 Forms\Components\Select::make('side_id')
                     ->relationship(name: "side", titleAttribute: "name")
-                    ->required(),
-                Forms\Components\Select::make('weapons')
-                    ->relationship(name: "weapons", titleAttribute: "name")
-                    ->multiple()
+                    ->required()
             ]);
     }
 

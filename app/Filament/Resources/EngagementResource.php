@@ -89,7 +89,7 @@ class EngagementResource extends Resource
                 Tables\Columns\TextColumn::make('amount')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('amount')
+                Tables\Columns\TextColumn::make('id')
                     ->label("Target")
                     ->formatStateUsing(function($record){
                         if (Arr::get($record->data, "engagement_type") == "track_number"){
@@ -101,7 +101,6 @@ class EngagementResource extends Resource
                             
                             return "Position: " . $latitude . "/" . $longitude;
                         }
-                            
                     })
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')

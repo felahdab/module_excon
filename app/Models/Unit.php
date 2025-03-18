@@ -4,7 +4,11 @@ namespace Modules\Excon\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Arr;
+
 use Modules\Excon\Traits\HasTablePrefix;
+use Modules\Excon\Models\Engagement;
+use Modules\Excon\Models\Position;
 
 // use Modules\Excon\Database\Factories\UnitFactory;
 
@@ -42,14 +46,68 @@ class Unit extends Model
             ->withPivot("amount", "timestamp", "data");
     }
 
-    public function positions()
+    public function getAmmunitionLoadAttribute()
+    {
+        $ammunition_load = [];
+        
+        foreach ($this->weapons as $weapon)
+        {
+            $ammunition_load[$weapon->id] = array_key_exists($weapon->id, $ammunition_load) ? 
+                $ammunition_load[$weapon->id] + $weapon->pivot->amount 
+                : $weapon->pivot->amount;
+        }
+
+        foreach($this->engagements as $engagement)
+        {
+            $ammunition_load[$engagement->weapon_id] = array_key_exists($engagement->weapon_id, $ammunition_load) ? 
+                $ammunition_load[$engagement->weapon_id] - $engagement->amount : - $engagement->amount;
+        }
+        return $ammunition_load;
+    }
+
+    public function getAvailableWeaponsAttribute()
+    {
+        $ammunition_load = $this->ammunition_load;
+        $available_weapons_list = Arr::where($ammunition_load, function($value, $key) {
+            return $value > 0;
+        });
+        return Arr::map($available_weapons_list, function($value, $key)
+        {
+            return Weapon::find($key)->name . " : " . str($value);
+        });
+    }
+
+    public function engagements()
+    {
+        return $this->hasMany(Engagement::class);
+
+    }
+
+    public function positions(string | array | null $sources = [])
     {
         # Là, il faut coder le nécessaire pour
         # - trouver les identifiants de l'unité dans la table des identifiants
+        # Prévoir de pouvoir restreindre les positions à certaines sources uniquement
+
+        $identifiers = null;
+
+        $sources = Arr::wrap($sources);
+        if (empty($sources)){
+            $identifiers = $this->identifiers()->get();
+        }
+        else {
+            $identifiers = $this->identifiers()
+                    ->whereIn("source", $sources)
+                    ->get();
+        }
         # - trouver toutes les positions reportées pour ces identifiants
         # - merger le tout dans une série chronologique
-        # Prévoir de pouvoir restreindre les positions à certaines sources uniquement
-        return [];
+
+        $positions = Position::whereIn("identifier_id", $identifiers->pluck("id"))
+            ->orderBy("timestamp", "asc");
+
+        return $positions;
+        
     }
 
     public function identifiers()
