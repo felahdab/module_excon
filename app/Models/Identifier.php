@@ -89,7 +89,7 @@ class Identifier extends Model
             # Ca va être difficile de renvoyer quelque chose d'utile.
             # Pour éviter ce cas: veiller à ne présenter dans les listes de pistes que celles pour lesquelles les 
             # identifiants possèdent au moins une position valide en terme de timestamp.
-            throw new Exception("Aucune position en base pour l'identifiant utilisé.");
+            throw new Exception("Aucune position en base utilisable pour l'identifiant utilisé.");
             } 
         elseif ($closest_after && 
             $closest_before && 

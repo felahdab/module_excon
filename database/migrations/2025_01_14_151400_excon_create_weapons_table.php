@@ -24,6 +24,8 @@ return new class extends Migration
             $table->integer("extra")->default(1);
             $table->decimal("speed")->default(300);
 
+            $table->json("data")->nullable(true)->default(null);
+
             $table->timestamps();
         });
     }

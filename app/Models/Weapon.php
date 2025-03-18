@@ -24,7 +24,8 @@ class Weapon extends Model
         "subcategory",
         "extra",
         "specific",
-        "speed"
+        "speed",
+        "data"
 
     ];
 

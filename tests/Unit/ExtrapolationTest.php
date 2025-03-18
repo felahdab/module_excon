@@ -102,15 +102,12 @@ it('reports a the next position when the previous one is invalid in time', funct
 
     [$latitude, $longitude ] = $identifier->extrapolatePositionForTimestamp($test_timestamp);
 
-    // dump($latitude);
-    // dump($longitude);
-
     $this->assertTrue($latitude == 44 && $longitude == 6);
 
 
 });
 
-it('extrapolates between two positionswhen both valid and above extrapolation threshold', function() {
+it('extrapolates between two positions when both valid and above extrapolation threshold', function() {
     $timestamp1 = Carbon::create(2025, 1, 1, 12, 0, 0);
     $timestamp2 = Carbon::create(2025, 1, 1, 12, 0, 30);
     $test_timestamp = Carbon::create(2025, 1, 1, 12, 0, 15);
