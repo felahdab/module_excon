@@ -17,16 +17,22 @@ class UnitSeeder extends Seeder
         $blue_side = Side::where("name","blue")->first();
         $red_side = Side::where("name","red")->first();
 
-        Unit::firstOrCreate(
-            ["name" => "Warship 1"], 
-            [
-                "side_id" => $blue_side->id,
-            ]);
-
-        Unit::firstOrCreate(
-            ["name" => "Warship 2"], 
-            [
-                "side_id" => $red_side->id,
-            ]);
+        foreach (["Dixmude", "Tonnerre", "Cristobal Colon", "Galicia", "Argus", "Lyme Bay", "Bretagne", "Auvergne", "Van Amstel",
+        "Aconit", "Thetis", "Sapeur", "Somme", "Sous-marin"] as $unitname){
+            Unit::firstOrCreate(
+                ["name" => $unitname], 
+                [
+                    "side_id" => $blue_side->id,
+                ]);
+    
+        }
+        foreach (["De Ruyter", "Bartolomeu Dias", "Rhon", "Normandie", "Giovannidelle Bande Nere"] as $unitname){
+            Unit::firstOrCreate(
+                ["name" => $unitname], 
+                [
+                    "side_id" => $red_side->id,
+                ]);
+    
+        }
     }
 }

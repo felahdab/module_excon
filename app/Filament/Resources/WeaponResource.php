@@ -69,6 +69,9 @@ class WeaponResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('speed')
+                    ->label('Speed (m/s)')
+                    ->numeric(),
                 Tables\Columns\TextColumn::make('kind')
                     ->numeric()
                     ->sortable(),
