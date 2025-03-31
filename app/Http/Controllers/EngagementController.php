@@ -9,6 +9,9 @@ use Illuminate\Support\Arr;
 use Modules\Excon\Models\Engagement;
 use Modules\Excon\Models\Identifier;
 
+use Modules\Excon\Http\Requests\AckEngagementRequest;
+
+
 
 /**
  * @tags Module Excon: Engagement
@@ -29,13 +32,32 @@ class EngagementController extends Controller
          * - enrichir chaque engagement avec la position et les paramètres DIS
          */ 
         $engagements = Engagement::all();
-        $eng_avec_position_et_dis = $engagements->map(function ($item){
+
+        $user = auth()->user();
+
+        $engagements = $engagements->filter(function ($item) use ($user)
+        {
+            return ! in_array($user->uuid, Arr::get($item->data, "acknowleged_by", []));
+        })
+        ->map(function ($item){
             return $item->description_for_dis();
         });
 
-        return $eng_avec_position_et_dis;
+        return $engagements;
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function acknowledge(AckEngagementRequest $request)
+    {
+        $validated = $request->validated();
+        $engagement = Engagement::findOrFail($validated["engagement"]);
+
+        $engagement->acknowlegeForUser(auth()->user());
+
+        return response()->json([]);
+    }
     /**
      * Store a newly created resource in storage.
      */

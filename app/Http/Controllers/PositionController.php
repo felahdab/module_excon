@@ -33,9 +33,14 @@ class PositionController extends Controller
 
         $source = $validated["source"];
         $identifier = $validated["identifier"];
-        $ident = Identifier::where("source", $source)
-            ->where("identifier", $identifier)
-            ->firstOrFail();
+
+        $ident = Identifier::firstOrCreate(
+            [
+                "source" => $source ,
+                "identifier" => $identifier
+            ]
+        );
+        
 
         $validated["identifier_id"] = $ident->id;
 

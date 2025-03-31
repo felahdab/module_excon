@@ -5,6 +5,7 @@ namespace Modules\Excon\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Arr;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use Modules\Excon\Traits\HasTablePrefix;
 
@@ -75,6 +76,26 @@ class Engagement extends Model
 
     }
 
+    public function acknowlegeForUser(Authenticatable $user)
+    {
+        /**
+         * $user can either be a regular user, or a remote system within the Skeletor context
+         */
+
+         $data = $this->data;
+         $acknowledged = Arr::get($data, "acknowleged_by", []);
+         if ( ! in_array($user->uuid, $acknowledged))
+         {
+            $acknowledged[] = $user->uuid;
+         }
+
+         Arr::set($data, "acknowleged_by", $acknowledged);
+         $this->data = $data;
+
+         $this->save();
+
+    }
+
     public function description_for_dis()
     {
         $timestamp = $this->timestamp;
@@ -119,6 +140,7 @@ class Engagement extends Model
 
 
         return [
+            "id" => $this->id,
             "timestamp" => $timestamp,
             "latitude" => $latitude,
             "longitude" => $longitude,

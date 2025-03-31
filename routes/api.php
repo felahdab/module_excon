@@ -15,11 +15,12 @@ use Modules\Excon\Http\Controllers\EngagementController;
  *
 */
 
-$middlewares = config("app.debug") ? ["forcejson"] : ['forcejson', 'auth:sanctum'];
+$middlewares = config("app.debug") ? ["forcejson", "auth:sanctum"] : ['forcejson', 'auth:sanctum'];
 
 Route::middleware($middlewares)->prefix('v1')->group(function () {
     Route::put("position", [PositionController::class, "store"])->name("position.store");
     Route::get("engagements", [EngagementController::class, "index"])->name("engagement.index");
+    Route::post("ackowledge_engagement", [EngagementController::class, "acknowledge"])->name("engagement.acknowledge");
 
     #Route::apiResource('excon', ExconController::class)->names('excon');
 });
