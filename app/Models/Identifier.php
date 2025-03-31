@@ -113,6 +113,11 @@ class Identifier extends Model
             $ret = [$position->latitude, $position->longitude];
         }
 
+        if ($ret) 
+        {
+            $ret = [floatval($ret[0]), floatval($ret[1])];
+        }
+
         return $ret ?? [0,0];    
     }
 }

@@ -24,6 +24,7 @@ class WeaponsSeeder extends Seeder
                 "subcategory" => 1,
                 "specific" => 4,
                 "extra" => 0,
+                "speed" => 300
             ]);
 
         Weapon::firstOrCreate(
@@ -36,6 +37,7 @@ class WeaponsSeeder extends Seeder
                 "subcategory" => 1,
                 "specific" => 1,
                 "extra" => 0,
+                "speed" => 300
             ]);
     }
 }

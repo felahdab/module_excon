@@ -6,9 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Arr;
 
+use Carbon\Carbon;
+
 use Modules\Excon\Traits\HasTablePrefix;
 use Modules\Excon\Models\Engagement;
 use Modules\Excon\Models\Position;
+
+use Modules\Excon\Services\PositionEstimationService;
 
 // use Modules\Excon\Database\Factories\UnitFactory;
 
@@ -115,10 +119,15 @@ class Unit extends Model
         return $this->hasMany(Identifier::class);
     }
 
-    public function extrapolatePositionForTimestamp($timestamp)
+    public function extrapolatePositionForTimestamp(Carbon | null $timestamp = null)
     {
+        $service = new PositionEstimationService;
+
+        $positions = $this->positions()->get();
+
+        [$latitude, $longitude ] = $service->extrapolatePositionForTimestamp( $positions, $timestamp);
         # Là, il faut trouver toutes les positions et notamment celle juste avant et celle juste après le timetamp.
         # puis extrapoler si nécessaire (écart entre les 2 positions supérieure à un seuil à définir)
-        return [43.2, 005.0];
+        return [$latitude, $longitude ];
     }
 }

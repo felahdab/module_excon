@@ -25,6 +25,7 @@ class PositionResource extends Resource
             ->schema([
                 Forms\Components\DateTimePicker::make('timestamp')
                     ->default(now())
+                    ->native(false)
                     ->required(),
                 Forms\Components\Select::make('identifier_id')
                     ->relationship(name: "identifier", titleAttribute: "identifier")

@@ -4,8 +4,11 @@ namespace Modules\Excon\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 use Modules\Excon\Models\Engagement;
+use Modules\Excon\Models\Identifier;
+
 
 /**
  * @tags Module Excon: Engagement
@@ -27,25 +30,9 @@ class EngagementController extends Controller
          */ 
         $engagements = Engagement::all();
         $eng_avec_position_et_dis = $engagements->map(function ($item){
-            $timestamp = $item->timestamp;
-            $unit = $item->unit;
-            [$latitude, $longitude] = $unit->extrapolatePositionForTimestamp($timestamp);
-
-            $weapon = $item->weapon;
-
-            return [
-                "timestamp" => $timestamp,
-                "latitude" => $latitude,
-                "longitude" => $longitude,
-                "kind" => $weapon->kind,
-                "domain" => $weapon->domain,
-                "country" => $weapon->country,
-                "category" => $weapon->category,
-                "subcategory" => $weapon->subcategory,
-                "specific" => $weapon->specific,
-                "extra" => $weapon->extra,
-            ];
+            return $item->description_for_dis();
         });
+
         return $eng_avec_position_et_dis;
     }
 
