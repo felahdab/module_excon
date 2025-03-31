@@ -31,15 +31,11 @@ class EngagementController extends Controller
          * - récupérer le weapon utilisé et notamment ses paramètres DIS
          * - enrichir chaque engagement avec la position et les paramètres DIS
          */ 
-        $engagements = Engagement::all();
 
-        $user = auth()->user();
+         // The forCurrentUser scope relies on data filled in by the acknowlegeForUser method of Engagement.
+        $engagements = Engagement::forCurrentUser()->get();
 
-        $engagements = $engagements->filter(function ($item) use ($user)
-        {
-            return ! in_array($user->uuid, Arr::get($item->data, "acknowleged_by", []));
-        })
-        ->map(function ($item){
+        $engagements = $engagements->map(function ($item){
             return $item->description_for_dis();
         });
 
@@ -54,6 +50,7 @@ class EngagementController extends Controller
         $validated = $request->validated();
         $engagement = Engagement::findOrFail($validated["engagement"]);
 
+        // The acknowlegeForUser fills data used by the forCurrentUser scope of Engagement.
         $engagement->acknowlegeForUser(auth()->user());
 
         return response()->json([]);
