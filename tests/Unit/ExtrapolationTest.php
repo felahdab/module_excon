@@ -9,6 +9,8 @@ use Modules\Excon\Models\Position;
 
 use Illuminate\Support\Carbon;
 
+pest()->group("Excon");
+
 it('reports a position when close enough in time', function() {
     $identifier= new Identifier(["source"=> "COT", 
                                     "identifier" => "identifier1", 

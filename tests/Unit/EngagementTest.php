@@ -13,6 +13,7 @@ use Modules\Excon\Models\Side;
 use Modules\Excon\Models\Identifier;
 use Modules\Excon\Models\Position;
 
+pest()->group("Excon");
 
 beforeEach(function () {
     
@@ -105,7 +106,7 @@ it('test engagement 1', function() {
 
     $this->assertTrue($description["course"] == 0);
 
-})->only();
+});
 
 it('test engagement 2', function() {
     $engagement = Engagement::create(
@@ -126,7 +127,7 @@ it('test engagement 2', function() {
 
     $this->assertTrue(intval($description["course"] * 1000) / 1000 == 89.658);
 
-})->only();
+});
 
 it('test engagement 3', function() {
     //dump(Position::all());
@@ -148,7 +149,7 @@ it('test engagement 3', function() {
     //dump($description);
     $this->assertTrue(intval($description["course"] * 1000) / 1000 == -89.658);
 
-})->only();
+});
 
 it('test engagement 4', function() {
     $engagement = Engagement::create(
@@ -167,7 +168,7 @@ it('test engagement 4', function() {
     $description = $engagement->description_for_dis();
     //dump($description);
     $this->assertTrue(intval($description["course"] * 1000) / 1000 == 0);
-})->only();
+});
 
 it('test engagement 5', function() {
     $this->other_pos2->latitude = 43;
@@ -192,4 +193,4 @@ it('test engagement 5', function() {
     $this->assertTrue(intval($description["course"] * 1000) / 1000 == 89.658);
     //$this->assertTrue(true);
 
-})->only();
+});
