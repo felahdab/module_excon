@@ -4,6 +4,10 @@ namespace Modules\Excon\Providers;
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
+use Modules\Excon\Events\AffectUserToUnitEvent;
+
+use Modules\Excon\Listeners\AffectUserToUnitListener;
+
 class EventServiceProvider extends ServiceProvider
 {
     /**
@@ -11,7 +15,11 @@ class EventServiceProvider extends ServiceProvider
      *
      * @var array<string, array<int, string>>
      */
-    protected $listen = [];
+    protected $listen = [
+        AffectUserToUnitEvent::class => [
+            AffectUserToUnitListener::class,
+        ]
+    ];
 
     /**
      * Indicates if events should be discovered.

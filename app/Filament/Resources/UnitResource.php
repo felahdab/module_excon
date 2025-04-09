@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 use Modules\Excon\Models\Weapon;
+use Modules\Excon\Filament\Resources\UnitResource\Widgets\UserTableWidget;
 
 
 class UnitResource extends Resource
@@ -79,6 +80,13 @@ class UnitResource extends Resource
             'index' => Pages\ListUnits::route('/'),
             'create' => Pages\CreateUnit::route('/create'),
             'edit' => Pages\EditUnit::route('/{record}/edit'),
+        ];
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            UserTableWidget::class,
         ];
     }
 }

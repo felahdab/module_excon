@@ -15,6 +15,9 @@ use Filament\Forms\Get;
 use Modules\Excon\Models\Weapon;
 use Modules\Excon\Models\Unit;
 
+use Modules\Excon\Filament\Resources\UnitResource\Widgets\UserTableWidget;
+
+
 class EditUnit extends EditRecord
 {
     protected static string $resource = UnitResource::class;
@@ -103,6 +106,13 @@ class EditUnit extends EditRecord
                                     ]
                                 ]);            
                 }),
+        ];
+    }
+
+    protected function getFooterWidgets(): array
+    {
+        return[
+            UserTableWidget::class,
         ];
     }
 }
