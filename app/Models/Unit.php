@@ -9,6 +9,7 @@ use Illuminate\Support\Arr;
 use Carbon\Carbon;
 
 use Modules\Excon\Traits\HasTablePrefix;
+use Modules\Excon\Models\User;
 use Modules\Excon\Models\Engagement;
 use Modules\Excon\Models\Position;
 
@@ -129,5 +130,10 @@ class Unit extends Model
         # Là, il faut trouver toutes les positions et notamment celle juste avant et celle juste après le timetamp.
         # puis extrapoler si nécessaire (écart entre les 2 positions supérieure à un seuil à définir)
         return [$latitude, $longitude ];
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, "excon_user_units");
     }
 }
