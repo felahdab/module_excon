@@ -128,6 +128,7 @@ class Engagement extends Model
                 "extra" => $weapon->extra,
             ],
             "speed" => floatval($weapon->speed),
+            "maxrange" => floatval($weapon->maxrange),
             "course" => $course
         ];
     }

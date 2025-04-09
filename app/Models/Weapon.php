@@ -25,6 +25,7 @@ class Weapon extends Model
         "extra",
         "specific",
         "speed",
+        "maxrange",
         "data"
 
     ];
