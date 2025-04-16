@@ -136,4 +136,96 @@ class Unit extends Model
     {
         return $this->belongsToMany(User::class, "excon_user_units");
     }
+
+    public function getWeaponsHistoryAttribute()
+    {
+        $weapons_loads = $this->weapons->transform(function ($item)
+        {
+            return (object) [
+                "weapon" => $item->name,
+                "amount" => $item->pivot->amount,
+                "timestamp" => Carbon::parse($item->pivot->timestamp),
+            ];
+        });
+
+        $weapons_consumptions = $this->engagements->transform(function ($item)
+        {
+            return (object) [
+                "weapon" => $item->weapon->name,
+                "amount" => - $item->amount,
+                "timestamp" => $item->timestamp,
+            ];
+        });
+
+        $history = $weapons_loads->concat($weapons_consumptions);
+        return $history->sortBy(function($value, $key) 
+            { 
+                $tt = Carbon::parse($value->timestamp);
+                return $tt->getTimestamp();
+            }
+        );
+    }
+
+    public function getWeaponsHistoryForWidgetAttribute()
+    {
+        $weapons_history = $this->weapons_history;
+        $timestamps = [];
+
+        $last_timestamp = Carbon::now();
+        if ($weapons_history->count())
+        {
+            $first_timestamp = (clone $weapons_history->pluck('timestamp')->first())->subDays(1);
+            $timestamps = array_merge([$first_timestamp], $weapons_history->pluck('timestamp')->toArray(), [$last_timestamp]);
+        }
+        else{
+            $timestamps = [$last_timestamp];
+        }
+        
+        $datasets_names = $weapons_history->pluck('weapon')->unique()->toArray();
+
+        $datasets = [];
+
+        foreach($datasets_names as $name)
+        {
+            $datasets[$name] = [0];
+        }
+
+        foreach($weapons_history as $weapon_mouvement)
+        {
+            foreach($datasets_names as $name)
+            {
+                if ($name == $weapon_mouvement->weapon)
+                {
+                    $datasets[$name][] = end($datasets[$name]) + $weapon_mouvement->amount;
+                }
+                else{
+                    $datasets[$name][] = end($datasets[$name]);
+                }
+            }
+        }
+
+        foreach($datasets_names as $name)
+        {
+            $datasets[$name][] = end($datasets[$name]);
+        }
+
+        $datasets = array_values(Arr::map($datasets, function ($item, $key)
+        {
+            return [
+                "label" => $key,
+                "data" => $item
+            ];
+        }));
+
+        $labels = Arr::map($timestamps, function ($item, $key){
+            return $item->toString();
+        });
+
+        return [
+            "datasets" => $datasets,
+            "labels" => $labels,
+        ];
+        return $datasets;
+        return $weapons_history;
+    }
 }

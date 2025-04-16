@@ -56,6 +56,16 @@ class Engagement extends Model
         return $query->whereNotIn('id', Engagement::whereJsonContains('data->acknowleged_by', auth()->user()->uuid)->get()->pluck('id'));
     }
 
+    public function getTargetAttribute()
+    {
+        if (Arr::get($this->data, "engagement_type")=="absolute_position"){
+            return "Position: " . Arr::get($this->data,"target_latitude") . "/" . Arr::get($this->data,'target_longitude');
+        }
+        if (Arr::get($this->data, "engagement_type")=="track_number"){
+            return "Track number: " . Arr::get($this->data, "track_number");
+        }
+    }
+
     public function acknowlegeForUser(Authenticatable $user)
     {
         /**

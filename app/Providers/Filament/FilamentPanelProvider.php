@@ -32,6 +32,9 @@ use App\Http\Middleware\SetTenantCookieMiddleware;
 use App\Http\Middleware\SetTenantDefaultForRoutesMiddleware;
 use App\Http\Middleware\ReconfigureSessionDatabaseWhenTenantNotInitialized;
 
+use Modules\Excon\Filament\Pages\MyUnitDashboard;
+use Modules\Excon\Models\User;
+
 class FilamentPanelProvider extends PanelProvider
 {
     use UsesSkeletorPrefixAndMultitenancyTrait;
@@ -67,10 +70,27 @@ class FilamentPanelProvider extends PanelProvider
             ])
             ->navigationItems([
                 NavigationItem::make('Login')
-                ->label('Se connecter')
-                ->url(fn(): string => route('login'))
-                ->icon('heroicon-o-user')
-                ->hidden(fn(): bool => Auth::check())
+                    ->label('Se connecter')
+                    ->url(fn(): string => route('login'))
+                    ->icon('heroicon-o-user')
+                    ->hidden(fn(): bool => Auth::check()),
+                NavigationItem::make('My Unit Dashboard')
+                    ->label('My Unit Dashboard')
+                    ->url(function(): string {
+                        $user = auth()->user();
+                        $excon_user = cast_as_eloquent_descendant($user, User::class);
+                        return  MyUnitDashboard::getUrl();
+                    })
+                    ->visible(function(): bool {
+                        return true;
+                        if ( ! auth()->check())
+                        {
+                            return false;
+                        }
+                        $user = auth()->user();
+                        $excon_user = cast_as_eloquent_descendant($user, User::class);
+                        return $excon_user->unit != null;
+                    })
             ])
             ->middleware([
                 EncryptCookies::class,
