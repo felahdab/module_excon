@@ -25,7 +25,7 @@ class WeaponsSeeder extends Seeder
                 "specific" => 4,
                 "extra" => 0,
                 "speed" => 318,
-                "maxrange" => 200
+                "range" => 200
             ]);
 
         Weapon::firstOrCreate(
@@ -39,7 +39,7 @@ class WeaponsSeeder extends Seeder
                 "specific" => 1,
                 "extra" => 0,
                 "speed" => 318,
-                "maxrange" => 40
+                "range" => 40
             ]);
 
         Weapon::firstOrCreate(
@@ -53,7 +53,7 @@ class WeaponsSeeder extends Seeder
                     "specific" => 3,
                     "extra" => 0,
                     "speed" => 318,
-                    "maxrange" => 50
+                    "range" => 50
                 ]);
 
         Weapon::firstOrCreate(
@@ -67,7 +67,7 @@ class WeaponsSeeder extends Seeder
                     "specific" => 0,
                     "extra" => 0,
                     "speed" => 240,
-                    "maxrange" => 200
+                    "range" => 200
                 ]);
 
         Weapon::firstOrCreate(
@@ -81,7 +81,7 @@ class WeaponsSeeder extends Seeder
                         "specific" => 2,
                         "extra" => 0,
                         "speed" => 310,
-                        "maxrange" => 180
+                        "range" => 180
                     ]);
     }
 }
