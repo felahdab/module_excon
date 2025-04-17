@@ -25,7 +25,8 @@ class Engagement extends Model
         "unit_id",
         "amount",
         "weapon_id",
-        "data"
+        "data",
+        "entity_number"
     ];
 
     protected $casts = [
@@ -128,6 +129,8 @@ class Engagement extends Model
             "longitude" => $longitude,
             "target_latitude" => $target_latitude,
             "target_longitude" => $target_longitude,
+            "AN" => $unit->id,
+            "EN" => $this->entity_number,
             "entity_type" => [
                 "kind" => $weapon->kind,
                 "domain" => $weapon->domain,

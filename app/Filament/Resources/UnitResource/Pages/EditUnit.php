@@ -14,6 +14,7 @@ use Filament\Forms\Get;
 
 use Modules\Excon\Models\Weapon;
 use Modules\Excon\Models\Unit;
+use Modules\Excon\Models\EntityNumber;
 
 use Modules\Excon\Filament\Resources\UnitResource\Widgets\UserTableWidget;
 
@@ -98,6 +99,7 @@ class EditUnit extends EditRecord
                         ->create([  "weapon_id" => $weapon->id,
                                     "amount"    => $data["amount"],
                                     "timestamp" => $data["timestamp"],
+                                    "entity_number" => EntityNumber::getNewEntityNumber(),
                                     "data" => [
                                         "engagement_type" => $data["engagement_type"],
                                         "track_number" => $data["track_number"] ?? null,

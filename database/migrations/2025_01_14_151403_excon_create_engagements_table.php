@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId("weapon_id")->references("id")->on("excon_weapons");
             $table->foreignId("unit_id")->references("id")->on("excon_units");
             $table->integer("amount");
+            $table->integer("entity_number")->unique();
 
             $table->json("data")->nullable(true);
             
