@@ -43,6 +43,15 @@ class UserTableWidget extends BaseWidget
                     })
                     ->action(function($record) use($unit){
                         AffectUserToUnitEvent::dispatch($record, $unit);
+                    }),
+                Tables\Actions\Action::make("de-affecter")
+                    ->requiresConfirmation()
+                    ->visible(function($record) use ($unit)
+                    {
+                        return auth()->check() && auth()->user()->can('excon::affect_users') && $record->unit?->id != null;
+                    })
+                    ->action(function($record) {
+                        AffectUserToUnitEvent::dispatch($record, null);
                     })
             ])
             ->bulkActions([

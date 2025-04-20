@@ -22,6 +22,11 @@ class AffectUserToUnitListener
      */
     public function handle(AffectUserToUnitEvent $event): void
     {
+        if ($event->unit == null)
+        {
+            $event->user->units()->sync([]);
+            return;
+        }
         $event->user->units()->sync([$event->unit->id]);
     }
 }

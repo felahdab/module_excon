@@ -20,7 +20,7 @@ class AffectUserToUnitEvent
     /**
      * Create a new event instance.
      */
-    public function __construct(public User $user, public Unit $unit)
+    public function __construct(public User $user, public ?Unit $unit)
     {
         //
     }
