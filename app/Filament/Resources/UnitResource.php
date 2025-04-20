@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 use Modules\Excon\Models\Weapon;
 use Modules\Excon\Filament\Resources\UnitResource\Widgets\UserTableWidget;
+use Modules\Excon\Filament\Pages\UnitDashboard;
 
 
 class UnitResource extends Resource
@@ -59,6 +60,9 @@ class UnitResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('unit-dashboard')
+                    ->label('Unit\'s dashboard')
+                    ->url(fn($record) => UnitDashboard::getUrl(['unitid' => $record->id]))
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
