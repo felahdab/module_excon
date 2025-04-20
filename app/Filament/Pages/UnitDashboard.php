@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 use Filament\Pages\Page;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
+use Filament\Forms;
+use Filament\Actions;
 use Filament\Infolists\Infolist;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\Section;
@@ -20,6 +23,7 @@ use Modules\Excon\Models\User;
 use Modules\Excon\Models\Unit;
 use Modules\Excon\Models\Weapon;
 use Modules\Excon\Models\Engagement;
+use Modules\Excon\Models\EntityNumber;
 
 class UnitDashboard extends Page
 {
@@ -52,6 +56,73 @@ class UnitDashboard extends Page
 
                     
         return $result;
+    }
+
+    protected function getHeaderActions(): array
+    {
+        $unit = $this->unit;
+
+        return [
+            Actions\Action::make("report_engagement")
+                ->requiresConfirmation()
+                ->form([
+                    Forms\Components\DateTimePicker::make('timestamp')
+                        ->required()
+                        ->default(now())
+                        ->native(false),
+                    Forms\Components\Select::make('weapon_id')
+                        ->options(function () use($unit)
+                            {
+                                //$unit = $this->getRecord();
+                                return $unit->available_weapons;
+                            })
+                        ->required(),                
+                    Forms\Components\TextInput::make('amount')
+                        ->required()
+                        ->numeric(),
+                    Forms\Components\Select::make('engagement_type')
+                        ->options(["track_number" => "Track number", "absolute_position" => "Absolute position"])
+                        ->live(),
+                    Forms\Components\TextInput::make('track_number')
+                        ->visible(function (Get $get) {
+                            return $get("engagement_type") == "track_number";
+                        })
+                        ->requiredIf('engagement_type', 'track_number'),
+                    Forms\Components\TextInput::make('target_latitude')
+                        ->numeric()
+                        ->visible(function (Get $get) {
+                            return $get("engagement_type") == "absolute_position";
+                        })
+                        ->requiredIf('engagement_type', 'absolute_position'),
+                    Forms\Components\TextInput::make('target_longitude')
+                        ->numeric()
+                        ->visible(function (Get $get) {
+                            return $get("engagement_type") == "absolute_position";
+                        })
+                        ->requiredIf('engagement_type', 'absolute_position'),
+                ])
+                ->action(function ($data) use ($unit) {
+                    $weapon = Weapon::find($data["weapon_id"]);
+                    $stock_before_engagement = $unit->available_weapons[$weapon->id] ?? 0;
+
+                    if ($data["amount"] > $stock_before_engagement)
+                    {
+                        return;
+                    }
+                    $unit->engagements()
+                        ->create([  "weapon_id" => $weapon->id,
+                                    "amount"    => $data["amount"],
+                                    "timestamp" => $data["timestamp"],
+                                    "entity_number" => EntityNumber::getNewEntityNumber(),
+                                    "data" => [
+                                        "engagement_type" => $data["engagement_type"],
+                                        "track_number" => $data["track_number"] ?? null,
+                                        "target_latitude" => $data["target_latitude"] ?? null,
+                                        "target_longitude" => $data["target_longitude"] ?? null,
+                                    ]
+                                ]);            
+                }),
+        ];
     }
 
     public function form(Form $form): Form
@@ -88,8 +159,10 @@ class UnitDashboard extends Page
                 "target" => $engagement->target
             ];
         }
+
+        $historical_datasets =  $this->unit->weapons_history_for_widget;
+
         $this->unit->engagements = $engs;
-        //ddd($this->unit);
 
         $ret = $infolist
             ->record($this->unit)
@@ -100,18 +173,20 @@ class UnitDashboard extends Page
                     ->schema([
                         TextEntry::make('name'),
                     ]),
-                Livewire::make(WeaponsHistory::class, ["unit" => $this->unit]),
+                Livewire::make(WeaponsHistory::class, ["datasets" => $historical_datasets]),
                 Section::make('Weapons')
-                    ->description('Weapons load')
+                    ->description('Current ammunition available')
                     ->columnSpan(1)
                     ->columns(2)
                     ->schema([
                         RepeatableEntry::make('weapon_loads')
+                        ->label(false)
                         ->columnSpan(2)
                         ->columns(2)
                         ->schema([
                             TextEntry::make('name'),
-                            TextEntry::make('amount'),
+                            TextEntry::make('amount')
+                                ->label("Amount currently available"),
                         ])
                     ]),
                 Section::make('Engagements')
@@ -131,7 +206,7 @@ class UnitDashboard extends Page
                         ])
                     ])
             ]);
-        $this->unit->refresh();
+        
         return $ret;
     }
 }

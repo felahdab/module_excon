@@ -21,5 +21,17 @@ class PermissionSeeder extends Seeder
             "name" => "excon::affect_users",
             "guard_name" => "web",
         ]);
+        Permission::firstOrCreate(
+            [
+            "name" => "excon::view_all_units_dashboard",
+            "guard_name" => "web",
+        ]);
+        Permission::firstOrCreate(
+            [
+            "name" => "excon::report_engagement_for_own_unit",
+            "guard_name" => "web",
+        ]);
+
+        
     }
 }
