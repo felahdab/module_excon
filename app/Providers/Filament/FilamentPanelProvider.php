@@ -73,24 +73,7 @@ class FilamentPanelProvider extends PanelProvider
                     ->label('Se connecter')
                     ->url(fn(): string => route('login'))
                     ->icon('heroicon-o-user')
-                    ->hidden(fn(): bool => Auth::check()),
-                NavigationItem::make('My Unit Dashboard')
-                    ->label('My Unit Dashboard')
-                    ->url(function(): string {
-                        $user = auth()->user();
-                        $excon_user = cast_as_eloquent_descendant($user, User::class);
-                        return  MyUnitDashboard::getUrl();
-                    })
-                    ->visible(function(): bool {
-                        return true;
-                        if ( ! auth()->check())
-                        {
-                            return false;
-                        }
-                        $user = auth()->user();
-                        $excon_user = cast_as_eloquent_descendant($user, User::class);
-                        return $excon_user->unit != null;
-                    })
+                    ->hidden(fn(): bool => Auth::check())
             ])
             ->middleware([
                 EncryptCookies::class,
