@@ -51,6 +51,10 @@ class Unit extends Model
             ->withPivot("amount", "timestamp", "data");
     }
 
+    /**
+     * Définit l'attribut ammunition_load qui liste toutes les armes ayant déjà été présentes sur l'unité, et le nombre de
+     * munitions disponibles tous comptes faits.
+     */
     public function getAmmunitionLoadAttribute()
     {
         $ammunition_load = [];
@@ -70,6 +74,12 @@ class Unit extends Model
         return $ammunition_load;
     }
 
+    /**
+     * Définit l'attribut available_weapons qui liste toutes les armes pour lesquelles le nombre de munitions actuelles
+     * est strictement positif.
+     * Sous la forme d'une chaine de caractères: Nom de l'arme : nombre de munitions disponibles.
+     * Example: Exocet MM 40 : 4
+     */
     public function getAvailableWeaponsAttribute()
     {
         $ammunition_load = $this->ammunition_load;
@@ -139,7 +149,7 @@ class Unit extends Model
 
     public function getWeaponsHistoryAttribute()
     {
-        $weapons_loads = $this->weapons->transform(function ($item)
+        $weapons_loads = $this->weapons->map(function ($item)
         {
             return (object) [
                 "weapon" => $item->name,
@@ -148,7 +158,7 @@ class Unit extends Model
             ];
         });
 
-        $weapons_consumptions = $this->engagements->transform(function ($item)
+        $weapons_consumptions = $this->engagements->map(function ($item)
         {
             return (object) [
                 "weapon" => $item->weapon->name,
@@ -169,6 +179,7 @@ class Unit extends Model
     public function getWeaponsHistoryForWidgetAttribute()
     {
         $weapons_history = $this->weapons_history;
+
         $timestamps = [];
 
         $last_timestamp = Carbon::now();
@@ -186,7 +197,7 @@ class Unit extends Model
         $datasets = [];
 
         foreach($datasets_names as $name)
-        {
+        { 
             $datasets[$name] = [0];
         }
 
@@ -225,7 +236,6 @@ class Unit extends Model
             "datasets" => $datasets,
             "labels" => $labels,
         ];
-        return $datasets;
-        return $weapons_history;
+
     }
 }
