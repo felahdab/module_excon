@@ -16,19 +16,11 @@ class WeaponsHistory extends ChartWidget
 {
     protected static ?string $heading = 'Weapon history';
 
-    private Unit $unit;
+    public Unit $unit;
     private array $datasets = [];
-
-    public function mount(): void
-    {
-        $excon_user = cast_as_eloquent_descendant(auth()->user(), User::class);
-        $this->unit = $excon_user?->unit;
-    }
 
     protected function getData(): array
     {
-        $excon_user = cast_as_eloquent_descendant(auth()->user(), User::class);
-        $this->unit = $excon_user?->unit;
         /**
          * On implémente une mise en cache élémentaire pour la requête en cours.
          */
@@ -37,24 +29,33 @@ class WeaponsHistory extends ChartWidget
             return $this->datasets;
         }
 
-        // TODO: fix this. The code below triggers a "Call to undefined method stdClass::getQueueableRelations()"
-        $this->datasets = $this->unit->weapons_history_for_widget;
-        return $this->datasets;
-
-        $this->datasets = 
-        [
-            'datasets' => [
-              [
-                "label" => "MM40",
-                "data" => [ 0, 1, 2, 3, 4, 5, 6]
-              ] ,
-              [
-                "label" => "Harpoon",
-                "data" => [ 6, 5, 4, 3, 2, 1, 0]
-              ] 
-            ],
-            'labels' => ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+        $datasets = [
+              "datasets" =>  [
+                [
+                  "label" => "MM 40 Exocet",
+                  "data" => [
+                    0 => 0,
+                    1 => 4,
+                    2 => 3,
+                    3 => 2,
+                    4 => 2,
+                  ]
+                ]
+              ],
+            "labels" => [
+              "Wed Apr 16 2025 00:00:00 GMT+0000",
+              "Thu Apr 17 2025 00:00:00 GMT+0000",
+              "Thu Apr 17 2025 21:42:14 GMT+0000",
+              "Sun Apr 20 2025 21:39:56 GMT+0000",
+              "Sun Apr 20 2025 22:13:48 GMT+0000",
+            ]
         ];
+        //ddd($this->datasets);
+        //return $this->datasets;
+
+        // TODO: fix this. The code below triggers a "Call to undefined method stdClass::getQueueableRelations()"
+        $this->datasets =  $this->unit->weapons_history_for_widget;
+        $this->unit->refresh();
         return $this->datasets;
     }
 
