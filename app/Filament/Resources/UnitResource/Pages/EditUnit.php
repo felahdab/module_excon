@@ -2,7 +2,6 @@
 
 namespace Modules\Excon\Filament\Resources\UnitResource\Pages;
 
-use Modules\Excon\Filament\Resources\UnitResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
@@ -11,6 +10,9 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Get;
+
+use Modules\Excon\Filament\Resources\UnitResource;
+use Modules\Excon\Filament\Pages\UnitDashboard;
 
 use Modules\Excon\Models\Weapon;
 use Modules\Excon\Models\Unit;
@@ -108,6 +110,9 @@ class EditUnit extends EditRecord
                                     ]
                                 ]);            
                 }),
+                Actions\Action::make("dashboard")
+                    ->label('Unit dashboard')
+                    ->url(fn($record) => UnitDashboard::getUrl(['unitid' => $record->id]))
         ];
     }
 
