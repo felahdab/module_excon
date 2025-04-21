@@ -71,10 +71,13 @@ class UnitDashboard extends Page
                         ->default(now())
                         ->native(false),
                     Forms\Components\Select::make('weapon_id')
-                        ->options(function () use($unit)
+                        ->options(function () use ($unit)
                             {
+                                //return [];
                                 //$unit = $this->getRecord();
-                                return $unit->available_weapons;
+                                $ret = $unit->available_weapons;
+                                $unit->refresh();
+                                return $ret;
                             })
                         ->required(),                
                     Forms\Components\TextInput::make('amount')
@@ -133,36 +136,7 @@ class UnitDashboard extends Page
 
     public function weaponsInfolist(Infolist $infolist): Infolist
     {
-        $ammo_load = $this->unit->ammunition_load;
-        $schema = [];
-        foreach($ammo_load as $weaponid => $amount){
-            $weapon = Weapon::find($weaponid);
-            $schema[]= (object) [
-                "name" => $weapon->name,
-                "amount" => $amount
-            ];
-        }
-        $this->unit->weapon_loads = $schema;
-
-        $engagements = Engagement::where('unit_id', $this->unit->id)
-            ->orderBy('timestamp', 'desc')
-            ->get();
-
-        $engs = [];
-        
-        foreach($engagements as $engagement)
-        {
-            $engs[] = (object) [
-                "timestamp" => $engagement->timestamp,
-                "weapon" => $engagement->weapon->name,
-                "amount" => $engagement->amount,
-                "target" => $engagement->target
-            ];
-        }
-
         $historical_datasets =  $this->unit->weapons_history_for_widget;
-
-        $this->unit->engagements = $engs;
 
         $ret = $infolist
             ->record($this->unit)
@@ -179,7 +153,7 @@ class UnitDashboard extends Page
                     ->columnSpan(1)
                     ->columns(2)
                     ->schema([
-                        RepeatableEntry::make('weapon_loads')
+                        RepeatableEntry::make('weapons_loads')
                         ->label(false)
                         ->columnSpan(2)
                         ->columns(2)
@@ -194,7 +168,7 @@ class UnitDashboard extends Page
                     ->columnSpan(1)
                     ->columns(4)
                     ->schema([
-                        RepeatableEntry::make('engagements')
+                        RepeatableEntry::make('engagements_history')
                         ->columnSpan(4)
                         ->columns(4
                         )

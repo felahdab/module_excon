@@ -92,6 +92,43 @@ class Unit extends Model
         });
     }
 
+
+    public function getWeaponsLoadsAttribute()
+    {
+        $ammo_load = $this->ammunition_load;
+
+        $schema = [];
+        foreach($ammo_load as $weaponid => $amount){
+            $weapon = Weapon::find($weaponid);
+            $schema[]= (object) [
+                "name" => $weapon->name,
+                "amount" => $amount
+            ];
+        }
+        return $schema;
+    }
+
+    public function getEngagementsHistoryAttribute()
+    {
+        $engagements = Engagement::where('unit_id', $this->id)
+            ->orderBy('timestamp', 'desc')
+            ->get();
+
+        $engs = [];
+        
+        foreach($engagements as $engagement)
+        {
+            $engs[] = (object) [
+                "timestamp" => $engagement->timestamp,
+                "weapon" => $engagement->weapon->name,
+                "amount" => $engagement->amount,
+                "target" => $engagement->target
+            ];
+        }
+        
+        return $engs;
+    }
+
     public function engagements()
     {
         return $this->hasMany(Engagement::class);
