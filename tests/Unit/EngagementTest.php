@@ -12,6 +12,8 @@ use Modules\Excon\Models\Weapon;
 use Modules\Excon\Models\Side;
 use Modules\Excon\Models\Identifier;
 use Modules\Excon\Models\Position;
+use Modules\Excon\Models\EntityNumber;
+
 
 pest()->group("Excon");
 
@@ -93,6 +95,7 @@ it('test engagement 1', function() {
             "timestamp" => $this->timestamp,
             "unit_id" => $this->warship1->id,
             "weapon_id" => $this->weapon->id,
+            "entity_number" => EntityNumber::getNewEntityNumber(),
             "amount" => 1,
             "data" => [
                 "engagement_type" => "absolute_position",
@@ -114,6 +117,7 @@ it('test engagement 2', function() {
             "timestamp" => $this->timestamp,
             "unit_id" => $this->warship1->id,
             "weapon_id" => $this->weapon->id,
+            "entity_number" => EntityNumber::getNewEntityNumber(),
             "amount" => 1,
             "data" => [
                 "engagement_type" => "absolute_position",
@@ -136,6 +140,7 @@ it('test engagement 3', function() {
             "timestamp" => $this->timestamp,
             "unit_id" => $this->warship1->id,
             "weapon_id" => $this->weapon->id,
+            "entity_number" => EntityNumber::getNewEntityNumber(),
             "amount" => 1,
             "data" => [
                 "engagement_type" => "absolute_position",
@@ -157,6 +162,7 @@ it('test engagement 4', function() {
             "timestamp" => $this->timestamp,
             "unit_id" => $this->warship1->id,
             "weapon_id" => $this->weapon->id,
+            "entity_number" => EntityNumber::getNewEntityNumber(),
             "amount" => 1,
             "data" => [
                 "engagement_type" => "track_number",
@@ -180,6 +186,7 @@ it('test engagement 5', function() {
             "timestamp" => $this->timestamp,
             "unit_id" => $this->warship1->id,
             "weapon_id" => $this->weapon->id,
+            "entity_number" => EntityNumber::getNewEntityNumber(),
             "amount" => 1,
             "data" => [
                 "engagement_type" => "track_number",
