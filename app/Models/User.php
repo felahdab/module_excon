@@ -15,6 +15,24 @@ class User extends BaseUser
         return $this->belongsToMany(Unit::class, "excon_user_units");
     }
 
+    public function sides()
+    {
+        return $this->belongsToMany(Side::class, "excon_user_sides");
+    }
+
+    public function getSideAttribute(): ?Side
+    {
+        $unit = $this->unit;
+        if ($unit)
+        {
+            return $unit->side;
+        }
+
+        $side = $this->sides?->first();
+
+        return $side;
+    }
+
     public function getUnitAttribute()
     {
         return $this->units?->first();
