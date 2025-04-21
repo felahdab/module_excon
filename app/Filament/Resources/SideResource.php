@@ -26,6 +26,8 @@ class SideResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\ColorPicker::make('data.color')
+                    ->label("Color"),
                 Forms\Components\Repeater::make('data.sources')
                     ->label("Position sources associated to this side")
                     ->schema([

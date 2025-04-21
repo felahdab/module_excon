@@ -3,6 +3,7 @@
 namespace Modules\Excon\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Arr;
 
@@ -51,5 +52,20 @@ class Side extends Model
             }
         }
         return $ret;
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, "excon_user_sides");
+
+    }
+
+    public function getAllUsersAttribute()
+    {
+        $direct_users = $this->users;
+
+        $users_thru_unit = User::whereHas('units', function (Builder $query) { $query->where('side_id', $this->id);})->get();
+
+        return $direct_users->concat($users_thru_unit);
     }
 }
