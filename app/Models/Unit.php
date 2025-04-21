@@ -125,7 +125,7 @@ class Unit extends Model
                 "target" => $engagement->target
             ];
         }
-        
+
         return $engs;
     }
 
@@ -273,6 +273,24 @@ class Unit extends Model
             "datasets" => $datasets,
             "labels" => $labels,
         ];
+
+    }
+
+    public function getPositionIsValidAttribute(?Carbon $timestamp = null)
+    {
+        if ($timestamp == null)
+        {
+            $timestamp = Carbon::now();
+        }
+        
+        $rightbefore = $timestamp->copy()->subSeconds(config("excon.limite_validite"));
+        
+        $position = $this->positions()
+            ->where('timestamp', '>=', $rightbefore)
+            ->where('timestamp', '<=', $timestamp)
+            ->first();
+
+        return $position != null ;
 
     }
 }
