@@ -46,6 +46,8 @@ class UnitResource extends Resource
                 Tables\Columns\TextColumn::make('side.name')
                     ->searchable()
                     ->sortable(),
+                Tables\Columns\IconColumn::make('position_is_valid')
+                    ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

@@ -12,6 +12,7 @@ use Filament\Forms;
 use Filament\Actions;
 use Filament\Infolists\Infolist;
 use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\Livewire;
@@ -143,9 +144,18 @@ class UnitDashboard extends Page
             ->columns(2)
             ->schema([
                 Section::make('Unit')
+                    ->columns(2)
                     ->columnSpan(2)
                     ->schema([
-                        TextEntry::make('name'),
+                        TextEntry::make('name')
+                            ->columnSpan(1),
+                        IconEntry::make('position_is_valid')
+                            ->columnSpan(1)
+                            ->boolean()
+                            ->color(fn ($record): string => match ($record->position_is_valid) {
+                                true => 'success',
+                                false => 'danger',
+                            }),
                     ]),
                 Livewire::make(WeaponsHistory::class, ["datasets" => $historical_datasets]),
                 Section::make('Weapons')
