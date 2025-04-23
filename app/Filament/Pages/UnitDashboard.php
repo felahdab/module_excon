@@ -74,8 +74,6 @@ class UnitDashboard extends Page
                     Forms\Components\Select::make('weapon_id')
                         ->options(function () use ($unit)
                             {
-                                //return [];
-                                //$unit = $this->getRecord();
                                 $ret = $unit->available_weapons;
                                 $unit->refresh();
                                 return $ret;
@@ -105,6 +103,10 @@ class UnitDashboard extends Page
                         })
                         ->requiredIf('engagement_type', 'absolute_position'),
                 ])
+                ->visible(function() {
+                    $ret = auth()->user()->can("excon::report_engagement_for_own_unit");
+                    return $ret;
+                })
                 ->action(function ($data) use ($unit) {
                     $weapon = Weapon::find($data["weapon_id"]);
                     $stock_before_engagement = $unit->available_weapons[$weapon->id] ?? 0;

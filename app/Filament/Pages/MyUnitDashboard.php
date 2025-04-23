@@ -11,7 +11,7 @@ class MyUnitDashboard extends UnitDashboard
 
     protected static bool $shouldRegisterNavigation = true;
 
-    public User $excon_user;
+    public ?User $excon_user;
 
     public function mount(?int $unitid=null): void
     {
@@ -23,7 +23,7 @@ class MyUnitDashboard extends UnitDashboard
     public static function canAccess(): bool
     {
         $result = auth()->check() && 
-                    cast_as_eloquent_descendant(auth()->user(), User::class)->unit != null;
+                    cast_as_eloquent_descendant(auth()->user(), User::class)?->unit != null;
 
         return $result;
     }
