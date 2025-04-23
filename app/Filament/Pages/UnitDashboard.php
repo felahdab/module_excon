@@ -51,7 +51,7 @@ class UnitDashboard extends Page
         $unit = Unit::findOrFail($unitid);
 
         $result = auth()->check() && ( 
-                                        cast_as_eloquent_descendant(auth()->user(), User::class)->unit->id == $unit->id
+                                        cast_as_eloquent_descendant(auth()->user(), User::class)->unit?->id == $unit->id
                                         || auth()->user()->can("excon::view_all_units_dashboard") 
                                     );
 
