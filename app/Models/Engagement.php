@@ -2,6 +2,8 @@
 
 namespace Modules\Excon\Models;
 
+use Exception;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -85,6 +87,19 @@ class Engagement extends Model
 
          $this->save();
 
+    }
+
+    public function getIsValidAttribute()
+    {
+        try{
+            $description = $this->description_for_dis();
+        }
+        catch (Exception $e) 
+            {
+                return false;
+            }
+
+        return true;
     }
 
     public function description_for_dis()
