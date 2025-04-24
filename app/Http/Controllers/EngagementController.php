@@ -35,11 +35,15 @@ class EngagementController extends Controller
          // The forCurrentUser scope relies on data filled in by the acknowlegeForUser method of Engagement.
         $engagements = Engagement::forCurrentUser()->get();
 
-        $engagements = $engagements->map(function ($item){
+        $engagements = $engagements->filter(function ($item){
+            return $item->isValid;
+        })
+        ->map(function ($item){
             return $item->description_for_dis();
         });
 
-        return $engagements;
+        logger()->info("Provided " . $engagements->count() . " engagements data to system: " . auth()->user()->nom);
+        return $engagements->toArray();
     }
 
     /**
@@ -48,11 +52,15 @@ class EngagementController extends Controller
     public function acknowledge(AckEngagementRequest $request)
     {
         $validated = $request->validated();
-        $engagement = Engagement::findOrFail($validated["engagement"]);
+        $engagement = Engagement::where("entity_number", $validated["engagement"])->first();
 
-        // The acknowlegeForUser fills data used by the forCurrentUser scope of Engagement.
-        $engagement->acknowlegeForUser(auth()->user());
+        if ($engagement != null)
+        {
+            // The acknowlegeForUser fills data used by the forCurrentUser scope of Engagement.
+            $engagement->acknowlegeForUser(auth()->user());
 
+            logger()->info("Ackownledge received for " . $validated["engagement"] . " from: " . auth()->user()->nom);
+        }
         return response()->json([]);
     }
     /**
