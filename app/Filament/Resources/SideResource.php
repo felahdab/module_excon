@@ -2,16 +2,19 @@
 
 namespace Modules\Excon\Filament\Resources;
 
-use Modules\Excon\Filament\Resources\SideResource\Pages;
-use Modules\Excon\Filament\Resources\SideResource\RelationManagers;
-use Modules\Excon\Models\Side;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+
+use Modules\Excon\Filament\Pages\SideDashboard;
+use Modules\Excon\Filament\Resources\SideResource\Pages;
+use Modules\Excon\Filament\Resources\SideResource\RelationManagers;
+use Modules\Excon\Models\Side;
 
 class SideResource extends Resource
 {
@@ -43,6 +46,8 @@ class SideResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
+                Tables\Columns\ColorColumn::make('data.color'),
+                    
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -57,6 +62,9 @@ class SideResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('side-dashboard')
+                    ->label("Side dashboard")
+                    ->url(fn($record) => SideDashboard::getUrl(['sideid' => $record->id])),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
