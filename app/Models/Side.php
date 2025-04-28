@@ -57,7 +57,11 @@ class Side extends Model
     public function users()
     {
         return $this->belongsToMany(User::class, "excon_user_sides");
+    }
 
+    public function units()
+    {
+        return $this->hasMany(Unit::class);
     }
 
     public function getAllUsersAttribute()
@@ -67,5 +71,13 @@ class Side extends Model
         $users_thru_unit = User::whereHas('units', function (Builder $query) { $query->where('side_id', $this->id);})->get();
 
         return $direct_users->concat($users_thru_unit);
+    }
+
+    public function getAllUnitsAvailableWeaponsAttribute()
+    {
+        return $this->units->map(function ($unit)
+        {
+            return $unit->available_weapons;
+        });
     }
 }
