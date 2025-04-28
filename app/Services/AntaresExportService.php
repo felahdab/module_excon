@@ -12,6 +12,7 @@ class AntaresExportService {
         //$start = Carbon::create(2025,4,23, 21, 57);
         //$end = Carbon::create(2025,4,23, 21, 59);
         
+        $header = collect($unit->name . "//");
         /**
          * On commence par les positions
          */
@@ -50,7 +51,7 @@ class AntaresExportService {
             return false;
         })
         ->map(function($item, $key){
-            return "TRACK/" . $item->timestamp->format("YmdHis") . "/". $item->latitude . "/" . $item->longitude;
+            return "TRACK/" . $item->timestamp->format("YmdHis") . "/". $item->latitude . "/" . $item->longitude . "//";
         });
 
         /**
@@ -72,28 +73,29 @@ class AntaresExportService {
         { 
             return $value->timestamp->getTimestamp();
         })
-        ->filter(function ($item, $key) use (&$previous_timestamp)
-        {
-            if ($previous_timestamp == null)
-            {
-                $previous_timestamp = $item->timestamp;
-                return true;
+        // ->filter(function ($item, $key) use (&$previous_timestamp)
+        // {
+        //     if ($previous_timestamp == null)
+        //     {
+        //         $previous_timestamp = $item->timestamp;
+        //         return true;
 
-            }
+        //     }
 
-            $ret = $item->timestamp->greaterThanOrEqualTo($previous_timestamp->clone()->addMinutes(1));
+        //     $ret = $item->timestamp->greaterThanOrEqualTo($previous_timestamp->clone()->addMinutes(1));
 
-            if ($ret)
-            {
-                $previous_timestamp = $item->timestamp;
-                return true;
-            }
-            return false;
-        })
+        //     if ($ret)
+        //     {
+        //         $previous_timestamp = $item->timestamp;
+        //         return true;
+        //     }
+        //     return false;
+        // })
         ->map(function($item, $key){
-            return "MISSILE/" . $item->timestamp->format("YmdHis") . "/";
+            return "MISSILE/" . $item->timestamp->format("YmdHis") . "///";
         });
 
-        return $engagements->concat($remaining_positions);
+        //return $engagements->concat($remaining_positions);
+        return $header->concat($engagements)->concat($remaining_positions);
     }
 }
