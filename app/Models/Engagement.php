@@ -59,6 +59,12 @@ class Engagement extends Model
         return $query->whereNotIn('id', Engagement::whereJsonContains('data->acknowleged_by', auth()->user()->uuid)->get()->pluck('id'));
     }
 
+    public function scopeOfType(Builder $query, string $type)
+    {
+        $weapon_list = Weapon::where("type", $type)->get()->pluck('id');
+        return $query->whereIn("weapon_id", $weapon_list);
+    }
+
     public function getTargetAttribute()
     {
         if (Arr::get($this->data, "engagement_type")=="absolute_position"){
