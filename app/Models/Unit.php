@@ -92,6 +92,16 @@ class Unit extends Model
         });
     }
 
+    /**
+     * Renvoie le nombre de munitions restantes pour le type d'arme indiquée
+     */
+
+    public function remaining_ammunitions(Weapon $weapon)
+    {
+        $id = $weapon->id;
+        return Arr::get($this->ammunition_load, $id);
+    }
+
 
     public function getWeaponsLoadsAttribute()
     {
