@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             
             $table->string("name");
+            $table->string("type")->nullable("false")->default("surface to surface");
             $table->integer("kind")->default(1);
             $table->integer("domain")->default(1);
             $table->integer("country")->default(1);

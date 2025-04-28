@@ -43,6 +43,8 @@ class UnitResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('type')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('side.name')
                     ->searchable()
                     ->sortable(),

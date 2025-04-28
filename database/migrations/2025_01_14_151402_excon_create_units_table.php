@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string("name");
             $table->foreignId("side_id")->nullable(true)->references("id")->on("excon_sides");
+            $table->string("type")->nullable(true)->default("");
 
             $table->json("data")->nullable(true);
             
