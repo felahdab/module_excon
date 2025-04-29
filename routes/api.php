@@ -19,7 +19,10 @@ use Modules\Excon\Http\Controllers\PduController;
 
 $middlewares = config("app.debug") ? ["forcejson", "auth:sanctum"] : ['forcejson', 'auth:sanctum'];
 
-Route::middleware($middlewares)->prefix('v1')->group(function () {
+Route::middleware($middlewares)
+->withoutMiddleware(['throttle:api'])
+->prefix('v1')
+->group(function () {
     Route::put("position", [PositionController::class, "store"])->name("position.store");
     Route::get("engagements", [EngagementController::class, "index"])->name("engagement.index");
     Route::post("ackowledge_engagement", [EngagementController::class, "acknowledge"])->name("engagement.acknowledge");
