@@ -46,6 +46,36 @@ class Identifier extends Model
         return $this->hasMany(Position::class);
     }
 
+    public function getIsValidAttribute()
+    {
+        return $this->positions->where("timestamp", "<=", now())
+            ->where("timestamp", ">=", now()->subSeconds(config("excon.limite_validite")))
+            ->count() > 0;
+    }
+
+    public function scopeIsValid()
+    {
+        return $this->whereHas("positions", function ($query) {
+            $query->where("timestamp", "<=", now())
+                ->where("timestamp", ">=", now()->subSeconds(config("excon.limite_validite")));
+        });
+    }
+
+    public function scopeSource($query, $source)
+    {
+        return $query->where("source", $source);
+    }
+
+    public function scopeIdentifier($query, $identifier)
+    {
+        return $query->where("identifier", $identifier);
+    }
+
+    public function scopeUnit($query, $unit)
+    {
+        return $query->where("unit_id", $unit);
+    }
+
     public function extrapolatePositionForTimestamp(Carbon | null $timestamp = null)
     {
         $timestamp = $timestamp ?? now();
