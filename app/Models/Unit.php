@@ -295,7 +295,7 @@ class Unit extends Model
         
         $rightbefore = $timestamp->copy()->subSeconds(config("excon.limite_validite"));
         
-        $position = $this->positions()
+        $position = $this->positions(["LDT, COT"])
             ->where('timestamp', '>=', $rightbefore)
             ->where('timestamp', '<=', $timestamp)
             ->first();
