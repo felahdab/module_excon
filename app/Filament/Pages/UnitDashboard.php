@@ -24,6 +24,7 @@ use Modules\Excon\Models\User;
 use Modules\Excon\Models\Unit;
 use Modules\Excon\Models\Weapon;
 use Modules\Excon\Models\Engagement;
+use Modules\Excon\Models\Identifier;
 use Modules\Excon\Models\EntityNumber;
 
 class UnitDashboard extends Page
@@ -71,6 +72,14 @@ class UnitDashboard extends Page
                         ->required()
                         ->default(now())
                         ->native(false),
+                    Forms\Components\TextInput::make('own_latitude')
+                        ->hidden(function() use ($unit) {
+                            return $unit->position_is_valid;
+                        }),
+                    Forms\Components\TextInput::make('own_longitude')
+                        ->hidden(function() use ($unit) {
+                            return $unit->position_is_valid;
+                        }),
                     Forms\Components\Select::make('weapon_id')
                         ->options(function () use ($unit)
                             {
@@ -85,7 +94,9 @@ class UnitDashboard extends Page
                     Forms\Components\Select::make('engagement_type')
                         ->options(["track_number" => "Track number", "absolute_position" => "Absolute position"])
                         ->live(),
-                    Forms\Components\TextInput::make('track_number')
+                    Forms\Components\Select::make('track_number')
+                        ->options(Identifier::source("LDT")->isValid()->get()->pluck('identifier', 'identifier'))
+                        ->searchable()
                         ->visible(function (Get $get) {
                             return $get("engagement_type") == "track_number";
                         })
@@ -108,6 +119,24 @@ class UnitDashboard extends Page
                     return $ret;
                 })
                 ->action(function ($data) use ($unit) {
+                    if ($data["own_latitude"] && $data["own_longitude"])
+                    {
+                        $manual_identifier = $unit->identifiers()->source("MANUAL")->first();
+                        if ($manual_identifier == null)
+                        {
+                            $manual_identifier = $unit->identifiers()->create([
+                                "source" => "MANUAL",
+                                "identifier" => "MANUAL",
+                            ]);
+                        }
+
+                        $manual_identifier->positions()->create([
+                            "latitude" => $data["own_latitude"],
+                            "longitude" => $data["own_longitude"],
+                            "timestamp" => $data["timestamp"],
+                        ]);
+                    }
+
                     $weapon = Weapon::find($data["weapon_id"]);
                     $stock_before_engagement = $unit->available_weapons[$weapon->id] ?? 0;
 
@@ -115,6 +144,7 @@ class UnitDashboard extends Page
                     {
                         return;
                     }
+                    
                     $unit->engagements()
                         ->create([  "weapon_id" => $weapon->id,
                                     "amount"    => $data["amount"],
