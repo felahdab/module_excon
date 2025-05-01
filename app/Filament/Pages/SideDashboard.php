@@ -99,6 +99,21 @@ class SideDashboard extends Page
                             TextEntry::make('available_weapons'),
                         ])
                     ]),
+                Section::make('Connectivity')
+                    ->description('Current status of connectivity')
+                    ->columnSpan(1)
+                    ->columns(2)
+                    ->schema([
+                        RepeatableEntry::make('units')
+                        ->label(false)
+                        ->columnSpan(2)
+                        ->columns(2)
+                        ->schema([
+                            TextEntry::make('name'),
+                            IconEntry::make('position_is_valid')
+                                ->boolean(),
+                        ])
+                    ]),
             ]);
         
         return $ret;

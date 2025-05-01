@@ -50,7 +50,8 @@ class EditUnit extends EditRecord
                     $record->weapons()
                         ->attach($weapon, ["amount" => $data["amount"],
                                         "timestamp" => $data["timestamp"]
-                                        ]);            
+                                        ]);       
+                    $record->touch();     
                 }),
             Actions\Action::make("record_engagement")
                 ->requiresConfirmation()
@@ -123,7 +124,8 @@ class EditUnit extends EditRecord
                                         "target_latitude" => $data["target_latitude"] ?? null,
                                         "target_longitude" => $data["target_longitude"] ?? null,
                                     ]
-                                ]);            
+                                ]);   
+                    $record->touch();         
                 }),
                 Actions\Action::make("dashboard")
                     ->label('Unit dashboard')

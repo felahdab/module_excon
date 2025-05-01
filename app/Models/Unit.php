@@ -5,6 +5,7 @@ namespace Modules\Excon\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
 
 use Carbon\Carbon;
 
@@ -57,6 +58,14 @@ class Unit extends Model
      */
     public function getAmmunitionLoadAttribute()
     {
+        return Cache::remember($this->cacheKey() . ".ammunition_load", 600, function()
+        {
+            return $this->calculateAmmunitionLoad();
+        });
+    }
+
+    public function calculateAmmunitionLoad()
+    {
         $ammunition_load = [];
         
         foreach ($this->weapons as $weapon)
@@ -105,6 +114,17 @@ class Unit extends Model
 
     public function getWeaponsLoadsAttribute()
     {
+        return Cache::remember($this->cacheKey() . ".weapons_loads", 600, function()
+        {
+            return $this->calculateWeaponsLoads();
+        });
+    }
+
+    /**
+     * Renvoie la liste des armes et le nombre de munitions restantes pour chaque arme
+     */
+    public function calculateWeaponsLoads()
+    {
         $ammo_load = $this->ammunition_load;
 
         $schema = [];
@@ -120,7 +140,19 @@ class Unit extends Model
 
     public function getEngagementsHistoryAttribute()
     {
+        return Cache::remember($this->cacheKey() . ".engagements_history", 600, function()
+        {
+            return $this->calculateEngagementsHistory();
+        });
+    }
+
+    /**
+     * Renvoie la liste des engagements de l'unité
+     */
+    public function calculateEngagementsHistory()
+    {
         $engagements = Engagement::where('unit_id', $this->id)
+            ->with('weapon')
             ->orderBy('timestamp', 'desc')
             ->get();
 
@@ -195,6 +227,18 @@ class Unit extends Model
     }
 
     public function getWeaponsHistoryAttribute()
+    {
+        return Cache::remember($this->cacheKey() . ".weapons_history", 600, function()
+        {
+            return $this->calculateWeaponsHistory();
+        });
+    }
+    /**
+     * Renvoie la liste des mouvements d'armes de l'unité
+     *
+     * @return array
+     */
+    public function calculateWeaponsHistory()
     {
         $weapons_loads = $this->weapons->map(function ($item)
         {
@@ -302,5 +346,15 @@ class Unit extends Model
 
         return $position != null ;
 
+    }
+
+    public function cacheKey()
+    {
+        return sprintf(
+            "%s/%s-%s",
+            $this->getTable(),
+            $this->getKey(),
+            $this->updated_at->timestamp
+        );
     }
 }

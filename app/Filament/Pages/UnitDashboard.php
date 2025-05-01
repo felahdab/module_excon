@@ -5,9 +5,12 @@ namespace Modules\Excon\Filament\Pages;
 use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
 
+use Carbon\Carbon;
+
 use Filament\Pages\Page;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Forms;
 use Filament\Actions;
 use Filament\Infolists\Infolist;
@@ -71,6 +74,7 @@ class UnitDashboard extends Page
                     Forms\Components\DateTimePicker::make('timestamp')
                         ->required()
                         ->default(now())
+                        ->live()
                         ->native(false),
                     Forms\Components\TextInput::make('own_latitude')
                         ->hidden(function() use ($unit) {
@@ -156,7 +160,8 @@ class UnitDashboard extends Page
                                         "target_latitude" => $data["target_latitude"] ?? null,
                                         "target_longitude" => $data["target_longitude"] ?? null,
                                     ]
-                                ]);            
+                                ]);   
+                    $unit->touch();         
                 }),
         ];
     }
@@ -196,14 +201,14 @@ class UnitDashboard extends Page
                     ->columns(2)
                     ->schema([
                         RepeatableEntry::make('weapons_loads')
-                        ->label(false)
-                        ->columnSpan(2)
-                        ->columns(2)
-                        ->schema([
-                            TextEntry::make('name'),
-                            TextEntry::make('amount')
-                                ->label("Amount currently available"),
-                        ])
+                            ->label(false)
+                            ->columnSpan(2)
+                            ->columns(2)
+                            ->schema([
+                                TextEntry::make('name'),
+                                TextEntry::make('amount')
+                                    ->label("Amount currently available"),
+                            ])
                     ]),
                 Section::make('Engagements')
                     ->description('History of shots')
@@ -211,16 +216,30 @@ class UnitDashboard extends Page
                     ->columns(4)
                     ->schema([
                         RepeatableEntry::make('engagements_history')
-                        ->columnSpan(4)
-                        ->columns(4
-                        )
-                        ->schema([
-                            TextEntry::make('timestamp'),
-                            TextEntry::make('weapon'),
-                            TextEntry::make('amount'),
-                            TextEntry::make('target'),
-                        ])
-                    ])
+                            ->columnSpan(4)
+                            ->columns(4
+                            )
+                            ->schema([
+                                TextEntry::make('timestamp'),
+                                TextEntry::make('weapon'),
+                                TextEntry::make('amount'),
+                                TextEntry::make('target'),
+                            ])
+                    ]),
+                Section::make('Identifiers')
+                    ->description('Unit identifiers')
+                    ->columnSpan(1)
+                    ->columns(2)
+                    ->schema([
+                        RepeatableEntry::make('identifiers')
+                            ->label(false)
+                            ->columnSpan(2)
+                            ->columns(2)
+                            ->schema([
+                                TextEntry::make('source'),
+                                TextEntry::make('identifier'),
+                            ])
+                    ]),
             ]);
         
         return $ret;
