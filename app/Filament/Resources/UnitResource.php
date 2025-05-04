@@ -63,7 +63,7 @@ class UnitResource extends Resource
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\Action::make('unit-dashboard')
                     ->label('Unit\'s dashboard')
-                    ->url(fn($record) => UnitDashboard::getUrl(['unitid' => $record->id]))
+                    ->url(fn($record) => UnitDashboard::getUrl(['unit' => $record]))
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

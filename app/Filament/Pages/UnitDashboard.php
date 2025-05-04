@@ -38,21 +38,20 @@ class UnitDashboard extends Page
 
     protected static bool $shouldRegisterNavigation = false;
 
-    protected static ?string $slug = 'unit-dashboard/{unitid}';
+    protected static ?string $slug = 'unit-dashboard/{unit}';
 
     public ?array $data = [];
     public ?Unit $unit;
 
-    public function mount(?int $unitid = null): void
+    public function mount(Unit $unit): void
     {
         $this->form->fill();
-        $this->unit = Unit::findOrFail($unitid);
+        $this->unit = $unit;
     }
 
     public static function canAccess(): bool
     {
-        $unitid = intval(request('unitid'));
-        $unit = Unit::findOrFail($unitid);
+        $unit = request('unit');
 
         $result = auth()->check() && ( 
                                         cast_as_eloquent_descendant(auth()->user(), User::class)->unit->id == $unit->id

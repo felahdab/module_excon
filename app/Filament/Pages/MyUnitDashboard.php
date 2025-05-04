@@ -3,6 +3,7 @@
 namespace Modules\Excon\Filament\Pages;
 
 use Modules\Excon\Models\User;
+use Modules\Excon\Models\Unit;
 
 
 class MyUnitDashboard extends UnitDashboard
@@ -13,7 +14,7 @@ class MyUnitDashboard extends UnitDashboard
 
     public ?User $excon_user;
 
-    public function mount(?int $unitid=null): void
+    public function mount(Unit $unit): void
     {
         $this->form->fill();
         $this->excon_user = cast_as_eloquent_descendant(auth()->user(), User::class);
