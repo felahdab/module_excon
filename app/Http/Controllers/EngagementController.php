@@ -33,7 +33,9 @@ class EngagementController extends Controller
          */ 
 
          // The forCurrentUser scope relies on data filled in by the acknowlegeForUser method of Engagement.
-        $engagements = Engagement::forCurrentUser()->get();
+        $engagements = Engagement::forCurrentUser()
+            ->ofType("surface to surface")
+            ->get();
 
         $engagements = $engagements->filter(function ($item){
             return $item->isValid;
