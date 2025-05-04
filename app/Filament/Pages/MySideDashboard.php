@@ -3,6 +3,7 @@
 namespace Modules\Excon\Filament\Pages;
 
 use Modules\Excon\Models\User;
+use Modules\Excon\Models\Side;
 
 
 class MySideDashboard extends SideDashboard
@@ -13,7 +14,7 @@ class MySideDashboard extends SideDashboard
 
     public ?User $excon_user;
 
-    public function mount(?int $sideid=null): void
+    public function mount(Side $side): void
     {
         $this->form->fill();
         $this->excon_user = cast_as_eloquent_descendant(auth()->user(), User::class);

@@ -64,7 +64,7 @@ class SideResource extends Resource
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\Action::make('side-dashboard')
                     ->label("Side dashboard")
-                    ->url(fn($record) => SideDashboard::getUrl(['sideid' => $record->id])),
+                    ->url(fn($record) => SideDashboard::getUrl(['side' => $record])),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

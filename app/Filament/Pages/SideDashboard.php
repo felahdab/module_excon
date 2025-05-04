@@ -37,15 +37,16 @@ class SideDashboard extends Page
 
     protected static bool $shouldRegisterNavigation = false;
 
-    protected static ?string $slug = 'side-dashboard/{sideid}';
+    protected static ?string $slug = 'side-dashboard/{side}';
 
     public ?array $data = [];
     public ?Side $side;
 
-    public function mount(?int $sideid = null): void
+    public function mount(Side $side): void
     {
         $this->form->fill();
-        $this->side = Side::findOrFail($sideid);
+        $this->side = $side;
+        //Side::findOrFail($sideid);
     }
 
     public function getTitle(): string | Htmlable
@@ -55,8 +56,7 @@ class SideDashboard extends Page
 
     public static function canAccess(): bool
     {
-        $sideid = intval(request('sideid'));
-        $side = Unit::findOrFail($sideid);
+        $side = request('side');
 
         $result = auth()->check() && ( 
                 cast_as_eloquent_descendant(auth()->user(), User::class)->side?->id == $side->id
