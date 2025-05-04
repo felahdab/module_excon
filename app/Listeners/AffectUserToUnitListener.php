@@ -25,8 +25,10 @@ class AffectUserToUnitListener
         if ($event->unit == null)
         {
             $event->user->units()->sync([]);
+            $event->user->refreshUnitAttribute();
             return;
         }
         $event->user->units()->sync([$event->unit->id]);
+        $event->user->refreshUnitAttribute();
     }
 }

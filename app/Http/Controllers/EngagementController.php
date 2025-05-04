@@ -10,7 +10,7 @@ use Modules\Excon\Models\Engagement;
 use Modules\Excon\Models\Identifier;
 
 use Modules\Excon\Http\Requests\AckEngagementRequest;
-
+use Modules\Excon\Enums\WeaponTypes;
 
 
 /**
@@ -34,7 +34,7 @@ class EngagementController extends Controller
 
          // The forCurrentUser scope relies on data filled in by the acknowlegeForUser method of Engagement.
         $engagements = Engagement::forCurrentUser()
-            ->ofType("surface to surface")
+            ->ofType(WeaponTypes::SURFACE_TO_SURFACE)
             ->get();
 
         $engagements = $engagements->filter(function ($item){

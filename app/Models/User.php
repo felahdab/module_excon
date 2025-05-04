@@ -39,9 +39,15 @@ class User extends BaseUser
 
     public function getUnitAttribute()
     {
-        return Cache::remember($this->cacheKey(), 60, function () {
+        return Cache::remember($this->cacheKey() .":unit_attribute", 60, function () {
             return $this->units?->first();
         });
+    }
+
+    public function refreshUnitAttribute()
+    {
+        Cache::forget($this->cacheKey() .":unit_attribute");
+        return $this->getUnitAttribute();
     }
 
     public function cacheKey()
