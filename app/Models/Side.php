@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Arr;
 
+use \Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use \Illuminate\Database\Eloquent\Relations\HasMany;
+
 use Modules\Excon\Traits\HasTablePrefix;
 
 // use Modules\Excon\Database\Factories\SideFactory;
@@ -54,12 +57,12 @@ class Side extends Model
         return $ret;
     }
 
-    public function users()
+    public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, "excon_user_sides");
     }
 
-    public function units()
+    public function units(): HasMany
     {
         return $this->hasMany(Unit::class);
     }

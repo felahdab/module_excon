@@ -11,6 +11,9 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+use \Illuminate\Database\Eloquent\Relations\BelongsTo;
+use \Illuminate\Database\Eloquent\Relations\HasMany;
+
 use Modules\Excon\Traits\HasTablePrefix;
 
 // use Modules\Excon\Database\Factories\TirFactory;
@@ -42,12 +45,12 @@ class Engagement extends Model
     //     // return TirFactory::new();
     // }
 
-    public function unit()
+    public function unit(): BelongsTo
     {
         return $this->belongsTo(Unit::class);
     }
 
-    public function weapon()
+    public function weapon(): BelongsTo
     {
         return $this->belongsTo(Weapon::class);
     }
@@ -57,7 +60,7 @@ class Engagement extends Model
         if (! auth()->check())
             return $query;
 
-        return $query->whereNotIn('id', Engagement::whereJsonContains('data->acknowleged_by', auth()->user()->uuid)->get()->pluck('id'));
+        return $query->whereNotIn('id', Engagement::whereJsonContains('data->acknowleged_by', auth()->user()->uuid)->pluck('id'));
     }
 
     public function getTargetAttribute()

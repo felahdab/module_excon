@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Excon\Traits\HasTablePrefix;
 
+use \Illuminate\Database\Eloquent\Relations\BelongsTo;
+use \Illuminate\Database\Eloquent\Relations\HasMany;
+
 use Illuminate\Support\Carbon;
 
 use Exception;
@@ -36,12 +39,12 @@ class Identifier extends Model
     //     // return IdentifierFactory::new();
     // }
 
-    public function unit()
+    public function unit(): BelongsTo
     {
         return $this->belongsTo(Unit::class);
     }
 
-    public function positions()
+    public function positions(): HasMany
     {
         return $this->hasMany(Position::class);
     }
