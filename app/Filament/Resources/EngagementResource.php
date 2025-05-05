@@ -80,6 +80,8 @@ class EngagementResource extends Resource
                 Tables\Columns\TextColumn::make('timestamp')
                     ->dateTime()
                     ->sortable(),
+                Tables\Columns\IconColumn::make('is_valid')
+                    ->boolean(),
                 Tables\Columns\TextColumn::make('weapon.name')
                     ->sortable()
                     ->searchable(),

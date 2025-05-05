@@ -3,28 +3,28 @@
 namespace Modules\Excon\Filament\Pages;
 
 use Modules\Excon\Models\User;
-use Modules\Excon\Models\Unit;
+use Modules\Excon\Models\Side;
 
 
-class MyUnitDashboard extends UnitDashboard
+class MySideDashboard extends SideDashboard
 {
-    protected static ?string $slug = 'my-unit-dashboard';
+    protected static ?string $slug = 'my-side-dashboard';
 
     protected static bool $shouldRegisterNavigation = true;
 
     public ?User $excon_user;
 
-    public function mount(Unit $unit): void
+    public function mount(Side $side): void
     {
         $this->form->fill();
         $this->excon_user = cast_as_eloquent_descendant(auth()->user(), User::class);
-        $this->unit = $this->excon_user?->unit;
+        $this->side = $this->excon_user?->side;
     }
 
     public static function canAccess(): bool
     {
         $result = auth()->check() && 
-                    cast_as_eloquent_descendant(auth()->user(), User::class)?->unit != null;
+                    cast_as_eloquent_descendant(auth()->user(), User::class)?->side != null;
 
         return $result;
     }

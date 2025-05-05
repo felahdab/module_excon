@@ -28,6 +28,11 @@ class PermissionSeeder extends Seeder
         ]);
         Permission::firstOrCreate(
             [
+            "name" => "excon::view_all_sides_dashboard",
+            "guard_name" => "web",
+        ]);
+        Permission::firstOrCreate(
+            [
             "name" => "excon::report_engagement_for_own_unit",
             "guard_name" => "web",
         ]);

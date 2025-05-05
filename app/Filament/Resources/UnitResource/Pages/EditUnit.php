@@ -10,6 +10,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Get;
+use Filament\Notifications\Notification;
 
 use Modules\Excon\Filament\Resources\UnitResource;
 use Modules\Excon\Filament\Pages\UnitDashboard;
@@ -49,7 +50,8 @@ class EditUnit extends EditRecord
                     $record->weapons()
                         ->attach($weapon, ["amount" => $data["amount"],
                                         "timestamp" => $data["timestamp"]
-                                        ]);            
+                                        ]);       
+                    $record->touch();     
                 }),
             Actions\Action::make("record_engagement")
                 ->requiresConfirmation()
@@ -64,9 +66,18 @@ class EditUnit extends EditRecord
                                 $unit = $this->getRecord();
                                 return $unit->available_weapons;
                             })
+                        ->live()
                         ->required(),                
                     Forms\Components\TextInput::make('amount')
                         ->required()
+                        ->maxValue(function (Get $get, $record) {
+                            $weapon = Weapon::find($get('weapon_id'));
+                            if ($weapon == null)
+                            {
+                                return 99999;
+                            }
+                             return $record->remaining_ammunitions($weapon);
+                        })
                         ->numeric(),
                     Forms\Components\Select::make('engagement_type')
                         ->options(["track_number" => "Track number", "absolute_position" => "Absolute position"])
@@ -91,10 +102,15 @@ class EditUnit extends EditRecord
                 ])
                 ->action(function ($data, $record){
                     $weapon = Weapon::find($data["weapon_id"]);
-                    $stock_before_engagement = $record->available_weapons[$weapon->id] ?? 0;
+                    $stock_before_engagement = $record->remaining_ammunitions($weapon) ?? 0;
 
                     if ($data["amount"] > $stock_before_engagement)
                     {
+                        Notification::make()
+                            ->title('weapon amount is over current stock !')
+                            ->body('You cannot shoot that many munitions.')
+                            ->danger()
+                            ->send();
                         return;
                     }
                     $record->engagements()
@@ -108,7 +124,8 @@ class EditUnit extends EditRecord
                                         "target_latitude" => $data["target_latitude"] ?? null,
                                         "target_longitude" => $data["target_longitude"] ?? null,
                                     ]
-                                ]);            
+                                ]);   
+                    $record->touch();         
                 }),
                 Actions\Action::make("dashboard")
                     ->label('Unit dashboard')

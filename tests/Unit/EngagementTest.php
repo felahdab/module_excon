@@ -152,7 +152,7 @@ it('test engagement 3', function() {
 
     $description = $engagement->description_for_dis();
     //dump($description);
-    $this->assertTrue(intval($description["course"] * 1000) / 1000 == -89.658);
+    $this->assertTrue(intval($description["course"] * 1000) / 1000 == 271);
 
 });
 

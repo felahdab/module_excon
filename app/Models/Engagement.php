@@ -2,11 +2,17 @@
 
 namespace Modules\Excon\Models;
 
+use Exception;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+
+use \Illuminate\Database\Eloquent\Relations\BelongsTo;
+use \Illuminate\Database\Eloquent\Relations\HasMany;
 
 use Modules\Excon\Traits\HasTablePrefix;
 
@@ -39,12 +45,12 @@ class Engagement extends Model
     //     // return TirFactory::new();
     // }
 
-    public function unit()
+    public function unit(): BelongsTo
     {
         return $this->belongsTo(Unit::class);
     }
 
-    public function weapon()
+    public function weapon(): BelongsTo
     {
         return $this->belongsTo(Weapon::class);
     }
@@ -54,7 +60,13 @@ class Engagement extends Model
         if (! auth()->check())
             return $query;
 
-        return $query->whereNotIn('id', Engagement::whereJsonContains('data->acknowleged_by', auth()->user()->uuid)->get()->pluck('id'));
+        return $query->whereNotIn('id', Engagement::whereJsonContains('data->acknowleged_by', auth()->user()->uuid)->pluck('id'));
+    }
+
+    public function scopeOfType(Builder $query, string $type)
+    {
+        $weapon_list = Weapon::where("type", $type)->get()->pluck('id');
+        return $query->whereIn("weapon_id", $weapon_list);
     }
 
     public function getTargetAttribute()
@@ -87,7 +99,27 @@ class Engagement extends Model
 
     }
 
+    public function getIsValidAttribute()
+    {
+        try{
+            $description = $this->description_for_dis();
+        }
+        catch (Exception $e) 
+            {
+                return false;
+            }
+
+        return true;
+    }
+
     public function description_for_dis()
+    {
+        return Cache::remember($this->cacheKey(), 600, function () {
+            return $this->calculate_description_for_dis();
+        });
+    }
+
+    public function calculate_description_for_dis()
     {
         $timestamp = $this->timestamp;
         $unit = $this->unit;
@@ -110,6 +142,12 @@ class Engagement extends Model
                 ['lat' => $latitude, 'lng' => $longitude],
                 ['lat' => $target_latitude, 'lng' => $target_longitude]);
 
+            $course = \GeometryLibrary\MathUtil::wrap($course, 0, 360);
+
+            $distance = \GeometryLibrary\SphericalUtil::computeDistanceBetween(
+                ['lat' => $latitude, 'lng' => $longitude],
+                ['lat' => $target_latitude, 'lng' => $target_longitude]);
+
         }
         elseif($engagement_type == 'absolute_position')
         {
@@ -119,6 +157,12 @@ class Engagement extends Model
             $course = \GeometryLibrary\SphericalUtil::computeHeading(
                 ['lat' => $latitude, 'lng' => $longitude],
                 ['lat' => $target_latitude, 'lng' => $target_longitude]);
+
+            $course = \GeometryLibrary\MathUtil::wrap($course, 0, 360);
+
+            $distance = \GeometryLibrary\SphericalUtil::computeDistanceBetween(
+                    ['lat' => $latitude, 'lng' => $longitude],
+                    ['lat' => $target_latitude, 'lng' => $target_longitude]);
         }
 
 
@@ -142,7 +186,18 @@ class Engagement extends Model
             ],
             "speed" => floatval($weapon->speed),
             "maxrange" => floatval($weapon->maxrange),
-            "course" => $course
+            "course" => $course,
+            "distance" => $distance
         ];
+    }
+
+    public function cacheKey()
+    {
+        return sprintf(
+            "%s/%s-%s",
+            $this->getTable(),
+            $this->getKey(),
+            $this->updated_at->timestamp
+        );
     }
 }

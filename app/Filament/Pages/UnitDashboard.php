@@ -5,9 +5,12 @@ namespace Modules\Excon\Filament\Pages;
 use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Model;
 
+use Carbon\Carbon;
+
 use Filament\Pages\Page;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Forms;
 use Filament\Actions;
 use Filament\Infolists\Infolist;
@@ -24,6 +27,7 @@ use Modules\Excon\Models\User;
 use Modules\Excon\Models\Unit;
 use Modules\Excon\Models\Weapon;
 use Modules\Excon\Models\Engagement;
+use Modules\Excon\Models\Identifier;
 use Modules\Excon\Models\EntityNumber;
 
 class UnitDashboard extends Page
@@ -34,21 +38,20 @@ class UnitDashboard extends Page
 
     protected static bool $shouldRegisterNavigation = false;
 
-    protected static ?string $slug = 'unit-dashboard/{unitid}';
+    protected static ?string $slug = 'unit-dashboard/{unit}';
 
     public ?array $data = [];
     public ?Unit $unit;
 
-    public function mount(?int $unitid = null): void
+    public function mount(Unit $unit): void
     {
         $this->form->fill();
-        $this->unit = Unit::findOrFail($unitid);
+        $this->unit = $unit;
     }
 
     public static function canAccess(): bool
     {
-        $unitid = intval(request('unitid'));
-        $unit = Unit::findOrFail($unitid);
+        $unit = request('unit');
 
         $result = auth()->check() && ( 
                                         cast_as_eloquent_descendant(auth()->user(), User::class)->unit?->id == $unit->id
@@ -70,12 +73,19 @@ class UnitDashboard extends Page
                     Forms\Components\DateTimePicker::make('timestamp')
                         ->required()
                         ->default(now())
+                        ->live()
                         ->native(false),
+                    Forms\Components\TextInput::make('own_latitude')
+                        ->hidden(function() use ($unit) {
+                            return $unit->position_is_valid;
+                        }),
+                    Forms\Components\TextInput::make('own_longitude')
+                        ->hidden(function() use ($unit) {
+                            return $unit->position_is_valid;
+                        }),
                     Forms\Components\Select::make('weapon_id')
                         ->options(function () use ($unit)
                             {
-                                //return [];
-                                //$unit = $this->getRecord();
                                 $ret = $unit->available_weapons;
                                 $unit->refresh();
                                 return $ret;
@@ -87,7 +97,9 @@ class UnitDashboard extends Page
                     Forms\Components\Select::make('engagement_type')
                         ->options(["track_number" => "Track number", "absolute_position" => "Absolute position"])
                         ->live(),
-                    Forms\Components\TextInput::make('track_number')
+                    Forms\Components\Select::make('track_number')
+                        ->options(Identifier::source("LDT")->isValid()->get()->pluck('identifier', 'identifier'))
+                        ->searchable()
                         ->visible(function (Get $get) {
                             return $get("engagement_type") == "track_number";
                         })
@@ -105,7 +117,29 @@ class UnitDashboard extends Page
                         })
                         ->requiredIf('engagement_type', 'absolute_position'),
                 ])
+                ->visible(function() {
+                    $ret = auth()->user()->can("excon::report_engagement_for_own_unit");
+                    return $ret;
+                })
                 ->action(function ($data) use ($unit) {
+                    if ($data["own_latitude"] && $data["own_longitude"])
+                    {
+                        $manual_identifier = $unit->identifiers()->source("MANUAL")->first();
+                        if ($manual_identifier == null)
+                        {
+                            $manual_identifier = $unit->identifiers()->create([
+                                "source" => "MANUAL",
+                                "identifier" => "MANUAL",
+                            ]);
+                        }
+
+                        $manual_identifier->positions()->create([
+                            "latitude" => $data["own_latitude"],
+                            "longitude" => $data["own_longitude"],
+                            "timestamp" => $data["timestamp"],
+                        ]);
+                    }
+
                     $weapon = Weapon::find($data["weapon_id"]);
                     $stock_before_engagement = $unit->available_weapons[$weapon->id] ?? 0;
 
@@ -113,6 +147,7 @@ class UnitDashboard extends Page
                     {
                         return;
                     }
+                    
                     $unit->engagements()
                         ->create([  "weapon_id" => $weapon->id,
                                     "amount"    => $data["amount"],
@@ -124,7 +159,8 @@ class UnitDashboard extends Page
                                         "target_latitude" => $data["target_latitude"] ?? null,
                                         "target_longitude" => $data["target_longitude"] ?? null,
                                     ]
-                                ]);            
+                                ]);   
+                    $unit->touch();         
                 }),
         ];
     }
@@ -164,14 +200,14 @@ class UnitDashboard extends Page
                     ->columns(2)
                     ->schema([
                         RepeatableEntry::make('weapons_loads')
-                        ->label(false)
-                        ->columnSpan(2)
-                        ->columns(2)
-                        ->schema([
-                            TextEntry::make('name'),
-                            TextEntry::make('amount')
-                                ->label("Amount currently available"),
-                        ])
+                            ->label(false)
+                            ->columnSpan(2)
+                            ->columns(2)
+                            ->schema([
+                                TextEntry::make('name'),
+                                TextEntry::make('amount')
+                                    ->label("Amount currently available"),
+                            ])
                     ]),
                 Section::make('Engagements')
                     ->description('History of shots')
@@ -179,16 +215,30 @@ class UnitDashboard extends Page
                     ->columns(4)
                     ->schema([
                         RepeatableEntry::make('engagements_history')
-                        ->columnSpan(4)
-                        ->columns(4
-                        )
-                        ->schema([
-                            TextEntry::make('timestamp'),
-                            TextEntry::make('weapon'),
-                            TextEntry::make('amount'),
-                            TextEntry::make('target'),
-                        ])
-                    ])
+                            ->columnSpan(4)
+                            ->columns(4
+                            )
+                            ->schema([
+                                TextEntry::make('timestamp'),
+                                TextEntry::make('weapon'),
+                                TextEntry::make('amount'),
+                                TextEntry::make('target'),
+                            ])
+                    ]),
+                Section::make('Identifiers')
+                    ->description('Unit identifiers')
+                    ->columnSpan(1)
+                    ->columns(2)
+                    ->schema([
+                        RepeatableEntry::make('identifiers')
+                            ->label(false)
+                            ->columnSpan(2)
+                            ->columns(2)
+                            ->schema([
+                                TextEntry::make('source'),
+                                TextEntry::make('identifier'),
+                            ])
+                    ]),
             ]);
         
         return $ret;

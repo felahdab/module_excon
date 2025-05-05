@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Excon\Traits\HasTablePrefix;
 
+use \Illuminate\Database\Eloquent\Relations\BelongsTo;
+use \Illuminate\Database\Eloquent\Relations\HasMany;
+
 use Illuminate\Support\Carbon;
 
 use Exception;
@@ -36,14 +39,44 @@ class Identifier extends Model
     //     // return IdentifierFactory::new();
     // }
 
-    public function unit()
+    public function unit(): BelongsTo
     {
         return $this->belongsTo(Unit::class);
     }
 
-    public function positions()
+    public function positions(): HasMany
     {
         return $this->hasMany(Position::class);
+    }
+
+    public function getIsValidAttribute()
+    {
+        return $this->positions->where("timestamp", "<=", now())
+            ->where("timestamp", ">=", now()->subSeconds(config("excon.limite_validite")))
+            ->count() > 0;
+    }
+
+    public function scopeIsValid()
+    {
+        return $this->whereHas("positions", function ($query) {
+            $query->where("timestamp", "<=", now())
+                ->where("timestamp", ">=", now()->subSeconds(config("excon.limite_validite")));
+        });
+    }
+
+    public function scopeSource($query, $source)
+    {
+        return $query->where("source", $source);
+    }
+
+    public function scopeIdentifier($query, $identifier)
+    {
+        return $query->where("identifier", $identifier);
+    }
+
+    public function scopeUnit($query, $unit)
+    {
+        return $query->where("unit_id", $unit);
     }
 
     public function extrapolatePositionForTimestamp(Carbon | null $timestamp = null)

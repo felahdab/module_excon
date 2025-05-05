@@ -45,9 +45,10 @@ class UnitResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('type')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('side.name')
-                    ->searchable()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('type')
+                    ->searchable(),
+                Tables\Columns\ColorColumn::make('side.data.color')
+                    ->label('Side'),
                 Tables\Columns\IconColumn::make('position_is_valid')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -66,7 +67,7 @@ class UnitResource extends Resource
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\Action::make('unit-dashboard')
                     ->label('Unit\'s dashboard')
-                    ->url(fn($record) => UnitDashboard::getUrl(['unitid' => $record->id]))
+                    ->url(fn($record) => UnitDashboard::getUrl(['unit' => $record]))
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
