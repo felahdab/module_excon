@@ -129,7 +129,7 @@ class EditUnit extends EditRecord
                 }),
                 Actions\Action::make("dashboard")
                     ->label('Unit dashboard')
-                    ->url(fn($record) => UnitDashboard::getUrl(['unitid' => $record->id]))
+                    ->url(fn($record) => UnitDashboard::getUrl(['unit' => $record]))
         ];
     }
 
