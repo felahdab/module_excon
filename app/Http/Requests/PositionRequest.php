@@ -28,6 +28,16 @@ class PositionRequest extends FormRequest
             */
             "longitude" => "required|decimal:0,12",
             /**
+            * La route
+            * @example "230"
+            */
+            "course" => "decimal:0,4",
+            /**
+            * La vitesse
+            * @example "5.123"
+            */
+            "speed" => "decimal:0,4",
+            /**
             * L'identifiant de l'unité dont la position est reportée. Le couple source, identifier doit correspondre 
             * à une entrée dans la table des identifiers.'
             * @example "COT_1"

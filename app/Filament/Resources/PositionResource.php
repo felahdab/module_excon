@@ -36,6 +36,12 @@ class PositionResource extends Resource
                 Forms\Components\TextInput::make('longitude')
                     ->required()
                     ->numeric(),
+                Forms\Components\TextInput::make('course')
+                    ->required()
+                    ->numeric(),
+                Forms\Components\TextInput::make('speed')
+                    ->required()
+                    ->numeric(),
                 Forms\Components\Hidden::make('data'),
             ]);
     }

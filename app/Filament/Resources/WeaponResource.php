@@ -26,6 +26,9 @@ class WeaponResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\TextInput::make('type')
+                    ->required()
+                    ->maxLength(255),
                 Forms\Components\TextInput::make('speed')
                     ->helperText("Speed in m/s")
                     ->required()

@@ -19,6 +19,8 @@ return new class extends Migration
             
             $table->decimal('latitude', 10, 8);
             $table->decimal('longitude', 11, 8);
+            $table->decimal('course', 4, 1)->nullable(true)->default(null);
+            $table->decimal('speed', 4, 1)->nullable(true)->default(null);
 
             $table->json("data")->nullable(true);
             

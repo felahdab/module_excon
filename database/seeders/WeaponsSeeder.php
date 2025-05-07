@@ -5,6 +5,7 @@ namespace Modules\Excon\Database\Seeders;
 use Illuminate\Database\Seeder;
 
 use Modules\Excon\Models\Weapon;
+use Modules\Excon\Enums\WeaponTypes;
 
 
 class WeaponsSeeder extends Seeder
@@ -17,7 +18,7 @@ class WeaponsSeeder extends Seeder
         Weapon::firstOrCreate(
             ["name" => "MM 40 Exocet"], 
             [
-                "type" => "surface to surface",
+                "type" => WeaponTypes::SURFACE_TO_SURFACE,
                 "kind" => 2,
                 "domain" => 6,
                 "country" => 71,
@@ -32,7 +33,7 @@ class WeaponsSeeder extends Seeder
         Weapon::firstOrCreate(
             ["name" => "MM 38 Exocet"], 
             [
-                "type" => "surface to surface",
+                "type" => WeaponTypes::SURFACE_TO_SURFACE,
                 "kind" => 2,
                 "domain" => 6,
                 "country" => 71,
@@ -47,7 +48,7 @@ class WeaponsSeeder extends Seeder
         Weapon::firstOrCreate(
                 ["name" => "SM 39 Exocet"], 
                 [
-                    "type" => "surface to surface",
+                    "type" => WeaponTypes::SURFACE_TO_SURFACE,
                     "kind" => 2,
                     "domain" => 6,
                     "country" => 71,
@@ -62,7 +63,7 @@ class WeaponsSeeder extends Seeder
         Weapon::firstOrCreate(
                 ["name" => "RGM-84 Harpoon"], 
                 [
-                    "type" => "surface to surface",
+                    "type" => WeaponTypes::SURFACE_TO_SURFACE,
                     "kind" => 2,
                     "domain" => 6,
                     "country" => 225,
@@ -77,7 +78,7 @@ class WeaponsSeeder extends Seeder
         Weapon::firstOrCreate(
                     ["name" => "Otomat Mk 2"], 
                     [
-                        "type" => "surface to surface",
+                        "type" => WeaponTypes::SURFACE_TO_SURFACE,
                         "kind" => 2,
                         "domain" => 6,
                         "country" => 71,
