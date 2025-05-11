@@ -8,7 +8,7 @@ use Illuminate\Support\ServiceProvider;
 use Nwidart\Modules\Traits\PathNamespace;
 
 use App\Filament\PanelRegistry\DirectMenuItem;
-use App\Filament\PanelRegistry\PanelRegistry;
+use App\Filament\PanelRegistry\ModuleDefinedMenusRegistry;
 
 use Modules\Excon\Models\Engagement;
 use Modules\Excon\Models\Position;
@@ -26,6 +26,7 @@ use Modules\Excon\Policies\WeaponPolicy;
 use Modules\Excon\Policies\IdentifierPolicy;
 
 use Modules\Excon\Filament\Pages\Dashboard;
+use Modules\Excon\Filament\Pages\MyUnitDashboard;
 
 class ExconServiceProvider extends ServiceProvider
 {
@@ -61,11 +62,21 @@ class ExconServiceProvider extends ServiceProvider
 
     public function registerMenus()
     {
-        app(PanelRegistry::class)->registerDirectMenuItem(
+        app(ModuleDefinedMenusRegistry::class)->registerDirectMenuItems([
             DirectMenuItem::make()
-                ->name('Excon')
-                ->url(fn() => Dashboard::getUrl())
-        );
+                ->name('Excon Module')
+                ->visible(fn() => auth()->check() && Dashboard::canAccess())
+                ->children([
+                    DirectMenuItem::make()
+                        ->name('Excon - Dashboard')
+                        ->url(fn() => Dashboard::getUrl(panel: "excon"))
+                        ->visible(fn() => auth()->check() && Dashboard::canAccess()),
+                    DirectMenuItem::make()
+                        ->name('Excon - My unit dashboard')
+                        ->url(fn() => MyUnitDashboard::getUrl(panel: "excon"))
+                        ->visible(fn() => auth()->check() && MyUnitDashboard::canAccess()),
+                ]),
+        ]);
     }
 
     public function registerPolicies()
