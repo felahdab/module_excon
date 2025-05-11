@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Nwidart\Modules\Traits\PathNamespace;
 
+use App\Filament\PanelRegistry\DirectMenuItem;
+use App\Filament\PanelRegistry\PanelRegistry;
+
 use Modules\Excon\Models\Engagement;
 use Modules\Excon\Models\Position;
 use Modules\Excon\Models\Side;
@@ -21,6 +24,8 @@ use Modules\Excon\Policies\SidePolicy;
 use Modules\Excon\Policies\UnitPolicy;
 use Modules\Excon\Policies\WeaponPolicy;
 use Modules\Excon\Policies\IdentifierPolicy;
+
+use Modules\Excon\Filament\Pages\Dashboard;
 
 class ExconServiceProvider extends ServiceProvider
 {
@@ -51,6 +56,16 @@ class ExconServiceProvider extends ServiceProvider
         $this->app->register(EventServiceProvider::class);
         $this->app->register(RouteServiceProvider::class);
         $this->registerPolicies();
+        $this->registerMenus();
+    }
+
+    public function registerMenus()
+    {
+        app(PanelRegistry::class)->registerDirectMenuItem(
+            DirectMenuItem::make()
+                ->name('Excon')
+                ->url(fn() => Dashboard::getUrl())
+        );
     }
 
     public function registerPolicies()
