@@ -23,7 +23,6 @@ use Filament\Infolists\Components\Livewire;
 
 use Modules\Excon\Filament\Pages\Widgets\WeaponsHistory;
 
-
 use Modules\Excon\Models\User;
 use Modules\Excon\Models\Unit;
 use Modules\Excon\Models\Weapon;
@@ -84,6 +83,7 @@ class UnitDashboard extends Page
                             ->required(),
                     ]),
                     Forms\Components\Section::make('Own position')
+                        ->description('This section is displayed because the application doesn\'t have a valid position for your unit.')
                         ->columns(2)
                         ->hidden(function() use ($unit) {
                             return $unit->position_is_valid;
@@ -120,6 +120,7 @@ class UnitDashboard extends Page
                         })
                         ->schema([
                             Forms\Components\Select::make('track_number')
+                                ->helperText('Only tracks with a valid position are shown. If your target doesn\'t appear, switch to absolute position and report the position of your targer.')
                                 ->options(Identifier::source("LDT")->isValid()->get()->pluck('identifier', 'identifier'))
                                 ->searchable()
                                 ->requiredIf('engagement_type', 'track_number'),
@@ -138,6 +139,7 @@ class UnitDashboard extends Page
                                 ->requiredIf('engagement_type', 'absolute_position'),
                         ]),
                     Forms\Components\Section::make('Target course and speed')
+                        ->description('Please specify the course and speed of your target as you would use in your weapon system. This will be used to assess the quality of the engagement.')
                         ->columns(2)
                         ->schema([
                             Forms\Components\TextInput::make('target_course')
@@ -190,6 +192,9 @@ class UnitDashboard extends Page
                                         "track_number" => $data["track_number"] ?? null,
                                         "target_latitude" => $data["target_latitude"] ?? null,
                                         "target_longitude" => $data["target_longitude"] ?? null,
+                                        "target_course" => $data["target_course"] ?? 0,
+                                        "target_speed" => $data["target_speed"] ? floatval($data["target_speed"])  * 1854 / 3600 : 0,
+                                        "assessed_target" => $data["assessed_target"] ?? null,
                                     ]
                                 ]);   
                     $unit->touch();         

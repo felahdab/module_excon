@@ -114,9 +114,13 @@ class Engagement extends Model
 
     public function description_for_dis()
     {
-        return Cache::remember($this->cacheKey(), 600, function () {
+        $static_description =  Cache::remember($this->cacheKey(), 600, function () {
             return $this->calculate_description_for_dis();
         });
+        $static_description["current_time"] = now()->timestamp;
+        
+        return $static_description;
+
     }
 
     public function calcMissileRoute($target_course, $target_speed, $azimuth_lanceur_but, $weapon_speed)
@@ -181,15 +185,14 @@ class Engagement extends Model
          * Calculer la laterale but.
          * Ajuster la course pour ajuster la laterale lanceur.
          */
-        $target_course = 0; // On a besoin de la route de la cible
-        $target_speed = 0; // On a besoin de la vitesse de la cible
+        $target_course = Arr::get($this->data, 'target_course', 0);
+        $target_speed = Arr::get($this->data, 'target_speed', 0);
 
         //calcMissileRoute($target_course, $target_speed, $azimuth_lanceur_but, $weapon_speed)
         $missile_course = $this->calcMissileRoute($target_course, $target_speed, $course, floatval($weapon->speed));
 
         return [
             "id" => $this->id,
-            "current_time" => now()->timestamp,
             "timestamp" => $timestamp->timestamp, // Le timestamp en secondes
             "weapon_flight_time" => $weapon->flight_time,
             "latitude" => $latitude,

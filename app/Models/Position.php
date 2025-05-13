@@ -21,6 +21,8 @@ class Position extends Model
         "latitude",
         "longitude",
         "timestamp",
+        "course",
+        "speed",
         "data"
     ];
 
