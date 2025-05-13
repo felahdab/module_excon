@@ -36,6 +36,11 @@ class PermissionSeeder extends Seeder
             "name" => "excon::report_engagement_for_own_unit",
             "guard_name" => "web",
         ]);
+        Permission::firstOrCreate(
+            [
+            "name" => "excon::export_antares_reports",
+            "guard_name" => "web",
+        ]);
 
         
     }

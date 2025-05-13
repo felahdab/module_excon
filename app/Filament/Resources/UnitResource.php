@@ -2,6 +2,8 @@
 
 namespace Modules\Excon\Filament\Resources;
 
+use Carbon\Carbon;
+
 use Modules\Excon\Filament\Resources\UnitResource\Pages;
 use Modules\Excon\Filament\Resources\UnitResource\RelationManagers;
 use Modules\Excon\Models\Unit;
@@ -16,6 +18,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Modules\Excon\Models\Weapon;
 use Modules\Excon\Filament\Resources\UnitResource\Widgets\UserTableWidget;
 use Modules\Excon\Filament\Pages\UnitDashboard;
+
+use Modules\Excon\Jobs\AntaresExportJob;
 
 
 class UnitResource extends Resource
@@ -67,11 +71,49 @@ class UnitResource extends Resource
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\Action::make('unit-dashboard')
                     ->label('Unit\'s dashboard')
-                    ->url(fn($record) => UnitDashboard::getUrl(['unit' => $record]))
+                    ->url(fn($record) => UnitDashboard::getUrl(['unit' => $record])),
+                Tables\Actions\Action::make('export-antares')
+                    ->label('Export Antares data')
+                    ->requiresConfirmation()
+                    ->visible(fn() => auth()->user()->can("excon::export_antares_reports"))
+                    ->form([
+                        Forms\Components\DateTimePicker::make('start_date')
+                            ->label("From")
+                            ->native(false)
+                            ->required(),
+                        Forms\Components\DateTimePicker::make('end_date')
+                            ->label("To")
+                            ->native(false)
+                            ->required(),
+                    ])
+                    ->action(function($record, $data){
+                        AntaresExportJob::dispatch(auth()->user(), $record, Carbon::parse($data['start_date']), Carbon::parse($data['end_date']));
+                    }),
+                
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\BulkAction::make("antares-bulk-export")
+                        ->label('Export Antares data')
+                        ->visible(fn() => auth()->user()->can("excon::export_antares_reports"))
+                        ->requiresConfirmation()
+                        ->form([
+                            Forms\Components\DateTimePicker::make('start_date')
+                                ->label("From")
+                                ->native(false)
+                                ->required(),
+                            Forms\Components\DateTimePicker::make('end_date')
+                                ->label("To")
+                                ->native(false)
+                                ->required(),
+                        ])
+                        ->action(function($records, $data){
+                            foreach ($records as $record)
+                            {
+                                AntaresExportJob::dispatch(auth()->user(), $record, Carbon::parse($data['start_date']), Carbon::parse($data['end_date']));
+                            }
+                        }),
                 ]),
             ]);
     }

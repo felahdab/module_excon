@@ -6,8 +6,14 @@ use Exception;
 
 use Modules\Excon\Models\Unit;
 
-class AntaresExportService {
+class AntaresExportService 
+{
 
+    public static function make()
+    {
+        return new static;
+    }
+    
     public function test()
     {
         $start = Carbon::create(2025,4,21, 00, 00);
