@@ -75,6 +75,7 @@ class UnitResource extends Resource
                 Tables\Actions\Action::make('export-antares')
                     ->label('Export Antares data')
                     ->requiresConfirmation()
+                    ->visible(fn() => auth()->user()->can("excon::export_antares_reports"))
                     ->form([
                         Forms\Components\DateTimePicker::make('start_date')
                             ->label("From")
@@ -86,7 +87,7 @@ class UnitResource extends Resource
                             ->required(),
                     ])
                     ->action(function($record, $data){
-                        AntaresExportJob::dispatch($record, Carbon::parse($data['start_date']), Carbon::parse($data['end_date']));
+                        AntaresExportJob::dispatch(auth()->user(), $record, Carbon::parse($data['start_date']), Carbon::parse($data['end_date']));
                     }),
                 
             ])
@@ -95,19 +96,23 @@ class UnitResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                     Tables\Actions\BulkAction::make("antares-bulk-export")
                         ->label('Export Antares data')
+                        ->visible(fn() => auth()->user()->can("excon::export_antares_reports"))
                         ->requiresConfirmation()
                         ->form([
                             Forms\Components\DateTimePicker::make('start_date')
                                 ->label("From")
                                 ->native(false)
                                 ->required(),
-                            Forms\Components\DateTimePicker::make('start_date')
+                            Forms\Components\DateTimePicker::make('end_date')
                                 ->label("To")
                                 ->native(false)
                                 ->required(),
                         ])
                         ->action(function($records, $data){
-                            ddd($records, $data);
+                            foreach ($records as $record)
+                            {
+                                AntaresExportJob::dispatch(auth()->user(), $record, Carbon::parse($data['start_date']), Carbon::parse($data['end_date']));
+                            }
                         }),
                 ]),
             ]);
