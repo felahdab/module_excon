@@ -4,6 +4,7 @@ namespace Modules\Excon\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 
@@ -356,5 +357,15 @@ class Unit extends Model
             $this->getKey(),
             $this->updated_at->timestamp
         );
+    }
+
+    public function scopeOfType(Builder $query, string $type)
+    {
+        $query->where('type', $type);
+    }
+
+    public function scopeNotOfType(Builder $query, string $type)
+    {
+        $query->where('type', '<>', $type);
     }
 }
