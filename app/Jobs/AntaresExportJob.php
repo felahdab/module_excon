@@ -11,8 +11,13 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 use Carbon\Carbon;
-use Modules\Excon\Models\Unit;
 
+use Filament\Notifications\Notification;
+use Filament\Notifications\Actions\Action as NotificationAction;
+
+use App\Models\User;
+
+use Modules\Excon\Models\Unit;
 use Modules\Excon\Services\AntaresExportService;
 
 
@@ -27,7 +32,7 @@ class AntaresExportJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(public Unit $unit, public Carbon $start_timestamp, public Carbon $stop_timestamp)
+    public function __construct(public User $user, public Unit $unit, public Carbon $start_timestamp, public Carbon $stop_timestamp)
     {
         $snake_unit_name = Str::snake($unit->name);
         $this->filename = "{$snake_unit_name}_{$start_timestamp->format('YmdHs')}_{$stop_timestamp->format('YmdHs')}.txt"; 
@@ -44,6 +49,7 @@ class AntaresExportJob implements ShouldQueue
     {
         $lines = AntaresExportService::make()
                         ->exportAsAntares($this->unit, $this->start_timestamp, $this->stop_timestamp);
+
         $content = "";
         foreach($lines as $line)
         {
@@ -51,6 +57,17 @@ class AntaresExportJob implements ShouldQueue
         }
 
         Storage::disk('public')->put("excon/{$this->filename}", $content);
+
+        Notification::make()
+            ->title("Export completed")
+            ->body("The export for {$this->unit->name} between {$this->start_timestamp} and {$this->stop_timestamp} is completed.")
+            ->actions([
+                NotificationAction::make('download')
+                    ->label("Download your file")
+                    ->url($this->url,  shouldOpenInNewTab: true)
+                    ->markAsRead()
+            ])
+            ->sendToDatabase($this->user, isEventDispatched: true);
     }
 }
 
