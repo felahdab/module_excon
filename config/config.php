@@ -18,4 +18,16 @@ return [
      * Valeur par défaut: 300 (soit 5 minutes)
      */
     'limite_validite' => 300,
+
+    /**
+     * URL de base du serveur NIRIS
+     * Valeur par défaut: https://1.2.3.4:2001/service/nwac/rest
+     */
+    'niris_url' => "https://1.2.3.4:2001/service/nwac/rest",
+
+    /**
+     * Token à utiliser pour l'authentification auprès du serveur NIRIS
+     * Valeur par défaut: notoken
+     */
+    'niris_token' => "notoken",
 ];
