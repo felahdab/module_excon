@@ -29,6 +29,7 @@ class Unit extends Model
      */
     protected $fillable = [
         "name",
+        "type",
         "side_id",
         "data",
     ];

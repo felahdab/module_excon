@@ -4,6 +4,7 @@ namespace Modules\Excon\Filament\Pages;
 
 use Modules\Excon\Models\User;
 use Modules\Excon\Models\Unit;
+use Modules\Excon\Enums\UnitTypes;
 
 
 class MyUnitDashboard extends UnitDashboard
@@ -24,7 +25,8 @@ class MyUnitDashboard extends UnitDashboard
     public static function canAccess(): bool
     {
         $result = auth()->check() && 
-                    cast_as_eloquent_descendant(auth()->user(), User::class)?->unit != null;
+                    cast_as_eloquent_descendant(auth()->user(), User::class)?->unit != null &&
+                    cast_as_eloquent_descendant(auth()->user(), User::class)?->unit->type != UnitTypes::STAFF->value;
 
         return $result;
     }
