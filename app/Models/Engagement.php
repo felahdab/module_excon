@@ -168,7 +168,9 @@ class Engagement extends Model
 
         return [
             "id" => $this->id,
-            "timestamp" => $timestamp,
+            "current_time" => now()->timestamp,
+            "timestamp" => $timestamp->timestamp, // Le timestamp en secondes
+            "weapon_flight_time" => $weapon->flight_time,
             "latitude" => $latitude,
             "longitude" => $longitude,
             "target_latitude" => $target_latitude,
