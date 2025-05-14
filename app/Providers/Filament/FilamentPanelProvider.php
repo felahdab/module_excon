@@ -60,7 +60,7 @@ class FilamentPanelProvider extends PanelProvider
             ->discoverResources(in: module_path($this->module, 'app/Filament/Resources'), for: "$moduleNamespace\\Filament\\Resources")
             ->discoverPages(in: module_path($this->module, 'app/Filament/Pages'), for: "$moduleNamespace\\Filament\\Pages")
             ->pages([
-                Pages\Dashboard::class,
+                //Pages\Dashboard::class,
             ])
             ->discoverWidgets(in: module_path($this->module, 'app/Filament/Widgets'), for: "$moduleNamespace\\Filament\\Widgets")
             ->widgets([

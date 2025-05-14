@@ -11,6 +11,7 @@ use Filament\Pages\Page;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
+use Filament\Support\Enums\MaxWidth;
 use Filament\Forms;
 use Filament\Actions;
 use Filament\Infolists\Infolist;
@@ -21,7 +22,6 @@ use Filament\Infolists\Components\RepeatableEntry;
 use Filament\Infolists\Components\Livewire;
 
 use Modules\Excon\Filament\Pages\Widgets\WeaponsHistory;
-
 
 use Modules\Excon\Models\User;
 use Modules\Excon\Models\Unit;
@@ -69,54 +69,88 @@ class UnitDashboard extends Page
         return [
             Actions\Action::make("report_engagement")
                 ->requiresConfirmation()
+                ->modalWidth(MaxWidth::FiveExtraLarge)
                 ->form([
-                    Forms\Components\DateTimePicker::make('timestamp')
-                        ->required()
-                        ->default(now())
-                        ->live()
-                        ->native(false),
-                    Forms\Components\TextInput::make('own_latitude')
+                    Forms\Components\Section::make('Target course and speed')
+                        ->columns(2)
+                        ->schema([
+                        Forms\Components\DateTimePicker::make('timestamp')
+                            ->required()
+                            ->default(now())
+                            ->native(false),
+                        Forms\Components\TextInput::make('assessed_target')
+                            ->label("Assessed target")
+                            ->required(),
+                    ]),
+                    Forms\Components\Section::make('Own position')
+                        ->description('This section is displayed because the application doesn\'t have a valid position for your unit.')
+                        ->columns(2)
                         ->hidden(function() use ($unit) {
                             return $unit->position_is_valid;
-                        }),
-                    Forms\Components\TextInput::make('own_longitude')
-                        ->hidden(function() use ($unit) {
-                            return $unit->position_is_valid;
-                        }),
-                    Forms\Components\Select::make('weapon_id')
-                        ->options(function () use ($unit)
-                            {
-                                $ret = $unit->available_weapons;
-                                $unit->refresh();
-                                return $ret;
-                            })
-                        ->required(),                
-                    Forms\Components\TextInput::make('amount')
-                        ->required()
-                        ->numeric(),
+                        })
+                        ->schema([
+                            Forms\Components\TextInput::make('own_latitude')
+                                ->label("Latitude"),
+                            Forms\Components\TextInput::make('own_longitude')
+                                ->label("Longitude"),
+
+                    ]),
+                    Forms\Components\Section::make('Weapon used')
+                        ->columns(2)
+                        ->schema([
+                        Forms\Components\Select::make('weapon_id')
+                            ->options(function () use ($unit)
+                                {
+                                    $ret = $unit->available_weapons;
+                                    $unit->refresh();
+                                    return $ret;
+                                })
+                            ->required(),                
+                        Forms\Components\TextInput::make('amount')
+                            ->required()
+                            ->numeric(),
+                    ]),
                     Forms\Components\Select::make('engagement_type')
                         ->options(["track_number" => "Track number", "absolute_position" => "Absolute position"])
                         ->live(),
-                    Forms\Components\Select::make('track_number')
-                        ->options(Identifier::source("LDT")->isValid()->get()->pluck('identifier', 'identifier'))
-                        ->searchable()
+                    Forms\Components\Section::make('Engagement on track number')
+                        ->columns(2)
                         ->visible(function (Get $get) {
                             return $get("engagement_type") == "track_number";
                         })
-                        ->requiredIf('engagement_type', 'track_number'),
-                    Forms\Components\TextInput::make('target_latitude')
-                        ->numeric()
+                        ->schema([
+                            Forms\Components\Select::make('track_number')
+                                ->helperText('Only tracks with a valid position are shown. If your target doesn\'t appear, switch to absolute position and report the position of your targer.')
+                                ->options(Identifier::source("LDT")->isValid()->get()->pluck('identifier', 'identifier'))
+                                ->searchable()
+                                ->requiredIf('engagement_type', 'track_number'),
+                    ]),
+                    Forms\Components\Section::make('Engagement on absolute position')
+                        ->columns(2)
                         ->visible(function (Get $get) {
                             return $get("engagement_type") == "absolute_position";
                         })
-                        ->requiredIf('engagement_type', 'absolute_position'),
-                    Forms\Components\TextInput::make('target_longitude')
-                        ->numeric()
-                        ->visible(function (Get $get) {
-                            return $get("engagement_type") == "absolute_position";
-                        })
-                        ->requiredIf('engagement_type', 'absolute_position'),
-                ])
+                        ->schema([
+                            Forms\Components\TextInput::make('target_latitude')
+                                ->numeric()
+                                ->requiredIf('engagement_type', 'absolute_position'),
+                            Forms\Components\TextInput::make('target_longitude')
+                                ->numeric()
+                                ->requiredIf('engagement_type', 'absolute_position'),
+                        ]),
+                    Forms\Components\Section::make('Target course and speed')
+                        ->description('Please specify the course and speed of your target as you would use in your weapon system. This will be used to assess the quality of the engagement.')
+                        ->columns(2)
+                        ->schema([
+                            Forms\Components\TextInput::make('target_course')
+                                ->numeric()
+                                ->required(),
+                            Forms\Components\TextInput::make('target_speed')
+                                ->helperText('Your target speed in knots.')
+                                ->numeric()
+                                ->required(),
+                        ])
+                    ])
                 ->visible(function() {
                     $ret = auth()->user()->can("excon::report_engagement_for_own_unit");
                     return $ret;
@@ -158,6 +192,9 @@ class UnitDashboard extends Page
                                         "track_number" => $data["track_number"] ?? null,
                                         "target_latitude" => $data["target_latitude"] ?? null,
                                         "target_longitude" => $data["target_longitude"] ?? null,
+                                        "target_course" => $data["target_course"] ?? 0,
+                                        "target_speed" => $data["target_speed"] ? floatval($data["target_speed"])  * 1854 / 3600 : 0,
+                                        "assessed_target" => $data["assessed_target"] ?? null,
                                     ]
                                 ]);   
                     $unit->touch();         

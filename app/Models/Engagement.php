@@ -114,9 +114,36 @@ class Engagement extends Model
 
     public function description_for_dis()
     {
-        return Cache::remember($this->cacheKey(), 600, function () {
+        $static_description =  Cache::remember($this->cacheKey(), 600, function () {
             return $this->calculate_description_for_dis();
         });
+        $static_description["current_time"] = now()->timestamp;
+        
+        return $static_description;
+
+    }
+
+    public function calcMissileRoute($target_course, $target_speed, $azimuth_lanceur_but, $weapon_speed)
+    {
+        /**
+         * Calculer la laterale but.
+         * Ajuster la course pour ajuster la laterale lanceur.
+         */
+        //dump(...func_get_args());
+        //$target_course = 0; // On a besoin de la route de la cible
+        //$target_speed = 0; // On a besoin de la vitesse de la cible
+
+        $reverse_course = \GeometryLibrary\MathUtil::wrap($azimuth_lanceur_but + 180, 0, 360);
+        //dump("reverse course: {$reverse_course}");
+        $laterale_but = - sin(deg2rad($target_course - $reverse_course)) * $target_speed;
+        //dump("laterale but: {$laterale_but}");
+        // Si la laterale but est positive: l'azimuth lanceur-but a tendance à augmentre
+        // Si la laterale but est négative: l'azimuth lanceur-but a tendance à diminuer
+
+        $derive_angulaire = rad2deg(asin(floatval($laterale_but / $weapon_speed)));
+        //dump("derive angulaire: {$derive_angulaire}");
+
+        return $azimuth_lanceur_but + $derive_angulaire;
     }
 
     public function calculate_description_for_dis()
@@ -137,38 +164,37 @@ class Engagement extends Model
             $track_number = Arr::get($this->data, "track_number");
             $identifier = Identifier::where('identifier', $track_number)->first();
             [$target_latitude, $target_longitude] = $identifier->extrapolatePositionForTimestamp($timestamp);
-
-            $course = \GeometryLibrary\SphericalUtil::computeHeading(
-                ['lat' => $latitude, 'lng' => $longitude],
-                ['lat' => $target_latitude, 'lng' => $target_longitude]);
-
-            $course = \GeometryLibrary\MathUtil::wrap($course, 0, 360);
-
-            $distance = \GeometryLibrary\SphericalUtil::computeDistanceBetween(
-                ['lat' => $latitude, 'lng' => $longitude],
-                ['lat' => $target_latitude, 'lng' => $target_longitude]);
-
         }
         elseif($engagement_type == 'absolute_position')
         {
             $target_latitude = floatval(Arr::get($this->data, 'target_latitude'));
             $target_longitude = floatval(Arr::get($this->data, 'target_longitude'));
-
-            $course = \GeometryLibrary\SphericalUtil::computeHeading(
-                ['lat' => $latitude, 'lng' => $longitude],
-                ['lat' => $target_latitude, 'lng' => $target_longitude]);
-
-            $course = \GeometryLibrary\MathUtil::wrap($course, 0, 360);
-
-            $distance = \GeometryLibrary\SphericalUtil::computeDistanceBetween(
-                    ['lat' => $latitude, 'lng' => $longitude],
-                    ['lat' => $target_latitude, 'lng' => $target_longitude]);
         }
 
+        $course = \GeometryLibrary\SphericalUtil::computeHeading(
+            ['lat' => $latitude, 'lng' => $longitude],
+            ['lat' => $target_latitude, 'lng' => $target_longitude]);
+
+        $course = \GeometryLibrary\MathUtil::wrap($course, 0, 360);
+
+        $distance = \GeometryLibrary\SphericalUtil::computeDistanceBetween(
+            ['lat' => $latitude, 'lng' => $longitude],
+            ['lat' => $target_latitude, 'lng' => $target_longitude]);
+
+        /**
+         * Calculer la laterale but.
+         * Ajuster la course pour ajuster la laterale lanceur.
+         */
+        $target_course = Arr::get($this->data, 'target_course', 0);
+        $target_speed = Arr::get($this->data, 'target_speed', 0);
+
+        //calcMissileRoute($target_course, $target_speed, $azimuth_lanceur_but, $weapon_speed)
+        $missile_course = $this->calcMissileRoute($target_course, $target_speed, $course, floatval($weapon->speed));
 
         return [
             "id" => $this->id,
-            "timestamp" => $timestamp,
+            "timestamp" => $timestamp->timestamp, // Le timestamp en secondes
+            "weapon_flight_time" => $weapon->flight_time,
             "latitude" => $latitude,
             "longitude" => $longitude,
             "target_latitude" => $target_latitude,
@@ -186,7 +212,7 @@ class Engagement extends Model
             ],
             "speed" => floatval($weapon->speed),
             "maxrange" => floatval($weapon->maxrange),
-            "course" => $course,
+            "course" => $missile_course,
             "distance" => $distance
         ];
     }

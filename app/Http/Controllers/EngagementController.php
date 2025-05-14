@@ -34,7 +34,7 @@ class EngagementController extends Controller
 
          // The forCurrentUser scope relies on data filled in by the acknowlegeForUser method of Engagement.
         $engagements = Engagement::forCurrentUser()
-            ->ofType(WeaponTypes::SURFACE_TO_SURFACE)
+            ->ofType(WeaponTypes::SURFACE_TO_SURFACE->value)
             ->get();
 
         $engagements = $engagements->filter(function ($item){
@@ -42,6 +42,9 @@ class EngagementController extends Controller
         })
         ->map(function ($item){
             return $item->description_for_dis();
+        })
+        ->filter(function ($item){
+            return $item["current_time"]-$item["timestamp"] < $item["weapon_flight_time"];
         });
 
         logger()->info("Provided " . $engagements->count() . " engagements data to system: " . auth()->user()->nom);
