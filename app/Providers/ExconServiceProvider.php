@@ -17,6 +17,7 @@ use Modules\Excon\Models\Unit;
 use Modules\Excon\Models\Weapon;
 use Modules\Excon\Models\Identifier;
 
+use Modules\Excon\Enums\UnitTypes;
 
 use Modules\Excon\Policies\EngagementPolicy;
 use Modules\Excon\Policies\PositionPolicy;
@@ -27,6 +28,7 @@ use Modules\Excon\Policies\IdentifierPolicy;
 
 use Modules\Excon\Filament\Pages\Dashboard;
 use Modules\Excon\Filament\Pages\MyUnitDashboard;
+use Modules\Excon\Filament\Pages\UnitDashboard;
 
 class ExconServiceProvider extends ServiceProvider
 {
@@ -62,6 +64,28 @@ class ExconServiceProvider extends ServiceProvider
 
     public function registerMenus()
     {
+        $blue_unit_dashboard_menus = [];
+        foreach (Unit::notOfType(UnitTypes::STAFF->value)
+                        ->where('side_id', Side::where('name', 'blue')->first()->id)
+                        ->orderBy('name')
+                        ->get() as $unit)
+        {
+            $blue_unit_dashboard_menus[] =  DirectMenuItem::make()
+                                    ->name("{$unit->name} dashboard")
+                                    ->url(fn() => UnitDashboard::getUrl(['unit' => $unit]));
+        }
+
+        $red_unit_dashboard_menus = [];
+        foreach (Unit::notOfType(UnitTypes::STAFF->value)
+                        ->where('side_id', Side::where('name', 'red')->first()->id)
+                        ->orderBy('name')
+                        ->get() as $unit)
+        {
+            $red_unit_dashboard_menus[] =  DirectMenuItem::make()
+                                    ->name("{$unit->name} dashboard")
+                                    ->url(fn() => UnitDashboard::getUrl(['unit' => $unit]));
+        }
+
         app(ModuleDefinedMenusRegistry::class)->registerDirectMenuItems([
             DirectMenuItem::make()
                 ->name('Excon Module')
@@ -75,7 +99,16 @@ class ExconServiceProvider extends ServiceProvider
                         ->name('Excon - My unit dashboard')
                         ->url(fn() => MyUnitDashboard::getUrl(panel: "excon"))
                         ->visible(fn() => auth()->check() && MyUnitDashboard::canAccess()),
+                    
                 ]),
+                DirectMenuItem::make()
+                    ->name('Excon Blue units dashboards')
+                    ->visible(fn() => auth()->check() && auth()->user()->can("excon::view_all_units_dashboard"))
+                    ->children($blue_unit_dashboard_menus),
+                DirectMenuItem::make()
+                    ->name('Excon Red units dashboards')
+                    ->visible(fn() => auth()->check() && auth()->user()->can("excon::view_all_units_dashboard"))
+                    ->children($red_unit_dashboard_menus)
         ]);
     }
 
