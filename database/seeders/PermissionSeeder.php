@@ -33,12 +33,22 @@ class PermissionSeeder extends Seeder
         ]);
         Permission::firstOrCreate(
             [
-            "name" => "excon::report_engagement_for_own_unit",
+            "name" => "excon::report_snipe_for_own_unit",
             "guard_name" => "web",
         ]);
         Permission::firstOrCreate(
             [
             "name" => "excon::export_antares_reports",
+            "guard_name" => "web",
+        ]);
+        Permission::firstOrCreate(
+            [
+            "name" => "excon::record_snipe_report",
+            "guard_name" => "web",
+        ]);
+        Permission::firstOrCreate(
+            [
+            "name" => "excon::load_weapons_into_units",
             "guard_name" => "web",
         ]);
 

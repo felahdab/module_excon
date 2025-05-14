@@ -17,6 +17,7 @@ class ExconDatabaseSeeder extends Seeder
             UnitSeeder::class,
             IdentifierSeeder::class,
             PermissionSeeder::class,
+            RoleSeeder::class
         ]);
     }
 }
