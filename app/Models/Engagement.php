@@ -31,8 +31,7 @@ class Engagement extends Model
         "unit_id",
         "amount",
         "weapon_id",
-        "data",
-        "entity_number"
+        "data"
     ];
 
     protected $casts = [
@@ -106,6 +105,7 @@ class Engagement extends Model
         }
         catch (Exception $e) 
             {
+                logger()->error("Engagement {$this->id} is not valid: " . $e->getMessage());
                 return false;
             }
 
@@ -200,7 +200,7 @@ class Engagement extends Model
             "target_latitude" => $target_latitude,
             "target_longitude" => $target_longitude,
             "AN" => $unit->id,
-            "EN" => $this->entity_number,
+            "EN" => $this->entity_numbers,
             "entity_type" => [
                 "kind" => $weapon->kind,
                 "domain" => $weapon->domain,
@@ -211,10 +211,16 @@ class Engagement extends Model
                 "extra" => $weapon->extra,
             ],
             "speed" => floatval($weapon->speed),
-            "maxrange" => floatval($weapon->maxrange),
+            "maxrange" => floatval($weapon->range),
             "course" => $missile_course,
             "distance" => $distance
         ];
+    }
+
+    public function getEntityNumbersAttribute()
+    {
+        $entity_numbers = Arr::get($this->data, "entity_numbers", []);
+        return $entity_numbers;
     }
 
     public function cacheKey()

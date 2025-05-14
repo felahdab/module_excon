@@ -36,7 +36,7 @@ class EngagementController extends Controller
         $engagements = Engagement::forCurrentUser()
             ->ofType(WeaponTypes::SURFACE_TO_SURFACE->value)
             ->get();
-
+            
         $engagements = $engagements->filter(function ($item){
             return $item->isValid;
         })
@@ -57,7 +57,7 @@ class EngagementController extends Controller
     public function acknowledge(AckEngagementRequest $request)
     {
         $validated = $request->validated();
-        $engagement = Engagement::where("entity_number", $validated["engagement"])->first();
+        $engagement = Engagement::find($validated["engagement"]);
 
         if ($engagement != null)
         {

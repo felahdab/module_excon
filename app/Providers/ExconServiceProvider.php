@@ -64,6 +64,7 @@ class ExconServiceProvider extends ServiceProvider
 
     public function registerMenus()
     {
+        //return;
         $blue_unit_dashboard_menus = [];
         foreach (Unit::notOfType(UnitTypes::STAFF->value)
                         ->where('side_id', Side::where('name', 'blue')->first()->id)
@@ -72,7 +73,7 @@ class ExconServiceProvider extends ServiceProvider
         {
             $blue_unit_dashboard_menus[] =  DirectMenuItem::make()
                                     ->name("{$unit->name} dashboard")
-                                    ->url(fn() => UnitDashboard::getUrl(['unit' => $unit]));
+                                    ->url(fn() => UnitDashboard::getUrl(['unit' => $unit], panel: "excon"));
         }
 
         $red_unit_dashboard_menus = [];
@@ -83,7 +84,7 @@ class ExconServiceProvider extends ServiceProvider
         {
             $red_unit_dashboard_menus[] =  DirectMenuItem::make()
                                     ->name("{$unit->name} dashboard")
-                                    ->url(fn() => UnitDashboard::getUrl(['unit' => $unit]));
+                                    ->url(fn() => UnitDashboard::getUrl(['unit' => $unit], panel: "excon"));
         }
 
         app(ModuleDefinedMenusRegistry::class)->registerDirectMenuItems([

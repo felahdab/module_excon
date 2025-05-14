@@ -37,4 +37,13 @@ class EntityNumber extends Model
         return $en->id;
     }
 
+    public static function getSeveralEntityNumbers($count)
+    {
+        $entity_numbers = [];
+        for ($i=0; $i<$count; $i++){
+            $entity_numbers[] = static::getNewEntityNumber();
+        }
+        return $entity_numbers;
+    }
+
 }

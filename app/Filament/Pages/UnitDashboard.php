@@ -88,13 +88,13 @@ class UnitDashboard extends Page
                         ->default(now())
                         ->required()
                 ])
-                ->action(function ($data, $record){
+                ->action(function ($data, $record) use ($unit){
                     $weapon=Weapon::find($data["weapon_type"]);
-                    $record->weapons()
+                    $unit->weapons()
                         ->attach($weapon, ["amount" => $data["amount"],
                                         "timestamp" => $data["timestamp"]
                                         ]);       
-                    $record->touch();     
+                    $unit->touch();     
                 }),
             Actions\Action::make("record_engagement")
                 ->requiresConfirmation()
@@ -106,22 +106,21 @@ class UnitDashboard extends Page
                         ->default(now())
                         ->native(false),
                     Forms\Components\Select::make('weapon_id')
-                        ->options(function ()
+                        ->options(function () use ($unit)
                             {
-                                $unit = $this->getRecord();
                                 return $unit->available_weapons;
                             })
                         ->live()
                         ->required(),                
                     Forms\Components\TextInput::make('amount')
                         ->required()
-                        ->maxValue(function (Get $get, $record) {
+                        ->maxValue(function (Get $get) use ($unit) {
                             $weapon = Weapon::find($get('weapon_id'));
                             if ($weapon == null)
                             {
                                 return 99999;
                             }
-                             return $record->remaining_ammunitions($weapon);
+                             return $unit->remaining_ammunitions($weapon);
                         })
                         ->numeric(),
                     Forms\Components\Select::make('engagement_type')
@@ -145,9 +144,9 @@ class UnitDashboard extends Page
                         })
                         ->requiredIf('engagement_type', 'absolute_position'),
                 ])
-                ->action(function ($data, $record){
+                ->action(function ($data) use ($unit){
                     $weapon = Weapon::find($data["weapon_id"]);
-                    $stock_before_engagement = $record->remaining_ammunitions($weapon) ?? 0;
+                    $stock_before_engagement = $unit->remaining_ammunitions($weapon) ?? 0;
 
                     if ($data["amount"] > $stock_before_engagement)
                     {
@@ -158,19 +157,19 @@ class UnitDashboard extends Page
                             ->send();
                         return;
                     }
-                    $record->engagements()
+                    $unit->engagements()
                         ->create([  "weapon_id" => $weapon->id,
                                     "amount"    => $data["amount"],
                                     "timestamp" => $data["timestamp"],
-                                    "entity_number" => EntityNumber::getNewEntityNumber(),
                                     "data" => [
+                                        "entity_numbers" => EntityNumber::getSeveralEntityNumbers(intval($data["amount"])),
                                         "engagement_type" => $data["engagement_type"],
                                         "track_number" => $data["track_number"] ?? null,
                                         "target_latitude" => $data["target_latitude"] ?? null,
                                         "target_longitude" => $data["target_longitude"] ?? null,
                                     ]
                                 ]);   
-                    $record->touch();         
+                    $unit->touch();         
                 }),
             Actions\Action::make("report_engagement")
                 ->label("Report SNIPE to EXCON")
@@ -293,9 +292,9 @@ class UnitDashboard extends Page
                         ->create([  "weapon_id" => $weapon->id,
                                     "amount"    => $data["amount"],
                                     "timestamp" => $data["timestamp"],
-                                    "entity_number" => EntityNumber::getNewEntityNumber(),
                                     "data" => [
                                         "engagement_type" => $data["engagement_type"],
+                                        "entity_numbers" => EntityNumber::getSeveralEntityNumbers(intval($data["amount"])),
                                         "track_number" => $data["track_number"] ?? null,
                                         "target_latitude" => $data["target_latitude"] ?? null,
                                         "target_longitude" => $data["target_longitude"] ?? null,

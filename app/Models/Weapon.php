@@ -27,7 +27,7 @@ class Weapon extends Model
         "extra",
         "specific",
         "speed",
-        "maxrange",
+        "range",
         "data"
 
     ];
@@ -44,11 +44,11 @@ class Weapon extends Model
     public function getFlightTimeAttribute()
     {
         /**
-         * La maxrange est en km.
+         * La range est en km.
          * La speed est en m/s.
-         * Donc le temps de vol est égal à maxrange * 1000 (en m) / speed (en m/s)
+         * Donc le temps de vol est égal à range * 1000 (en m) / speed (en m/s)
          */
-        return $this->maxrange * 1000 / $this->speed;
+        return floatval($this->range) * 1000 / floatval($this->speed);
 
     }
 }
