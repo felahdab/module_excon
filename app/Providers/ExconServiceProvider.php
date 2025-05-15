@@ -65,28 +65,6 @@ class ExconServiceProvider extends ServiceProvider
     public function registerMenus()
     {
         //return;
-        $blue_unit_dashboard_menus = [];
-        foreach (Unit::notOfType(UnitTypes::STAFF->value)
-                        ->where('side_id', Side::where('name', 'blue')->first()->id)
-                        ->orderBy('name')
-                        ->get() as $unit)
-        {
-            $blue_unit_dashboard_menus[] =  DirectMenuItem::make()
-                                    ->name("{$unit->name} dashboard")
-                                    ->url(fn() => UnitDashboard::getUrl(['unit' => $unit], panel: "excon"));
-        }
-
-        $red_unit_dashboard_menus = [];
-        foreach (Unit::notOfType(UnitTypes::STAFF->value)
-                        ->where('side_id', Side::where('name', 'red')->first()->id)
-                        ->orderBy('name')
-                        ->get() as $unit)
-        {
-            $red_unit_dashboard_menus[] =  DirectMenuItem::make()
-                                    ->name("{$unit->name} dashboard")
-                                    ->url(fn() => UnitDashboard::getUrl(['unit' => $unit], panel: "excon"));
-        }
-
         app(ModuleDefinedMenusRegistry::class)->registerDirectMenuItems([
             DirectMenuItem::make()
                 ->name('Excon Module')
@@ -105,11 +83,35 @@ class ExconServiceProvider extends ServiceProvider
                 DirectMenuItem::make()
                     ->name('Excon Blue units dashboards')
                     ->visible(fn() => auth()->check() && auth()->user()->can("excon::view_all_units_dashboard"))
-                    ->children($blue_unit_dashboard_menus),
+                    ->children(function() {
+                        $blue_unit_dashboard_menus = [];
+                        foreach (Unit::notOfType(UnitTypes::STAFF->value)
+                                        ->where('side_id', Side::where('name', 'blue')->first()->id)
+                                        ->orderBy('name')
+                                        ->get() as $unit)
+                        {
+                            $blue_unit_dashboard_menus[] =  DirectMenuItem::make()
+                                                    ->name("{$unit->name} dashboard")
+                                                    ->url(fn() => UnitDashboard::getUrl(['unit' => $unit], panel: "excon"));
+                        }
+                        return $blue_unit_dashboard_menus;
+                    }),
                 DirectMenuItem::make()
                     ->name('Excon Red units dashboards')
                     ->visible(fn() => auth()->check() && auth()->user()->can("excon::view_all_units_dashboard"))
-                    ->children($red_unit_dashboard_menus)
+                    ->children(function(){
+                        $red_unit_dashboard_menus = [];
+                        foreach (Unit::notOfType(UnitTypes::STAFF->value)
+                                        ->where('side_id', Side::where('name', 'red')->first()->id)
+                                        ->orderBy('name')
+                                        ->get() as $unit)
+                        {
+                            $red_unit_dashboard_menus[] =  DirectMenuItem::make()
+                                                    ->name("{$unit->name} dashboard")
+                                                    ->url(fn() => UnitDashboard::getUrl(['unit' => $unit], panel: "excon"));
+                        }
+                        return $red_unit_dashboard_menus;
+                    })
         ]);
     }
 
