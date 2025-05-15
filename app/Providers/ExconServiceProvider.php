@@ -28,6 +28,7 @@ use Modules\Excon\Policies\IdentifierPolicy;
 
 use Modules\Excon\Filament\Pages\Dashboard;
 use Modules\Excon\Filament\Pages\MyUnitDashboard;
+use Modules\Excon\Filament\Pages\SideDashboard;
 use Modules\Excon\Filament\Pages\UnitDashboard;
 
 class ExconServiceProvider extends ServiceProvider
@@ -80,6 +81,19 @@ class ExconServiceProvider extends ServiceProvider
                         ->visible(fn() => auth()->check() && MyUnitDashboard::canAccess()),
                     
                 ]),
+                DirectMenuItem::make()
+                    ->name('Excon Side dashboards')
+                    ->visible(fn() => auth()->check() && auth()->user()->can("excon::view_all_sides_dashboard"))
+                    ->children(function() {
+                        $side_dashboards = [];
+                        foreach( Side::all() as $side)
+                        {
+                            $side_dashboards[] =  DirectMenuItem::make()
+                                ->name("{$side->name} dashboard")
+                                ->url(fn() => SideDashboard::getUrl(['side' => $side], panel: "excon"));
+                        }
+                        return $side_dashboards;
+                    }),
                 DirectMenuItem::make()
                     ->name('Excon Blue units dashboards')
                     ->visible(fn() => auth()->check() && auth()->user()->can("excon::view_all_units_dashboard"))
