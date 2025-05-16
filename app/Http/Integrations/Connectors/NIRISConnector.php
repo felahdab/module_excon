@@ -10,16 +10,11 @@ class NIRISConnector extends Connector
 {
     use AcceptsJson;
 
-    public function __construct(public readonly string $url, 
-                                public readonly string $token) 
+    public function __construct(public readonly string $url) 
     {
 
     }
 
-    // protected function defaultAuth(): TokenAuthenticator
-    // {
-    //     return new TokenAuthenticator($this->token);
-    // }
     /**
      * The Base URL of the API
      */

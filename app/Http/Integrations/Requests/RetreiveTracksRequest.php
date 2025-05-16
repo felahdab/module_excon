@@ -10,11 +10,11 @@ class RetreiveTracksRequest extends Request
     protected Method $method = Method::GET;
 
     public function __construct(public string $datasource) {
-        
+        $this->query()->add('dataSources', $datasource);
     }
 
     public function resolveEndpoint(): string
     {
-        return "/tracks/{$this->datasource}/";
+        return "/rest/tracks";
     }
 }

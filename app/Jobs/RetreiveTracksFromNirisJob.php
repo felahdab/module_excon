@@ -29,9 +29,8 @@ class RetreiveTracksFromNirisJob implements ShouldQueue
     public function handle(): void
     {
         $url = config("excon.niris_url");
-        $token=config("excon.niris_token");
 
-        $server = new NIRISConnector($url, $token);
+        $server = new NIRISConnector($url);
         $request = new RetreiveTracksRequest($this->datasource);
         $response = $server->send($request);
         $response->throw();

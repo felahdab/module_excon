@@ -10,11 +10,14 @@ class RetreiveKmlFileRequest extends Request
     protected Method $method = Method::GET;
 
     public function __construct(public string $datasource) {
-        
+        $this->query()->add('trackStyle', "STREET_MAP");
+        //GOOGLE_EARTH
+        //NATO_MAJIIC
+        //STREET_MAP
     }
 
     public function resolveEndpoint(): string
     {
-        return "/tracks/{$this->datasource}/";
+        return "rest/kml/{$this->datasource}.kml";
     }
 }

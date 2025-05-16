@@ -30,9 +30,8 @@ class RetreiveKmlFileFromNirisJob implements ShouldQueue
     public function handle(): void
     {
         $url = config("excon.niris_url");
-        $token=config("excon.niris_token");
 
-        $server = new NIRISConnector($url, $token);
+        $server = new NIRISConnector($url);
         $request = new RetreiveKmlFileRequest($this->datasource);
         $response = $server->send($request);
         $response->throw();
@@ -40,6 +39,7 @@ class RetreiveKmlFileFromNirisJob implements ShouldQueue
         $timestamp = now()->format('Y-m-d_H-i-s');
 
         Storage::disk('public')->put("excon/kml/{$this->datasource}_{$timestamp}.kml", $response->body());
+        dump(Storage::disk('public')->url("excon/kml/{$this->datasource}_{$timestamp}.kml"));
          
     }
 }

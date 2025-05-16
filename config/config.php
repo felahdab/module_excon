@@ -23,11 +23,6 @@ return [
      * URL de base du serveur NIRIS
      * Valeur par défaut: https://1.2.3.4:2001/service/nwac/rest
      */
-    'niris_url' => "https://1.2.3.4:2001/service/nwac/rest",
+    'niris_url' => "https:/10.56.186.80:2001/service/nwac/",
 
-    /**
-     * Token à utiliser pour l'authentification auprès du serveur NIRIS
-     * Valeur par défaut: notoken
-     */
-    'niris_token' => "notoken",
 ];
