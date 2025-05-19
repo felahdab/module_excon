@@ -4,6 +4,7 @@ namespace Modules\Excon\Providers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Schedule;
 use Illuminate\Support\ServiceProvider;
 use Nwidart\Modules\Traits\PathNamespace;
 
@@ -28,6 +29,8 @@ use Modules\Excon\Policies\IdentifierPolicy;
 
 use Modules\Excon\Filament\Pages\Dashboard;
 use Modules\Excon\Filament\Pages\MyUnitDashboard;
+
+use Modules\Excon\Jobs\RetreiveTracksFromNirisJob;
 use Modules\Excon\Filament\Pages\SideDashboard;
 use Modules\Excon\Filament\Pages\UnitDashboard;
 
@@ -159,10 +162,23 @@ class ExconServiceProvider extends ServiceProvider
      */
     protected function registerCommandSchedules(): void
     {
-        // $this->app->booted(function () {
-        //     $schedule = $this->app->make(Schedule::class);
-        //     $schedule->command('inspire')->hourly();
-        // });
+        $this->app->booted(function () {
+            Schedule::call(function()
+            {
+                $job = new RetreiveTracksFromNirisJob("BLEU");
+                $job->handle();
+            })->everyMinute();
+            Schedule::call(function()
+            {
+                $job = new RetreiveTracksFromNirisJob("RED");
+                $job->handle();
+            })->everyMinute();
+            Schedule::call(function()
+            {
+                $job = new RetreiveTracksFromNirisJob("BALISE");
+                $job->handle();
+            })->everyMinute();
+        });
     }
 
     /**

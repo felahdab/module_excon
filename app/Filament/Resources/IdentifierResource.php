@@ -50,6 +50,8 @@ class IdentifierResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('unit.name')
                     ->sortable(),
+                Tables\Columns\IconColumn::make('is_valid')
+                    ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

@@ -20,6 +20,8 @@ class Position extends Model
         "identifier_id",
         "latitude",
         "longitude",
+        "course",
+        "speed",
         "timestamp",
         "course",
         "speed",

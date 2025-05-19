@@ -37,8 +37,8 @@ class AntaresExportJob implements ShouldQueue
         $snake_unit_name = Str::snake($unit->name);
         $this->filename = "{$snake_unit_name}_{$start_timestamp->format('YmdHs')}_{$stop_timestamp->format('YmdHs')}.txt"; 
 
-        $this->filepath = Storage::disk('public')->path("excon/{$this->filename}");
-        $this->url = Storage::disk('public')->url("excon/{$this->filename}");
+        $this->filepath = Storage::disk('public')->path("excon/antares/{$this->filename}");
+        $this->url = Storage::disk('public')->url("excon/antares/{$this->filename}");
     }
 
 
@@ -56,7 +56,7 @@ class AntaresExportJob implements ShouldQueue
             $content = $content . $line . "\n";
         }
 
-        Storage::disk('public')->put("excon/{$this->filename}", $content);
+        Storage::disk('public')->put("excon/antares/{$this->filename}", $content);
 
         Notification::make()
             ->title("Export completed")

@@ -334,6 +334,9 @@ class Unit extends Model
 
     public function getPositionIsValidAttribute(?Carbon $timestamp = null)
     {
+        return $this->identifiers()->source("LDT_BLEU")->get()->filter(function ($item){
+            return $item->is_valid;
+        })->count() > 0;
         if ($timestamp == null)
         {
             $timestamp = Carbon::now();
@@ -341,7 +344,7 @@ class Unit extends Model
         
         $rightbefore = $timestamp->copy()->subSeconds(config("excon.limite_validite"));
         
-        $position = $this->positions(["LDT, COT"])
+        $position = $this->positions(["LDT_BLEU, COT"])
             ->where('timestamp', '>=', $rightbefore)
             ->where('timestamp', '<=', $timestamp)
             ->first();
