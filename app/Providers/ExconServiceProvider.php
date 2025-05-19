@@ -4,6 +4,7 @@ namespace Modules\Excon\Providers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Schedule;
 use Illuminate\Support\ServiceProvider;
 use Nwidart\Modules\Traits\PathNamespace;
 
@@ -17,7 +18,6 @@ use Modules\Excon\Models\Unit;
 use Modules\Excon\Models\Weapon;
 use Modules\Excon\Models\Identifier;
 
-
 use Modules\Excon\Policies\EngagementPolicy;
 use Modules\Excon\Policies\PositionPolicy;
 use Modules\Excon\Policies\SidePolicy;
@@ -27,6 +27,8 @@ use Modules\Excon\Policies\IdentifierPolicy;
 
 use Modules\Excon\Filament\Pages\Dashboard;
 use Modules\Excon\Filament\Pages\MyUnitDashboard;
+
+use Modules\Excon\Jobs\RetreiveTracksFromNirisJob;
 
 class ExconServiceProvider extends ServiceProvider
 {
@@ -109,10 +111,23 @@ class ExconServiceProvider extends ServiceProvider
      */
     protected function registerCommandSchedules(): void
     {
-        // $this->app->booted(function () {
-        //     $schedule = $this->app->make(Schedule::class);
-        //     $schedule->command('inspire')->hourly();
-        // });
+        $this->app->booted(function () {
+            Schedule::call(function()
+            {
+                $job = new RetreiveTracksFromNirisJob("BLEU");
+                $job->handle();
+            })->everyMinute();
+            Schedule::call(function()
+            {
+                $job = new RetreiveTracksFromNirisJob("RED");
+                $job->handle();
+            })->everyMinute();
+            Schedule::call(function()
+            {
+                $job = new RetreiveTracksFromNirisJob("BALISE");
+                $job->handle();
+            })->everyMinute();
+        });
     }
 
     /**
