@@ -334,9 +334,12 @@ class Unit extends Model
 
     public function getPositionIsValidAttribute(?Carbon $timestamp = null)
     {
-        return $this->identifiers()->source("LDT_BLEU")->get()->filter(function ($item){
+        $reference_datasource = $this->side->reference_datasource;
+
+        return $this->identifiers()->source([$reference_datasource, "LDT_BALISE"])->get()->filter(function ($item){
             return $item->is_valid;
         })->count() > 0;
+
         if ($timestamp == null)
         {
             $timestamp = Carbon::now();
