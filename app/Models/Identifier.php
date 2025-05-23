@@ -2,18 +2,16 @@
 
 namespace Modules\Excon\Models;
 
+use Exception;
+use Carbon\Carbon;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Modules\Excon\Traits\HasTablePrefix;
-
+use Illuminate\Support\Arr;
 use \Illuminate\Database\Eloquent\Relations\BelongsTo;
 use \Illuminate\Database\Eloquent\Relations\HasMany;
 
-use Illuminate\Support\Carbon;
-
-use Exception;
-
-// use Modules\Excon\Database\Factories\IdentifierFactory;
+use Modules\Excon\Traits\HasTablePrefix;
 
 class Identifier extends Model
 {
@@ -49,8 +47,27 @@ class Identifier extends Model
         return $this->hasMany(Position::class);
     }
 
+    public function setLatestPositionReceived(Position $position)
+    {
+        $data = $this->data;
+        Arr::set($data, 'position.latest_position_timestamp', $position->timestamp);
+        $this->data = $data;
+        $this->save();
+    }
+
     public function getIsValidAttribute()
     {
+        $latest_position_timestamp = Arr::get($this->data, 'position.latest_position_timestamp', null);
+        if ($latest_position_timestamp == null)
+        {
+            return false;
+        }
+        
+        $latest_position_timestamp = Carbon::parse($latest_position_timestamp);
+
+        return $latest_position_timestamp <= now() && $latest_position_timestamp >= now()->subSeconds(config("excon.limite_validite"));
+
+
         return $this->positions->where("timestamp", "<=", now())
             ->where("timestamp", ">=", now()->subSeconds(config("excon.limite_validite")))
             ->count() > 0;
