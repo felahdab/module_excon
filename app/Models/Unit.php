@@ -339,24 +339,24 @@ class Unit extends Model
         {
             return false; 
         }
-        
+
         return $this->identifiers()->source([$reference_datasource, "LDT_BALISE"])->get()->filter(function ($item){
             return $item->is_valid;
         })->count() > 0;
 
-        if ($timestamp == null)
-        {
-            $timestamp = Carbon::now();
-        }
+        // if ($timestamp == null)
+        // {
+        //     $timestamp = Carbon::now();
+        // }
         
-        $rightbefore = $timestamp->copy()->subSeconds(config("excon.limite_validite"));
+        // $rightbefore = $timestamp->copy()->subSeconds(config("excon.limite_validite"));
         
-        $position = $this->positions(["LDT_BLEU, COT"])
-            ->where('timestamp', '>=', $rightbefore)
-            ->where('timestamp', '<=', $timestamp)
-            ->first();
+        // $position = $this->positions(["LDT_BLEU, COT"])
+        //     ->where('timestamp', '>=', $rightbefore)
+        //     ->where('timestamp', '<=', $timestamp)
+        //     ->first();
 
-        return $position != null ;
+        // return $position != null ;
 
     }
 

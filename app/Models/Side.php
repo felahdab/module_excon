@@ -57,7 +57,8 @@ class Side extends Model
         $ret= [];
         foreach(static::all() as $side)
         {
-            if (in_array($source, $side->sources))
+            if ($source == $side->reference_datasource)
+//            if (in_array($source, $side->sources))
             {
                 $ret[] = $side;
             }
