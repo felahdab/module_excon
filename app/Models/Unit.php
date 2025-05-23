@@ -334,8 +334,12 @@ class Unit extends Model
 
     public function getPositionIsValidAttribute(?Carbon $timestamp = null)
     {
-        $reference_datasource = $this->side->reference_datasource;
-
+        $reference_datasource = $this->side?->reference_datasource;
+        if ($reference_datasource == null)
+        {
+            return false; 
+        }
+        
         return $this->identifiers()->source([$reference_datasource, "LDT_BALISE"])->get()->filter(function ($item){
             return $item->is_valid;
         })->count() > 0;
