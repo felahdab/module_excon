@@ -4,9 +4,6 @@ namespace Modules\Excon\Filament\Resources;
 
 use Carbon\Carbon;
 
-use Modules\Excon\Filament\Resources\UnitResource\Pages;
-use Modules\Excon\Filament\Resources\UnitResource\RelationManagers;
-use Modules\Excon\Models\Unit;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -15,7 +12,13 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
+
+use Modules\Excon\Filament\Resources\UnitResource\Pages;
+use Modules\Excon\Filament\Resources\UnitResource\RelationManagers;
+use Modules\Excon\Models\Unit;
 use Modules\Excon\Models\Weapon;
+use Modules\Excon\Enums\UnitTypes;
+
 use Modules\Excon\Filament\Resources\UnitResource\Widgets\UserTableWidget;
 use Modules\Excon\Filament\Pages\UnitDashboard;
 
@@ -35,9 +38,11 @@ class UnitResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\Select::make('type')
+                    ->required()
+                    ->options(UnitTypes::class),
                 Forms\Components\Select::make('side_id')
                     ->relationship(name: "side", titleAttribute: "name")
-                    ->required()
             ]);
     }
 
