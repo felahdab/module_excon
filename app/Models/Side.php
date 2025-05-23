@@ -44,6 +44,14 @@ class Side extends Model
         return Arr::flatten($sources);
     }
 
+    public function getReferenceDatasourceAttribute()
+    {
+        
+        $source = Arr::get($this->data, "reference_datasource", null);
+        
+        return $source;
+    }
+
     public static function getSideForSource($source)
     {
         $ret= [];
