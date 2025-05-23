@@ -29,14 +29,6 @@ class SideResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\ColorPicker::make('data.color')
-                    ->label("Color"),
-                Forms\Components\Repeater::make('data.sources')
-                    ->label("Position sources associated to this side")
-                    ->schema([
-                        Forms\Components\TextInput::make('name')->required(),
-                    ])
-
             ]);
     }
 
@@ -46,8 +38,7 @@ class SideResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\ColorColumn::make('data.color'),
-                    
+                   
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
