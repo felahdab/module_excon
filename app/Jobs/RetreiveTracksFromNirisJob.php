@@ -64,7 +64,7 @@ class RetreiveTracksFromNirisJob implements ShouldQueue
                  */
                 continue;
             }
-            $carbon_time = Carbon::parse($timestamp)->clone()->addHours(1);
+            $carbon_time = Carbon::parse($timestamp);
 
             $identifier = Identifier::firstOrCreate(
                 [
@@ -93,6 +93,7 @@ class RetreiveTracksFromNirisJob implements ShouldQueue
                         "speed" => $speed
                     ]
                     );
+                $identifier->setLatestPositionReceived($position);
             }
 
         }
