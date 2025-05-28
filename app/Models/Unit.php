@@ -332,6 +332,19 @@ class Unit extends Model
 
     }
 
+    public function getReferenceIdentifierAttribute()
+    {
+        if ($this->side == null)
+        {
+            return null;
+        }
+
+        $reference_datasource = $this->side->reference_datasource;
+        $reference_identifier = $this->identifiers()->source($reference_datasource)->first();
+        
+        return $reference_identifier;
+    }
+
     public function getPositionIsValidAttribute(?Carbon $timestamp = null)
     {
         $reference_datasource = $this->side?->reference_datasource;

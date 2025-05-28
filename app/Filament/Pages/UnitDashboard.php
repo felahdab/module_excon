@@ -183,7 +183,7 @@ class UnitDashboard extends Page
                         ])
                 ])
                 ->action(function ($data) use ($unit){
-                    if ($data["own_latitude"] && $data["own_longitude"])
+                    if (array_key_exists("own_latitude", $data) && $data["own_latitude"] && array_key_exists("own_longitude", $data) && $data["own_longitude"])
                     {
                         $manual_identifier = $unit->identifiers()->source("MANUAL")->first();
                         if ($manual_identifier == null)
@@ -235,8 +235,9 @@ class UnitDashboard extends Page
                 ->requiresConfirmation()
                 ->modalWidth(MaxWidth::FiveExtraLarge)
                 ->visible(function() use ($unit) {
-                    $ret = auth()->user()->can("excon::report_snipe_for_own_unit") &&
-                        cast_as_eloquent_descendant(auth()->user(), User::class)->unit?->id == $unit->id ;
+                    $ret = ( auth()->user()->can("excon::report_snipe_for_own_unit") &&
+                        cast_as_eloquent_descendant(auth()->user(), User::class)->unit?->id == $unit->id ) ||
+                        auth()->user()->can("excon::report_snipe_for_any_unit");
                     return $ret;
                 })
                 ->form([
@@ -321,7 +322,7 @@ class UnitDashboard extends Page
                         ])
                     ])
                 ->action(function ($data) use ($unit) {
-                    if ($data["own_latitude"] && $data["own_longitude"])
+                    if (array_key_exists("own_latitude", $data) && $data["own_latitude"] && array_key_exists("own_longitude", $data) && $data["own_longitude"])
                     {
                         $manual_identifier = $unit->identifiers()->source("MANUAL")->first();
                         if ($manual_identifier == null)

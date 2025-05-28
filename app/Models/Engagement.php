@@ -150,6 +150,9 @@ class Engagement extends Model
     {
         $timestamp = $this->timestamp;
         $unit = $this->unit;
+
+        $reference_identifier = $unit->reference_identifier;
+
         [$latitude, $longitude] = $unit->extrapolatePositionForTimestamp($timestamp);
 
         $weapon = $this->weapon;
@@ -194,6 +197,7 @@ class Engagement extends Model
         return [
             "id" => $this->id,
             "timestamp" => $timestamp->timestamp, // Le timestamp en secondes
+            "STN" => $reference_identifier->identifier,
             "weapon_flight_time" => $weapon->flight_time,
             "latitude" => $latitude,
             "longitude" => $longitude,
