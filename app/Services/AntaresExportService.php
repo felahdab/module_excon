@@ -143,7 +143,7 @@ class AntaresExportService
                             $this->convertLongitudeToAntaresFormat($description["longitude"]) . "/" .
                             $item->weapon->name . "/" . 
                             number_format($description["course"], 0, '.', '') ."/" . intval($description["distance"]) . "/" . 
-                            "-/-/-/-//";
+                            "00800/006/0200/-//";
         });
 
         $lastLine = "END//";
