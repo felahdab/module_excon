@@ -19,6 +19,8 @@ class UserTableWidget extends BaseWidget
 {
     public ?Model $record = null;
 
+    protected int | string | array $columnSpan = 4;
+
     public function table(Table $table): Table
     {
         $unit=$this->record;
@@ -29,8 +31,10 @@ class UserTableWidget extends BaseWidget
                 User::query()
             )
             ->columns([
-                Tables\Columns\TextColumn::make('nom'),
-                Tables\Columns\TextColumn::make('prenom'),
+                Tables\Columns\TextColumn::make('nom')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('prenom')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('email'),
                 Tables\Columns\TextColumn::make('unit.name'),
             ])
