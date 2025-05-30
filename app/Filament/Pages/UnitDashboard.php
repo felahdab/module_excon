@@ -29,10 +29,13 @@ use Modules\Excon\Filament\Pages\Widgets\WeaponsHistory;
 
 use Modules\Excon\Models\User;
 use Modules\Excon\Models\Unit;
+use Modules\Excon\Enums\UnitTypes;
 use Modules\Excon\Models\Weapon;
 use Modules\Excon\Models\Engagement;
 use Modules\Excon\Models\Identifier;
 use Modules\Excon\Models\EntityNumber;
+
+use Modules\Excon\Jobs\AntaresExportJob;
 
 class UnitDashboard extends Page
 {
@@ -71,6 +74,25 @@ class UnitDashboard extends Page
         $unit = $this->unit;
 
         return [
+            Actions\Action::make('export-antares')
+                    ->label('Export Antares data')
+                    ->requiresConfirmation()
+                    ->visible(function() use ($unit) { 
+                        return $unit->type != UnitTypes::STAFF->value && auth()->user()->can("excon::export_antares_reports"); 
+                    })
+                    ->form([
+                        Forms\Components\DateTimePicker::make('start_date')
+                            ->label("From")
+                            ->native(false)
+                            ->required(),
+                        Forms\Components\DateTimePicker::make('end_date')
+                            ->label("To")
+                            ->native(false)
+                            ->required(),
+                    ])
+                    ->action(function($record, $data) use ($unit){
+                        AntaresExportJob::dispatch(auth()->user(), $unit, Carbon::parse($data['start_date']), Carbon::parse($data['end_date']));
+                    }),
             Actions\Action::make("load_weapon")
                 ->label("Load weapon onto unit")
                 ->requiresConfirmation()
