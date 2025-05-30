@@ -64,7 +64,8 @@ class AntaresExportJob implements ShouldQueue
             ->actions([
                 NotificationAction::make('download')
                     ->label("Download your file")
-                    ->url($this->url,  shouldOpenInNewTab: true)
+                    //->url($this->url,  shouldOpenInNewTab: true)
+                    ->url(route('skeletor.public_file_download', ['skeletor_download_filename' => "excon/antares/{$this->filename}"]),  shouldOpenInNewTab: true)
                     ->markAsRead()
             ])
             ->sendToDatabase($this->user, isEventDispatched: true);
