@@ -205,7 +205,6 @@ class UnitDashboard extends Page
                         ])
                 ])
                 ->action(function ($data) use ($unit){
-                    ddd($data);
                     if (array_key_exists("own_latitude", $data) && $data["own_latitude"] && array_key_exists("own_longitude", $data) && $data["own_longitude"])
                     {
                         $manual_identifier = $unit->identifiers()->source("MANUAL")->first();
