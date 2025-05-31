@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 use Carbon\Carbon;
 
+use App\Forms\Components\LatitudeField;
+use App\Forms\Components\LongitudeField;
+
 use Filament\Pages\Page;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
@@ -142,10 +145,8 @@ class UnitDashboard extends Page
                             return $unit->position_is_valid;
                         })
                         ->schema([
-                            Forms\Components\TextInput::make('own_latitude')
-                                ->label("Latitude"),
-                            Forms\Components\TextInput::make('own_longitude')
-                                ->label("Longitude"),
+                            LatitudeField::make('own_latitude'),
+                            LongitudeField::make('own_longitude')
 
                     ]),
                     Forms\Components\Section::make('Weapon used')
@@ -184,12 +185,11 @@ class UnitDashboard extends Page
                             return $get("engagement_type") == "absolute_position";
                         })
                         ->schema([
-                            Forms\Components\TextInput::make('target_latitude')
-                                ->numeric()
+                            LatitudeField::make('target_latitude')
                                 ->requiredIf('engagement_type', 'absolute_position'),
-                            Forms\Components\TextInput::make('target_longitude')
-                                ->numeric()
+                            LongitudeField::make('target_longitude')
                                 ->requiredIf('engagement_type', 'absolute_position'),
+                                
                         ]),
                     Forms\Components\Section::make('Target course and speed')
                         ->description('Report the course and speed of the target. This will be used to assess the quality of the engagement. Enter 0 and 0 if this data was not provided.')
@@ -205,6 +205,7 @@ class UnitDashboard extends Page
                         ])
                 ])
                 ->action(function ($data) use ($unit){
+                    ddd($data);
                     if (array_key_exists("own_latitude", $data) && $data["own_latitude"] && array_key_exists("own_longitude", $data) && $data["own_longitude"])
                     {
                         $manual_identifier = $unit->identifiers()->source("MANUAL")->first();
@@ -281,10 +282,8 @@ class UnitDashboard extends Page
                             return $unit->position_is_valid;
                         })
                         ->schema([
-                            Forms\Components\TextInput::make('own_latitude')
-                                ->label("Latitude"),
-                            Forms\Components\TextInput::make('own_longitude')
-                                ->label("Longitude"),
+                            LatitudeField::make('own_latitude'),
+                            LongitudeField::make('own_longitude')
 
                     ]),
                     Forms\Components\Section::make('Weapon used')
@@ -323,11 +322,9 @@ class UnitDashboard extends Page
                             return $get("engagement_type") == "absolute_position";
                         })
                         ->schema([
-                            Forms\Components\TextInput::make('target_latitude')
-                                ->numeric()
+                            LatitudeField::make('target_latitude')
                                 ->requiredIf('engagement_type', 'absolute_position'),
-                            Forms\Components\TextInput::make('target_longitude')
-                                ->numeric()
+                            LongitudeField::make('target_longitude')
                                 ->requiredIf('engagement_type', 'absolute_position'),
                         ]),
                     Forms\Components\Section::make('Target course and speed')
