@@ -34,6 +34,14 @@ class RoleSeeder extends Seeder
         ]);
 
         $player_role->syncPermissions(["excon::report_snipe_for_own_unit"]);
+
+        $receives_attack_notification_role = Role::firstOrCreate(
+            [
+            "name" => "excon::receive_attack_notification",
+            "guard_name" => "web",
+        ]);
+
+        $receives_attack_notification_role->syncPermissions(["excon::notify_when_attack_reported"]);
         
     }
 }
