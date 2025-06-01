@@ -33,6 +33,7 @@ use Modules\Excon\Filament\Pages\Widgets\WeaponsHistory;
 use Modules\Excon\Models\User;
 use Modules\Excon\Models\Unit;
 use Modules\Excon\Enums\UnitTypes;
+use Modules\Excon\Events\AnAttackWasReportedEvent;
 use Modules\Excon\Models\Weapon;
 use Modules\Excon\Models\Engagement;
 use Modules\Excon\Models\Identifier;
@@ -235,7 +236,7 @@ class UnitDashboard extends Page
                             ->send();
                         return;
                     }
-                    $unit->engagements()
+                    $newengagement = $unit->engagements()
                         ->create([  "weapon_id" => $weapon->id,
                                     "amount"    => $data["amount"],
                                     "timestamp" => $data["timestamp"],
@@ -249,7 +250,8 @@ class UnitDashboard extends Page
                                         "target_speed" => $data["target_speed"] ? floatval($data["target_speed"])  * 1854 / 3600 : 0,
                                         "assessed_target" => $data["assessed_target"] ?? null,
                                     ]
-                                ]);   
+                                ]);
+                    event(new AnAttackWasReportedEvent($newengagement, auth()->user()));
                     $unit->touch();         
                 }),
             Actions\Action::make("report_engagement")
@@ -366,7 +368,7 @@ class UnitDashboard extends Page
                         return;
                     }
                     
-                    $unit->engagements()
+                    $newengagement = $unit->engagements()
                         ->create([  "weapon_id" => $weapon->id,
                                     "amount"    => $data["amount"],
                                     "timestamp" => $data["timestamp"],
@@ -380,8 +382,9 @@ class UnitDashboard extends Page
                                         "target_speed" => $data["target_speed"] ? floatval($data["target_speed"])  * 1854 / 3600 : 0,
                                         "assessed_target" => $data["assessed_target"] ?? null,
                                     ]
-                                ]);   
-                    $unit->touch();         
+                                ]);
+                    event(new AnAttackWasReportedEvent($newengagement, auth()->user()));
+                    $unit->touch();
                 }),
         ];
     }
