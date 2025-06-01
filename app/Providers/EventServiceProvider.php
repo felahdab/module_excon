@@ -7,10 +7,13 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 use Modules\Excon\Events\AffectUserToUnitEvent;
 use Modules\Excon\Events\AffectUserToSideEvent;
 use Modules\Excon\Events\AnAttackWasReportedEvent;
+use Modules\Excon\Events\NirisTracksWhereRetreivedEvent;
 
 use Modules\Excon\Listeners\AffectUserToUnitListener;
 use Modules\Excon\Listeners\AffectUserToSideListener;
 use Modules\Excon\Listeners\AnAttackWasReportedListener;
+use Modules\Excon\Listeners\GenerateNvgFileWithNirisTracks;
+use Modules\Excon\Listeners\UpdateDatabaseWithNirisTracks;
 
 
 class EventServiceProvider extends ServiceProvider
@@ -29,6 +32,10 @@ class EventServiceProvider extends ServiceProvider
         ],
         AnAttackWasReportedEvent::class => [
             AnAttackWasReportedListener::class,
+        ],
+        NirisTracksWhereRetreivedEvent::class => [
+            UpdateDatabaseWithNirisTracks::class,
+            GenerateNvgFileWithNirisTracks::class
         ]
     ];
 

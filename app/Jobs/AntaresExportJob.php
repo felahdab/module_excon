@@ -35,7 +35,7 @@ class AntaresExportJob implements ShouldQueue
     public function __construct(public User $user, public Unit $unit, public Carbon $start_timestamp, public Carbon $stop_timestamp)
     {
         $snake_unit_name = Str::snake($unit->name);
-        $this->filename = "{$snake_unit_name}_{$start_timestamp->format('YmdHs')}_{$stop_timestamp->format('YmdHs')}.txt"; 
+        $this->filename = "{$snake_unit_name}_{$start_timestamp->format('YmdHis')}_{$stop_timestamp->format('YmdHis')}.txt"; 
 
         $this->filepath = Storage::disk('public')->path("excon/antares/{$this->filename}");
         $this->url = Storage::disk('public')->url("excon/antares/{$this->filename}");

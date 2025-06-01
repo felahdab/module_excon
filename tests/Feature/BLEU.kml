@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+  <kml xmlns="http://www.opengis.net/kml/2.2" xmlns:ns2="http://www.w3.org/2005/Atom" xmlns:ns3="urn:oasis:names:tc:ciq:xsdschema:xAL:2.0">
+    <NetworkLinkControl>
+      <minRefreshPeriod>10.0</minRefreshPeriod>
+      <expires>2025-06-01T08:51:00Z</expires>
+    </NetworkLinkControl>
+    <Document>
+      <name>Track Store: BLEU</name>
+      <visibility>true</visibility>
+      <Snippet maxLines="4">10 Tracks&lt;hr&gt;Created: Sun 1 Jun 2025 - 08:50:30 [Z]</Snippet>
+      <description>Tracks in Track Store 'BLEU' using APP-6a Symbols</description>
+      <TimeSpan>
+        <begin>2025-06-01T08:40:14Z</begin>
+        <end>2025-06-01T08:50:27Z</end>
+      </TimeSpan>
+      <Style id="kml_track_n">
+        <IconStyle>
+          <colorMode>normal</colorMode>
+          <scale>0.6</scale>
+        </IconStyle>
+        <LabelStyle>
+          <color>FFFFE1E1</color>
+          <colorMode>normal</colorMode>
+          <scale>0.6</scale>
+        </LabelStyle>
+        <LineStyle>
+          <color>20FFEDEA</color>
+          <colorMode>normal</colorMode>
+          <width>0.5</width>
+        </LineStyle>
+        <PolyStyle>
+          <color>20FFEDEA</color>
+          <colorMode>normal</colorMode>
+          <fill>true</fill>
+          <outline>false</outline>
+        </PolyStyle>
+        <BalloonStyle>
+          <text>&lt;img src="$[app6Url]"&gt;&amp;nbsp;&amp;nbsp;&lt;font color="#6161ff" size="+2"&gt;&lt;b&gt;$[name]&lt;/b&gt;&lt;/font&gt;&lt;br&gt;$[description]&lt;a title="Click for more info" href="$[linkBackUrl]"&gt;&lt;b&gt;&lt;i&gt;More Info...&lt;/i&gt;&lt;/b&gt;&lt;/a&gt;</text>
+          <displayMode>default</displayMode>
+        </BalloonStyle>
+        <ListStyle>
+          <listItemType>check</listItemType>
+          <maxSnippetLines>2</maxSnippetLines>
+        </ListStyle>
+      </Style>
+      <Style id="kml_track_h">
+        <IconStyle>
+          <colorMode>normal</colorMode>
+          <scale>0.8</scale>
+        </IconStyle>
+        <LabelStyle>
+          <color>FFFFFFFF</color>
+          <colorMode>normal</colorMode>
+          <scale>0.8</scale>
+        </LabelStyle>
+        <LineStyle>
+          <color>7FFFEDEA</color>
+          <colorMode>normal</colorMode>
+          <width>0.7</width>
+        </LineStyle>
+        <PolyStyle>
+          <color>60FFEDEA</color>
+          <colorMode>normal</colorMode>
+          <fill>true</fill>
+          <outline>true</outline>
+        </PolyStyle>
+        <BalloonStyle>
+          <text>&lt;img src="$[app6Url]"&gt;&amp;nbsp;&amp;nbsp;&lt;font color="#6161ff" size="+2"&gt;&lt;b&gt;$[name]&lt;/b&gt;&lt;/font&gt;&lt;br&gt;$[description]&lt;a title="Click for more info" href="$[linkBackUrl]"&gt;&lt;b&gt;&lt;i&gt;More Info...&lt;/i&gt;&lt;/b&gt;&lt;/a&gt;</text>
+          <displayMode>default</displayMode>
+        </BalloonStyle>
+        <ListStyle>
+          <listItemType>check</listItemType>
+          <maxSnippetLines>2</maxSnippetLines>
+        </ListStyle>
+      </Style>
+      <StyleMap id="kml_track">
+        <Pair>
+          <key>normal</key>
+          <styleUrl>#kml_track_n</styleUrl>
+        </Pair>
+        <Pair>
+          <key>highlight</key>
+          <styleUrl>#kml_track_h</styleUrl>
+        </Pair>
+      </StyleMap>
+      <Placemark>
+        <name>Link16:00002</name>
+        <visibility>true</visibility>
+        <description>&lt;table border="0"&gt;&lt;tr&gt;&lt;td align="right"&gt;Environment/Category:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Surface&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;NATO&amp;nbsp;Identity:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Friend&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Emergency:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;No&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Speed:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.0&amp;nbsp;Kts.&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Heading:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.0°&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Latitude:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;00°&amp;nbsp;00'&amp;nbsp;00.0"N&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Longitude:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;000°&amp;nbsp;00'&amp;nbsp;00.0"E&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Height:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.0&amp;nbsp;mtr.&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Simulated&amp;nbsp;Track:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;No&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Exercise&amp;nbsp;Track:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;No&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Platform&amp;nbsp;Type:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;FRIGATE&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;APP-6A&amp;nbsp;Symbol:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;SFSPCLFF-------&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Last&amp;nbsp;Updated:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Sun&amp;nbsp;1&amp;nbsp;Jun&amp;nbsp;2025&amp;nbsp;-&amp;nbsp;08:50:26&amp;nbsp;[Z]&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</description>
+        <TimeSpan>
+          <begin>2025-06-01T08:40:49Z</begin>
+          <end>2025-06-01T08:50:26Z</end>
+        </TimeSpan>
+        <styleUrl>#kml_track</styleUrl>
+        <Style>
+          <IconStyle>
+            <Icon>
+              <href>https://10.56.186.80:2001/service/nwac/symbology/point?SIZE=10&amp;SCHEME=app6a&amp;SYMB=SFSPCLFF-------</href>
+            </Icon>
+          </IconStyle>
+        </Style>
+        <ExtendedData>
+          <Data name="app6Url">
+            <value>https://10.56.186.80:2001/service/nwac/symbology/point?SIZE=10&amp;SCHEME=app6a&amp;SYMB=SFSPCLFF-------</value>
+          </Data>
+          <Data name="linkBackUrl">
+            <value>https://10.56.186.80:2001/service/nwac/tss/track/415d5158-8375-42f7-97b6-8af1b2652825</value>
+          </Data>
+        </ExtendedData>
+        <MultiGeometry>
+          <Point>
+            <extrude>true</extrude>
+            <altitudeMode>clampToGround</altitudeMode>
+            <coordinates>0.00000000000000,0.00000000000000,0.0</coordinates>
+          </Point>
+        </MultiGeometry>
+      </Placemark>
+      <Placemark>
+        <name>Link16:00007</name>
+        <visibility>true</visibility>
+        <description>&lt;table border="0"&gt;&lt;tr&gt;&lt;td align="right"&gt;Environment/Category:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Surface&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;NATO&amp;nbsp;Identity:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Friend&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Emergency:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;No&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Speed:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.0&amp;nbsp;Kts.&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Heading:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;1.0°&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Latitude:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;00°&amp;nbsp;00'&amp;nbsp;00.0"N&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Longitude:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;000°&amp;nbsp;00'&amp;nbsp;00.0"E&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Height:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.0&amp;nbsp;mtr.&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Simulated&amp;nbsp;Track:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;No&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Exercise&amp;nbsp;Track:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;No&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Platform&amp;nbsp;Type:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;FRIGATE&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;APP-6A&amp;nbsp;Symbol:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;SFSPCLFF-------&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Last&amp;nbsp;Updated:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Sun&amp;nbsp;1&amp;nbsp;Jun&amp;nbsp;2025&amp;nbsp;-&amp;nbsp;08:50:26&amp;nbsp;[Z]&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</description>
+        <TimeSpan>
+          <begin>2025-06-01T08:40:49Z</begin>
+          <end>2025-06-01T08:50:26Z</end>
+        </TimeSpan>
+        <styleUrl>#kml_track</styleUrl>
+        <Style>
+          <IconStyle>
+            <Icon>
+              <href>https://10.56.186.80:2001/service/nwac/symbology/point?SIZE=10&amp;SCHEME=app6a&amp;SYMB=SFSPCLFF-------</href>
+            </Icon>
+          </IconStyle>
+        </Style>
+        <ExtendedData>
+          <Data name="app6Url">
+            <value>https://10.56.186.80:2001/service/nwac/symbology/point?SIZE=10&amp;SCHEME=app6a&amp;SYMB=SFSPCLFF-------</value>
+          </Data>
+          <Data name="linkBackUrl">
+            <value>https://10.56.186.80:2001/service/nwac/tss/track/b048cdc7-f752-49d7-9bef-9389d451616d</value>
+          </Data>
+        </ExtendedData>
+        <MultiGeometry>
+          <Point>
+            <extrude>true</extrude>
+            <altitudeMode>clampToGround</altitudeMode>
+            <coordinates>0.00000000000000,0.00000000000000,0.0</coordinates>
+          </Point>
+        </MultiGeometry>
+      </Placemark>
+      <Placemark>
+        <name>Link16:00003</name>
+        <visibility>true</visibility>
+        <description>&lt;table border="0"&gt;&lt;tr&gt;&lt;td align="right"&gt;Environment/Category:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Surface&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;NATO&amp;nbsp;Identity:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Friend&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Emergency:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;No&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Speed:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.0&amp;nbsp;Kts.&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Heading:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;1.0°&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Latitude:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;00°&amp;nbsp;00'&amp;nbsp;00.0"N&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Longitude:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;000°&amp;nbsp;00'&amp;nbsp;00.0"E&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Height:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.0&amp;nbsp;mtr.&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Simulated&amp;nbsp;Track:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;No&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Exercise&amp;nbsp;Track:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;No&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Platform&amp;nbsp;Type:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;FRIGATE&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;APP-6A&amp;nbsp;Symbol:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;SFSPCLFF-------&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Last&amp;nbsp;Updated:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Sun&amp;nbsp;1&amp;nbsp;Jun&amp;nbsp;2025&amp;nbsp;-&amp;nbsp;08:50:26&amp;nbsp;[Z]&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</description>
+        <TimeSpan>
+          <begin>2025-06-01T08:40:49Z</begin>
+          <end>2025-06-01T08:50:26Z</end>
+        </TimeSpan>
+        <styleUrl>#kml_track</styleUrl>
+        <Style>
+          <IconStyle>
+            <Icon>
+              <href>https://10.56.186.80:2001/service/nwac/symbology/point?SIZE=10&amp;SCHEME=app6a&amp;SYMB=SFSPCLFF-------</href>
+            </Icon>
+          </IconStyle>
+        </Style>
+        <ExtendedData>
+          <Data name="app6Url">
+            <value>https://10.56.186.80:2001/service/nwac/symbology/point?SIZE=10&amp;SCHEME=app6a&amp;SYMB=SFSPCLFF-------</value>
+          </Data>
+          <Data name="linkBackUrl">
+            <value>https://10.56.186.80:2001/service/nwac/tss/track/bbbae6e8-3a4a-4bee-8b3e-a3e623b85a24</value>
+          </Data>
+        </ExtendedData>
+        <MultiGeometry>
+          <Point>
+            <extrude>true</extrude>
+            <altitudeMode>clampToGround</altitudeMode>
+            <coordinates>0.00000000000000,0.00000000000000,0.0</coordinates>
+          </Point>
+        </MultiGeometry>
+      </Placemark>
+      <Placemark>
+        <name>Link16:00005</name>
+        <visibility>true</visibility>
+        <description>&lt;table border="0"&gt;&lt;tr&gt;&lt;td align="right"&gt;Environment/Category:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Surface&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;NATO&amp;nbsp;Identity:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Friend&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Emergency:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;No&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Speed:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.0&amp;nbsp;Kts.&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Heading:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;1.0°&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Latitude:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;00°&amp;nbsp;00'&amp;nbsp;00.0"N&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Longitude:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;000°&amp;nbsp;00'&amp;nbsp;00.0"E&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Height:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.0&amp;nbsp;mtr.&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Simulated&amp;nbsp;Track:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;No&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Exercise&amp;nbsp;Track:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;No&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Platform&amp;nbsp;Type:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;FRIGATE&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;APP-6A&amp;nbsp;Symbol:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;SFSPCLFF-------&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Last&amp;nbsp;Updated:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Sun&amp;nbsp;1&amp;nbsp;Jun&amp;nbsp;2025&amp;nbsp;-&amp;nbsp;08:50:26&amp;nbsp;[Z]&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</description>
+        <TimeSpan>
+          <begin>2025-06-01T08:40:50Z</begin>
+          <end>2025-06-01T08:50:26Z</end>
+        </TimeSpan>
+        <styleUrl>#kml_track</styleUrl>
+        <Style>
+          <IconStyle>
+            <Icon>
+              <href>https://10.56.186.80:2001/service/nwac/symbology/point?SIZE=10&amp;SCHEME=app6a&amp;SYMB=SFSPCLFF-------</href>
+            </Icon>
+          </IconStyle>
+        </Style>
+        <ExtendedData>
+          <Data name="app6Url">
+            <value>https://10.56.186.80:2001/service/nwac/symbology/point?SIZE=10&amp;SCHEME=app6a&amp;SYMB=SFSPCLFF-------</value>
+          </Data>
+          <Data name="linkBackUrl">
+            <value>https://10.56.186.80:2001/service/nwac/tss/track/7e7946c0-60cb-4e31-9178-976d4396ca5b</value>
+          </Data>
+        </ExtendedData>
+        <MultiGeometry>
+          <Point>
+            <extrude>true</extrude>
+            <altitudeMode>clampToGround</altitudeMode>
+            <coordinates>0.00000000000000,0.00000000000000,0.0</coordinates>
+          </Point>
+        </MultiGeometry>
+      </Placemark>
+      <Placemark>
+        <name>Link16:00006</name>
+        <visibility>true</visibility>
+        <description>&lt;table border="0"&gt;&lt;tr&gt;&lt;td align="right"&gt;Environment/Category:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Surface&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;NATO&amp;nbsp;Identity:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Friend&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Emergency:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;No&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Speed:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.0&amp;nbsp;Kts.&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Heading:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;1.0°&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Latitude:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;00°&amp;nbsp;00'&amp;nbsp;00.0"N&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Longitude:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;000°&amp;nbsp;00'&amp;nbsp;00.0"E&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Height:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.0&amp;nbsp;mtr.&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Simulated&amp;nbsp;Track:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;No&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Exercise&amp;nbsp;Track:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;No&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Platform&amp;nbsp;Type:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;FRIGATE&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;APP-6A&amp;nbsp;Symbol:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;SFSPCLFF-------&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Last&amp;nbsp;Updated:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Sun&amp;nbsp;1&amp;nbsp;Jun&amp;nbsp;2025&amp;nbsp;-&amp;nbsp;08:50:26&amp;nbsp;[Z]&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</description>
+        <TimeSpan>
+          <begin>2025-06-01T08:40:50Z</begin>
+          <end>2025-06-01T08:50:26Z</end>
+        </TimeSpan>
+        <styleUrl>#kml_track</styleUrl>
+        <Style>
+          <IconStyle>
+            <Icon>
+              <href>https://10.56.186.80:2001/service/nwac/symbology/point?SIZE=10&amp;SCHEME=app6a&amp;SYMB=SFSPCLFF-------</href>
+            </Icon>
+          </IconStyle>
+        </Style>
+        <ExtendedData>
+          <Data name="app6Url">
+            <value>https://10.56.186.80:2001/service/nwac/symbology/point?SIZE=10&amp;SCHEME=app6a&amp;SYMB=SFSPCLFF-------</value>
+          </Data>
+          <Data name="linkBackUrl">
+            <value>https://10.56.186.80:2001/service/nwac/tss/track/3661d177-912b-4e74-ad2d-b7f8aac7eb2c</value>
+          </Data>
+        </ExtendedData>
+        <MultiGeometry>
+          <Point>
+            <extrude>true</extrude>
+            <altitudeMode>clampToGround</altitudeMode>
+            <coordinates>0.00000000000000,0.00000000000000,0.0</coordinates>
+          </Point>
+        </MultiGeometry>
+      </Placemark>
+      <Placemark>
+        <name>Link16:SB043</name>
+        <visibility>true</visibility>
+        <description>&lt;table border="0"&gt;&lt;tr&gt;&lt;td align="right"&gt;Environment/Category:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Surface&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;NATO&amp;nbsp;Identity:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Unknown&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Emergency:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;No&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Speed:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.0&amp;nbsp;Kts.&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Heading:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;1.0°&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Latitude:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;00°&amp;nbsp;00'&amp;nbsp;00.0"N&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Longitude:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;000°&amp;nbsp;00'&amp;nbsp;00.0"E&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Simulated&amp;nbsp;Track:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;No&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Exercise&amp;nbsp;Track:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;No&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Platform&amp;nbsp;Type:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;FRIGATE&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;IFF&amp;nbsp;Mode-4:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Not&amp;nbsp;Interrogated/NO&amp;nbsp;STATEMENT&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;APP-6A&amp;nbsp;Symbol:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;SUSPCLFF-------&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Last&amp;nbsp;Updated:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Sun&amp;nbsp;1&amp;nbsp;Jun&amp;nbsp;2025&amp;nbsp;-&amp;nbsp;08:50:27&amp;nbsp;[Z]&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</description>
+        <TimeSpan>
+          <begin>2025-06-01T08:40:20Z</begin>
+          <end>2025-06-01T08:50:27Z</end>
+        </TimeSpan>
+        <styleUrl>#kml_track</styleUrl>
+        <Style>
+          <IconStyle>
+            <Icon>
+              <href>https://10.56.186.80:2001/service/nwac/symbology/point?SIZE=10&amp;SCHEME=app6a&amp;SYMB=SUSPCLFF-------</href>
+            </Icon>
+          </IconStyle>
+        </Style>
+        <ExtendedData>
+          <Data name="app6Url">
+            <value>https://10.56.186.80:2001/service/nwac/symbology/point?SIZE=10&amp;SCHEME=app6a&amp;SYMB=SUSPCLFF-------</value>
+          </Data>
+          <Data name="linkBackUrl">
+            <value>https://10.56.186.80:2001/service/nwac/tss/track/25c5626f-1207-4720-9c1a-ebcea59d7b7d</value>
+          </Data>
+        </ExtendedData>
+        <MultiGeometry>
+          <Point>
+            <extrude>true</extrude>
+            <altitudeMode>clampToGround</altitudeMode>
+            <coordinates>0.00000000000000,0.00000000000000</coordinates>
+          </Point>
+          <LineString>
+            <extrude>true</extrude>
+            <altitudeMode>clampToGround</altitudeMode>
+            <coordinates>0.00000000000000,0.00000000000000 0.00000000000000,0.00000000000000,0.0</coordinates>
+          </LineString>
+        </MultiGeometry>
+      </Placemark>
+      <Placemark>
+        <name>Link16:SB041</name>
+        <visibility>true</visibility>
+        <description>&lt;table border="0"&gt;&lt;tr&gt;&lt;td align="right"&gt;Environment/Category:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Surface&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;NATO&amp;nbsp;Identity:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Unknown&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Emergency:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;No&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Speed:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.0&amp;nbsp;Kts.&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Heading:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;1.0°&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Latitude:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;00°&amp;nbsp;00'&amp;nbsp;00.0"N&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Longitude:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;000°&amp;nbsp;00'&amp;nbsp;00.0"E&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Simulated&amp;nbsp;Track:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;No&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Exercise&amp;nbsp;Track:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;No&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Platform&amp;nbsp;Type:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;FRIGATE&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;IFF&amp;nbsp;Mode-4:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Not&amp;nbsp;Interrogated/NO&amp;nbsp;STATEMENT&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;APP-6A&amp;nbsp;Symbol:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;SUSPCLFF-------&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Last&amp;nbsp;Updated:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Sun&amp;nbsp;1&amp;nbsp;Jun&amp;nbsp;2025&amp;nbsp;-&amp;nbsp;08:50:21&amp;nbsp;[Z]&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</description>
+        <TimeSpan>
+          <begin>2025-06-01T08:40:14Z</begin>
+          <end>2025-06-01T08:50:21Z</end>
+        </TimeSpan>
+        <styleUrl>#kml_track</styleUrl>
+        <Style>
+          <IconStyle>
+            <Icon>
+              <href>https://10.56.186.80:2001/service/nwac/symbology/point?SIZE=10&amp;SCHEME=app6a&amp;SYMB=SUSPCLFF-------</href>
+            </Icon>
+          </IconStyle>
+        </Style>
+        <ExtendedData>
+          <Data name="app6Url">
+            <value>https://10.56.186.80:2001/service/nwac/symbology/point?SIZE=10&amp;SCHEME=app6a&amp;SYMB=SUSPCLFF-------</value>
+          </Data>
+          <Data name="linkBackUrl">
+            <value>https://10.56.186.80:2001/service/nwac/tss/track/39e798e0-5b7a-4e6d-8975-121a49fc2be8</value>
+          </Data>
+        </ExtendedData>
+        <MultiGeometry>
+          <Point>
+            <extrude>true</extrude>
+            <altitudeMode>clampToGround</altitudeMode>
+            <coordinates>0.00000000000000,0.00000000000000</coordinates>
+          </Point>
+          <LineString>
+            <extrude>true</extrude>
+            <altitudeMode>clampToGround</altitudeMode>
+            <coordinates>0.00000000000000,0.00000000000000 0.00000000000000,0.00000000000000,0.0</coordinates>
+          </LineString>
+        </MultiGeometry>
+      </Placemark>
+      <Placemark>
+        <name>Link16:00004</name>
+        <visibility>true</visibility>
+        <description>&lt;table border="0"&gt;&lt;tr&gt;&lt;td align="right"&gt;Environment/Category:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Surface&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;NATO&amp;nbsp;Identity:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Friend&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Emergency:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;No&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Speed:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.0&amp;nbsp;Kts.&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Heading:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;1.0°&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Latitude:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;00°&amp;nbsp;00'&amp;nbsp;00.0"N&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Longitude:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;000°&amp;nbsp;00'&amp;nbsp;00.0"E&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Height:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.0&amp;nbsp;mtr.&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Simulated&amp;nbsp;Track:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;No&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Exercise&amp;nbsp;Track:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;No&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Platform&amp;nbsp;Type:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;FRIGATE&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;APP-6A&amp;nbsp;Symbol:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;SFSPCLFF-------&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Last&amp;nbsp;Updated:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Sun&amp;nbsp;1&amp;nbsp;Jun&amp;nbsp;2025&amp;nbsp;-&amp;nbsp;08:50:26&amp;nbsp;[Z]&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</description>
+        <TimeSpan>
+          <begin>2025-06-01T08:40:49Z</begin>
+          <end>2025-06-01T08:50:26Z</end>
+        </TimeSpan>
+        <styleUrl>#kml_track</styleUrl>
+        <Style>
+          <IconStyle>
+            <Icon>
+              <href>https://10.56.186.80:2001/service/nwac/symbology/point?SIZE=10&amp;SCHEME=app6a&amp;SYMB=SFSPCLFF-------</href>
+            </Icon>
+          </IconStyle>
+        </Style>
+        <ExtendedData>
+          <Data name="app6Url">
+            <value>https://10.56.186.80:2001/service/nwac/symbology/point?SIZE=10&amp;SCHEME=app6a&amp;SYMB=SFSPCLFF-------</value>
+          </Data>
+          <Data name="linkBackUrl">
+            <value>https://10.56.186.80:2001/service/nwac/tss/track/d851476a-bdc2-4b28-889e-d289715db478</value>
+          </Data>
+        </ExtendedData>
+        <MultiGeometry>
+          <Point>
+            <extrude>true</extrude>
+            <altitudeMode>clampToGround</altitudeMode>
+            <coordinates>0.00000000000000,0.00000000000000,0.0</coordinates>
+          </Point>
+        </MultiGeometry>
+      </Placemark>
+      <Placemark>
+        <name>Link16:SB042</name>
+        <visibility>true</visibility>
+        <description>&lt;table border="0"&gt;&lt;tr&gt;&lt;td align="right"&gt;Environment/Category:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Surface&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;NATO&amp;nbsp;Identity:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Unknown&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Emergency:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;No&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Speed:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.0&amp;nbsp;Kts.&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Heading:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;1.0°&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Latitude:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;00°&amp;nbsp;00'&amp;nbsp;00.0"N&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Longitude:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;000°&amp;nbsp;00'&amp;nbsp;00.0"E&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Simulated&amp;nbsp;Track:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;No&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Exercise&amp;nbsp;Track:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;No&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Platform&amp;nbsp;Type:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;FRIGATE&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;IFF&amp;nbsp;Mode-4:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Not&amp;nbsp;Interrogated/NO&amp;nbsp;STATEMENT&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;APP-6A&amp;nbsp;Symbol:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;SUSPCLFF-------&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Last&amp;nbsp;Updated:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Sun&amp;nbsp;1&amp;nbsp;Jun&amp;nbsp;2025&amp;nbsp;-&amp;nbsp;08:50:27&amp;nbsp;[Z]&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</description>
+        <TimeSpan>
+          <begin>2025-06-01T08:40:20Z</begin>
+          <end>2025-06-01T08:50:27Z</end>
+        </TimeSpan>
+        <styleUrl>#kml_track</styleUrl>
+        <Style>
+          <IconStyle>
+            <Icon>
+              <href>https://10.56.186.80:2001/service/nwac/symbology/point?SIZE=10&amp;SCHEME=app6a&amp;SYMB=SUSPCLFF-------</href>
+            </Icon>
+          </IconStyle>
+        </Style>
+        <ExtendedData>
+          <Data name="app6Url">
+            <value>https://10.56.186.80:2001/service/nwac/symbology/point?SIZE=10&amp;SCHEME=app6a&amp;SYMB=SUSPCLFF-------</value>
+          </Data>
+          <Data name="linkBackUrl">
+            <value>https://10.56.186.80:2001/service/nwac/tss/track/ce793ef4-83c8-4c9e-b7f1-08e5cb95ecfa</value>
+          </Data>
+        </ExtendedData>
+        <MultiGeometry>
+          <Point>
+            <extrude>true</extrude>
+            <altitudeMode>clampToGround</altitudeMode>
+            <coordinates>0.00000000000000,0.00000000000000</coordinates>
+          </Point>
+          <LineString>
+            <extrude>true</extrude>
+            <altitudeMode>clampToGround</altitudeMode>
+            <coordinates>0.00000000000000,0.00000000000000 0.00000000000000,0.00000000000000,0.0</coordinates>
+          </LineString>
+        </MultiGeometry>
+      </Placemark>
+      <Placemark>
+        <name>Link16:00001</name>
+        <visibility>true</visibility>
+        <description>&lt;table border="0"&gt;&lt;tr&gt;&lt;td align="right"&gt;Environment/Category:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Surface&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;NATO&amp;nbsp;Identity:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Friend&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Emergency:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;No&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Speed:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.0&amp;nbsp;Kts.&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Heading:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.0°&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Latitude:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;00°&amp;nbsp;00'&amp;nbsp;00.0"N&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Longitude:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;000°&amp;nbsp;00'&amp;nbsp;00.0"E&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Height:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;0.0&amp;nbsp;mtr.&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Simulated&amp;nbsp;Track:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;No&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Exercise&amp;nbsp;Track:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;No&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Platform&amp;nbsp;Type:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;FRIGATE&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;APP-6A&amp;nbsp;Symbol:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;SFSPCLFF-------&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td align="right"&gt;Last&amp;nbsp;Updated:&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;b&gt;Sun&amp;nbsp;1&amp;nbsp;Jun&amp;nbsp;2025&amp;nbsp;-&amp;nbsp;08:50:25&amp;nbsp;[Z]&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</description>
+        <TimeSpan>
+          <begin>2025-06-01T08:40:49Z</begin>
+          <end>2025-06-01T08:50:25Z</end>
+        </TimeSpan>
+        <styleUrl>#kml_track</styleUrl>
+        <Style>
+          <IconStyle>
+            <Icon>
+              <href>https://10.56.186.80:2001/service/nwac/symbology/point?SIZE=10&amp;SCHEME=app6a&amp;SYMB=SFSPCLFF-------</href>
+            </Icon>
+          </IconStyle>
+        </Style>
+        <ExtendedData>
+          <Data name="app6Url">
+            <value>https://10.56.186.80:2001/service/nwac/symbology/point?SIZE=10&amp;SCHEME=app6a&amp;SYMB=SFSPCLFF-------</value>
+          </Data>
+          <Data name="linkBackUrl">
+            <value>https://10.56.186.80:2001/service/nwac/tss/track/e42d703f-16b8-4112-a69a-48045062deaa</value>
+          </Data>
+        </ExtendedData>
+        <MultiGeometry>
+          <Point>
+            <extrude>true</extrude>
+            <altitudeMode>clampToGround</altitudeMode>
+            <coordinates>0.00000000000000,0.00000000000000,0.0</coordinates>
+          </Point>
+        </MultiGeometry>
+      </Placemark>
+    </Document>
+  </kml>
