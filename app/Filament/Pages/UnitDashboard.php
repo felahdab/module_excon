@@ -268,10 +268,10 @@ class UnitDashboard extends Page
                     Forms\Components\Section::make('Time of first missile launch and assessed target')
                         ->columns(2)
                         ->schema([
-                        Forms\Components\DateTimePicker::make('timestamp')
-                            ->required()
-                            ->default(now())
-                            ->native(false),
+                        // Forms\Components\DateTimePicker::make('timestamp')
+                        //     ->required()
+                        //     ->default(now())
+                        //     ->native(false),
                         Forms\Components\TextInput::make('assessed_target')
                             ->label("Assessed target")
                             ->required(),
@@ -342,6 +342,7 @@ class UnitDashboard extends Page
                         ])
                     ])
                 ->action(function ($data) use ($unit) {
+                    $timestamp = now();
                     if (array_key_exists("own_latitude", $data) && $data["own_latitude"] && array_key_exists("own_longitude", $data) && $data["own_longitude"])
                     {
                         $manual_identifier = $unit->identifiers()->source("MANUAL")->first();
@@ -356,7 +357,7 @@ class UnitDashboard extends Page
                         $manual_identifier->positions()->create([
                             "latitude" => $data["own_latitude"],
                             "longitude" => $data["own_longitude"],
-                            "timestamp" => $data["timestamp"],
+                            "timestamp" => $timestamp,
                         ]);
                     }
 
@@ -371,7 +372,7 @@ class UnitDashboard extends Page
                     $newengagement = $unit->engagements()
                         ->create([  "weapon_id" => $weapon->id,
                                     "amount"    => $data["amount"],
-                                    "timestamp" => $data["timestamp"],
+                                    "timestamp" => $timestamp,
                                     "data" => [
                                         "engagement_type" => $data["engagement_type"],
                                         "entity_numbers" => EntityNumber::getSeveralEntityNumbers(intval($data["amount"])),
