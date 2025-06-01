@@ -51,6 +51,11 @@ class PermissionSeeder extends Seeder
             "name" => "excon::load_weapons_into_units",
             "guard_name" => "web",
         ]);
+        Permission::firstOrCreate(
+            [
+            "name" => "excon::notify_when_attack_reported",
+            "guard_name" => "web",
+        ]);
 
         
     }
