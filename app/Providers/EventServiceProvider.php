@@ -6,9 +6,11 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 
 use Modules\Excon\Events\AffectUserToUnitEvent;
 use Modules\Excon\Events\AffectUserToSideEvent;
+use Modules\Excon\Events\AnAttackWasReportedEvent;
 
 use Modules\Excon\Listeners\AffectUserToUnitListener;
 use Modules\Excon\Listeners\AffectUserToSideListener;
+use Modules\Excon\Listeners\AnAttackWasReportedListener;
 
 
 class EventServiceProvider extends ServiceProvider
@@ -24,6 +26,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         AffectUserToSideEvent::class => [
             AffectUserToSideListener::class,
+        ],
+        AnAttackWasReportedEvent::class => [
+            AnAttackWasReportedListener::class,
         ]
     ];
 
