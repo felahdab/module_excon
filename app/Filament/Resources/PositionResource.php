@@ -13,6 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
+use App\Forms\Components\LatitudeField;
+use App\Forms\Components\LongitudeField;
+
 class PositionResource extends Resource
 {
     protected static ?string $model = Position::class;
@@ -30,12 +33,10 @@ class PositionResource extends Resource
                 Forms\Components\Select::make('identifier_id')
                     ->relationship(name: "identifier", titleAttribute: "identifier")
                     ->required(),
-                Forms\Components\TextInput::make('latitude')
-                    ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('longitude')
-                    ->required()
-                    ->numeric(),
+                LatitudeField::make('latitude')
+                    ->required(),
+                LongitudeField::make('longitude')
+                    ->required(),
                 Forms\Components\TextInput::make('course')
                     ->required()
                     ->numeric(),
