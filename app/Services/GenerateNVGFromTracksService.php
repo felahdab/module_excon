@@ -27,7 +27,7 @@ class GenerateNVGFromTracksService
         foreach ($tracks as $track)
         {
             //dump($track);
-            $geometry = new Geometry($track["point"]["latitude"], $track["point"]["latitude"]);
+            $geometry = new Geometry($track["point"]["latitude"], $track["point"]["longitude"]);
             $feature = new Feature($track["domainSpecificTrackID"], $track["symbolIdCode"], $geometry);
             $geojson->addFeature($feature);
         }
