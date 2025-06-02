@@ -48,7 +48,7 @@ class EngagementController extends Controller
         });
 
         logger()->info("Provided " . $engagements->count() . " engagements data to system: " . auth()->user()->nom);
-        return $engagements->toArray();
+        return array_values($engagements->toArray());
     }
 
     /**
