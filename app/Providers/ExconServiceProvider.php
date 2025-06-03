@@ -31,6 +31,8 @@ use Modules\Excon\Filament\Pages\Dashboard;
 use Modules\Excon\Filament\Pages\MyUnitDashboard;
 
 use Modules\Excon\Jobs\RetreiveTracksFromNirisJob;
+use Modules\Excon\Jobs\BuildZipArchiveOfJsonFiles;
+
 use Modules\Excon\Filament\Pages\SideDashboard;
 use Modules\Excon\Filament\Pages\UnitDashboard;
 
@@ -178,6 +180,8 @@ class ExconServiceProvider extends ServiceProvider
                 $job = new RetreiveTracksFromNirisJob("BALISE");
                 $job->handle();
             })->everyMinute();
+
+            Schedule::job(new BuildZipArchiveOfJsonFiles)->dailyAt('01:00');
         });
     }
 

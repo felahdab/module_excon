@@ -25,8 +25,9 @@ class StoreNirisSituationAsJsonListener
     public function handle(NirisSituationWasRetreivedEvent $event): void
     {
         $situation = $event->situation;
+        $foldername = $event->timestamp->format('Ymd');
         $filename = "{$event->timestamp->format('YmdHi')}_{$event->datasource}_sitac.json"; 
         //logger()->info(json_encode($situation));
-        Storage::disk('public')->put("excon/json/{$filename}", json_encode($situation));
+        Storage::disk('public')->put("excon/json/{$foldername}/{$filename}", json_encode($situation));
     }
 }
