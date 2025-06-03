@@ -108,7 +108,13 @@ class AntaresExportService
             return false;
         })
         ->map(function($item, $key){
-            $line = "TRACK/" . $item->timestamp->format("YmdHi") . "Z/". $this->convertLatitudeToAntaresFormat($item->latitude) . "-" . $this->convertLongitudeToAntaresFormat($item->longitude) . "/000/012/00000//";
+
+            $coursestr = intval($item->course);
+            $speedstr = intval($item->speed);
+
+            $line = "TRACK/" . $item->timestamp->format("YmdHi") . "Z/". 
+                $this->convertLatitudeToAntaresFormat($item->latitude) . "-" . $this->convertLongitudeToAntaresFormat($item->longitude) . 
+                "/{$coursestr}/{$speedstr}/00000//";
             return $line;
         });
 
