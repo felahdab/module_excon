@@ -20,7 +20,7 @@ foreach(["BLEU", "RED", "BALISE"] as $datasource){
 $distance = Arr::get($description, "distance", "No distance available.");
 if ($distance != "No distance available")
 {
-    $distancestr = Number::format(floatval($distance)) . " meters ";
+    $distancestr = Number::format(floatval($distance), precision:0) . " meters ";
 }
 else 
 {
