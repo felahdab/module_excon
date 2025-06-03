@@ -206,22 +206,24 @@ class UnitDashboard extends Page
                         ])
                 ])
                 ->action(function ($data) use ($unit){
-                    if (array_key_exists("own_latitude", $data) && $data["own_latitude"] && array_key_exists("own_longitude", $data) && $data["own_longitude"])
+                    if (array_key_exists("own_latitude", $data) && $data["own_latitude"] != null && array_key_exists("own_longitude", $data) && $data["own_longitude"]  != null)
                     {
+                        logger()->info("Using provided position to create a specific position for the firing unit");
                         $manual_identifier = $unit->identifiers()->source("MANUAL")->first();
                         if ($manual_identifier == null)
                         {
                             $manual_identifier = $unit->identifiers()->create([
                                 "source" => "MANUAL",
-                                "identifier" => "MANUAL",
+                                "identifier" => $unit->name,
                             ]);
                         }
 
-                        $manual_identifier->positions()->create([
+                        $pos = $manual_identifier->positions()->create([
                             "latitude" => $data["own_latitude"],
                             "longitude" => $data["own_longitude"],
                             "timestamp" => $data["timestamp"],
                         ]);
+                        logger()->info("Manual position created: {$pos->id}");
                     }
                     
                     $weapon = Weapon::find($data["weapon_id"]);
@@ -251,6 +253,7 @@ class UnitDashboard extends Page
                                         "assessed_target" => $data["assessed_target"] ?? null,
                                     ]
                                 ]);
+                    logger()->info("New engagement record created: {$newengagement->id}");
                     event(new AnAttackWasReportedEvent($newengagement, auth()->user()));
                     $unit->touch();         
                 }),
@@ -265,7 +268,7 @@ class UnitDashboard extends Page
                     return $ret;
                 })
                 ->form([
-                    Forms\Components\Section::make('Time of first missile launch and assessed target')
+                    Forms\Components\Section::make('Assessed target')
                         ->columns(2)
                         ->schema([
                         // Forms\Components\DateTimePicker::make('timestamp')
@@ -343,14 +346,15 @@ class UnitDashboard extends Page
                     ])
                 ->action(function ($data) use ($unit) {
                     $timestamp = now();
-                    if (array_key_exists("own_latitude", $data) && $data["own_latitude"] && array_key_exists("own_longitude", $data) && $data["own_longitude"])
+                    if (array_key_exists("own_latitude", $data) && $data["own_latitude"] != null && array_key_exists("own_longitude", $data) && $data["own_longitude"]  != null)
                     {
+                        
                         $manual_identifier = $unit->identifiers()->source("MANUAL")->first();
                         if ($manual_identifier == null)
                         {
                             $manual_identifier = $unit->identifiers()->create([
                                 "source" => "MANUAL",
-                                "identifier" => "MANUAL",
+                                "identifier" =>  $unit->name,
                             ]);
                         }
 

@@ -22,7 +22,7 @@ class GenerateNVGFromTracksService
 
     public function transform($name, $tracks, $filename)
     {
-        logger()->info("Generate Nvg file from {$name} to {$filename}:");
+        //logger()->info("Generate Nvg file from {$name} to {$filename}:");
         $geojson = FeatureCollection::make($name);
         foreach ($tracks as $track)
         {
@@ -32,7 +32,7 @@ class GenerateNVGFromTracksService
             $geojson->addFeature($feature);
         }
         //dump($geojson->toGeoJson());
-        logger()->info(Storage::disk('public')->path("excon/nvgs/{$filename}"));
+        //logger()->info(Storage::disk('public')->path("excon/nvgs/{$filename}"));
         Storage::disk('public')->put("excon/nvgs/{$filename}", $geojson->toNVG());
     }
     

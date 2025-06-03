@@ -31,7 +31,7 @@ class GenerateNvgFileWithNirisTracks
      */
     public function handle(NirisTracksWhereRetreivedEvent $event): void
     {
-        logger()->info("Generating Nvg file from {$event->datasource} dated {$event->timestamp}.");
+        //logger()->info("Generating Nvg file from {$event->datasource} dated {$event->timestamp}.");
         $this->filename = "{$event->timestamp->format('YmdHi')}_{$event->datasource}_sitac.nvg"; 
         GenerateNVGFromTracksService::make()->transform($event->datasource, $event->tracks, $this->filename);
     }
