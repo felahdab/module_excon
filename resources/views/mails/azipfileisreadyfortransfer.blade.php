@@ -5,7 +5,10 @@ Un fichier de données est paré à être transféré à la cellule Jumeau numé
 Voici le lien pour le télécharger:
 [Fichier]({{ $url }})
 
-Merci de le transférer sur Intradef et de l'envoyer à benjamin.haddad@intradef.gouv.fr
+Merci de le transférer sur Intradef et de l'envoyer à: 
+- benjamin.haddad@intradef.gouv.fr
+- mathieu.moog@intradef.gouv.fr
+- marc.oldham@intradef.gouv.fr
 
 
 </x-markdown>
