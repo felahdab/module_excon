@@ -469,6 +469,9 @@ class UnitDashboard extends Page
                             ->schema([
                                 TextEntry::make('source'),
                                 TextEntry::make('identifier'),
+                                IconEntry::make('is_valid')
+                                    ->label('Position is up to date ?')
+                                    ->boolean()
                             ])
                     ]),
             ]);
