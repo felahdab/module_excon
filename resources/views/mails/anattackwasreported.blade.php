@@ -34,9 +34,11 @@ An attack was reported into the Polaris Online platform.
 
 The user reporting this attack is: {{ $user->display_name }}
 
-The attack is coming from: {{ $engagement->unit->name }}
+The attack is coming from: {{ $engagement->unit->name }}.
+Position: {{ Arr::get($description, "latitude") }} / {{ Arr::get($description, "longitude") }}
 
 Its intented target is: {{ Arr::get($engagement->data, "assessed_target", "")}}
+Position: {{ Arr::get($description, "target_latitude") }} / {{ Arr::get($description, "target_longitude") }}
 
 The timestamp of the attack is: {{ $engagement->timestamp }}
 
