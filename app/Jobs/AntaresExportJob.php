@@ -50,6 +50,11 @@ class AntaresExportJob implements ShouldQueue
         $lines = AntaresExportService::make()
                         ->exportAsAntares($this->unit, $this->start_timestamp, $this->stop_timestamp);
 
+        if ($lines == null)
+        {
+            return;
+        }
+        
         $content = "";
         foreach($lines as $line)
         {
