@@ -105,7 +105,7 @@ class Engagement extends Model
         }
         catch (Exception $e) 
             {
-                logger()->error("Engagement {$this->id} is not valid: " . $e->getMessage());
+                //logger()->error("Engagement {$this->id} is not valid: " . $e->getMessage());
                 return false;
             }
 
