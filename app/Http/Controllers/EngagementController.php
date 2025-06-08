@@ -47,7 +47,11 @@ class EngagementController extends Controller
             return $item["current_time"]-$item["timestamp"] < $item["weapon_flight_time"];
         });
 
-        //logger()->info("Provided " . $engagements->count() . " engagements data to system: " . auth()->user()->nom);
+        if ($engagements->count() != 0)
+        {
+            logger()->info("Provided " . $engagements->count() . " engagements data to : " . auth()->user()->nom);
+        }
+        
         return array_values($engagements->toArray());
     }
 
