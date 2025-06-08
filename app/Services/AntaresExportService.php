@@ -5,6 +5,7 @@ use Carbon\Carbon;
 use Exception;
 
 use Modules\Excon\Models\Unit;
+use Modules\Excon\Enums\UnitTypes;
 
 class AntaresExportService 
 {
@@ -63,6 +64,18 @@ class AntaresExportService
 
     public function exportAsAntares(Unit $unit, Carbon $start, Carbon $end)
     {
+        if ($unit == null)
+        {
+            return;
+        }
+        if ($unit->side == null)
+        {
+            return;
+        }
+        if ($unit->type == UnitTypes::STAFF)
+        {
+            return;
+        }
         //$start = Carbon::create(2025,4,23, 21, 57);
         //$end = Carbon::create(2025,4,23, 21, 59);
         
