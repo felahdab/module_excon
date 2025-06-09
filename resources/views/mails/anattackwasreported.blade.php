@@ -20,11 +20,13 @@ foreach(["BLEU", "RED", "BALISE"] as $datasource){
 $distance = Arr::get($description, "distance", "No distance available.");
 if ($distance != "No distance available")
 {
-    $distancestr = Number::format(floatval($distance), precision:0) . " meters ";
+    $distancestr = Number::format(floatval($distance), precision:0, locale: 'fr') . " meters.";
+    $distancenqstr = Number::format(floatval($distance) / 1852, precision:0, locale: 'fr') . " nautical miles.";
 }
 else 
 {
     $distancestr = "No distance available.";
+    $distancenqstr = "No distance available.";
 }
 
 @endphp
@@ -44,7 +46,11 @@ The timestamp of the attack is: {{ $engagement->timestamp }}
 
 The attacking unit used {{ $engagement->amount }} missiles of type {{ $engagement->weapon->name }}.
 
-The distance between the attacking unit and its target was: {{  $distancestr }}
+The distance between the attacking unit and its target was:
+
+ {{  $distancestr }}
+
+ {{  $distancenqstr }}
 
 Here are the snapshot of the tactical datalinks pictures and gps trackers. You can download them and open them in any ICC workstation (Map, activate Drawing tools, open drawing layer):
 
